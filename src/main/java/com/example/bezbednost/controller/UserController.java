@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -47,6 +48,14 @@ public class UserController {
 		}
 		
 		return new ResponseEntity<>(servicesDTO, HttpStatus.OK);
+	}
+	
+	@PostMapping(value="/create")
+	public ResponseEntity<UserDTO> createUser(@RequestBody UserDTO userDTO){
+		User user = new User(userDTO);
+		user = service.save(user);
+		
+		return new ResponseEntity<UserDTO>(new UserDTO(user), HttpStatus.OK);
 	}
 	
 	@DeleteMapping(value="/{id}")

@@ -1,56 +1,55 @@
 package com.example.bezbednost.model;
 
+import java.security.PublicKey;
+import java.security.cert.X509Certificate;
 import java.util.Date;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import org.bouncycastle.asn1.x500.X500Name;
 
-@Entity
-@Table(name="Certificates")
 public class Certificate {
 	
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="id", unique = true, nullable = false)
 	private Long id;
 	
-	@Column(name="idNadSertifikata")
-	private Long idNadSertifikata;
+	private X500Name naziv;
+	private Long nadSertifikatId;
+	private PublicKey publicKey;
 	
-	@Column(name="datumIzdavanja", nullable = false)
 	private Date datumIzdavanja;
-	
-	@Column(name="datumIsteka", nullable = false)
 	private Date datumIsteka;
-	
-	@Column(name="povucen")
 	private boolean revoked;
-	
-	@Column(name="korenski")
 	private boolean root;
-	
-	@Column(name="dozvolaZaIzdavanje")
 	private boolean authority;
+	private CertificateType tip;
+	
+	private String nazivOrganizacije;
 	
 	
 	public Certificate() {
 		super();
 	}
 
-	public Certificate(Long id, Long idNadSertifikata, Date datumIzdavanja, Date datumIsteka, boolean revoked,
-			boolean root, boolean authority) {
+	public Certificate(Long id, Long nadSertifikatId, Date datumIzdavanja,
+			Date datumIsteka, boolean revoked, boolean root, boolean authority, CertificateType tip, String nazivOrganizacije) {
 		super();
 		this.id = id;
-		this.idNadSertifikata = idNadSertifikata;
+		this.naziv = naziv;
+		this.nadSertifikatId = nadSertifikatId;
+		this.publicKey = publicKey;
 		this.datumIzdavanja = datumIzdavanja;
 		this.datumIsteka = datumIsteka;
 		this.revoked = revoked;
 		this.root = root;
 		this.authority = authority;
+		this.tip = tip;
+		this.nazivOrganizacije = nazivOrganizacije;
+	}
+
+	public String getNazivOrganizacije() {
+		return nazivOrganizacije;
+	}
+
+	public void setNazivOrganizacije(String nazivOrganizacije) {
+		this.nazivOrganizacije = nazivOrganizacije;
 	}
 
 	public Long getId() {
@@ -61,12 +60,24 @@ public class Certificate {
 		this.id = id;
 	}
 
-	public Long getIdNadSertifikata() {
-		return idNadSertifikata;
+	public X500Name getNaziv() {
+		return naziv;
 	}
 
-	public void setIdNadSertifikata(Long idNadSertifikata) {
-		this.idNadSertifikata = idNadSertifikata;
+	public void setNaziv(X500Name naziv) {
+		this.naziv = naziv;
+	}
+
+	public Long getNadSertifikatId() {
+		return nadSertifikatId;
+	}
+
+	public void setNadSertifikatId(Long nadSertifikatId) {
+		this.nadSertifikatId = nadSertifikatId;
+	}
+
+	public PublicKey getPublicKey() {
+		return publicKey;
 	}
 
 	public Date getDatumIzdavanja() {
@@ -107,5 +118,13 @@ public class Certificate {
 
 	public void setAuthority(boolean authority) {
 		this.authority = authority;
+	}
+
+	public CertificateType getTip() {
+		return tip;
+	}
+
+	public void setTip(CertificateType tip) {
+		this.tip = tip;
 	}
 }

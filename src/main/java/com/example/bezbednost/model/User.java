@@ -14,6 +14,8 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
+import com.example.bezbednost.dto.UserDTO;
+
 @Entity
 @Table(name = "users")
 public class User {
@@ -43,6 +45,11 @@ public class User {
 		this.id = id;
 		this.username = username;
 		this.password = password;
+	}
+	
+	public User(UserDTO user) {
+		this.username = user.getUsername();
+		this.password = user.getPassword();
 	}
 
 	public Long getId() {
