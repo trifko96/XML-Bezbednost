@@ -50,7 +50,7 @@ public class UserController {
 	}
 	
 	@DeleteMapping(value="/{id}")
-	public void deleteHotel(@PathVariable long id){
+	public void delete(@PathVariable long id){
 		User user = service.findOne(id);
 		service.delete(user);
 	}
