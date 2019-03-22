@@ -185,7 +185,126 @@ $(document).ready(function(){
 					});
 				},
 			});
-		} 
+			
+		} else if(odabraniTip == "PERSON"){
+			var sertifikat = new Object();
+			sertifikat.nadSertifikatId = $("#comboSertifikat option:selected").val();
+			sertifikat.datumIzdavanja = $("#datumIzdavanjaOsoba").val();
+			sertifikat.datumIsteka = $("#datumIsticanjaOsoba").val();
+			sertifikat.authority = $("#dozvolaZaIzdavanjeOsoba").val();
+			sertifikat.nazivOrganizacije = $("#nazivOrganizacijeOsoba").val();
+			sertifikat.ime = $("#imeOsoba").val();
+			sertifikat.prezime = $("#prezimeOsoba").val();
+			sertifikat.drzava = $("#drzavaOsoba").val();
+			sertifikat.email = $("#emailOsoba").val();
+			
+			$.ajax({
+				type: "POST",
+				url: "/Certificate/create",
+				data: JSON.stringify(sertifikat),
+				contentType: 'application/json',
+				success: function(data){
+					$.ajax({
+						type: "GET",
+						url: "/Certificate/getAll",
+						contentType: 'application/json',
+						success: function(data){
+							$("#tabelaNovihSertifikata").html("");
+							upisiSertifikate(data);
+						},
+					});
+				},
+			});
+		}
+		else if(odabraniTip == "APPLICATION"){
+			var sertifikat = new Object();
+			sertifikat.nadSertifikatId = $("#comboSertifikat option:selected").val();
+			sertifikat.datumIzdavanja = $("#datumIzdavanjaAplikacija").val();
+			sertifikat.datumIsteka = $("#datumIsticanjaAplikacija").val();
+			sertifikat.authority = $("#dozvolaZaIzdavanjeAplikacija").val();
+			sertifikat.nazivOrganizacije = $("#nazivOrganizacijeAplikacija").val();
+			sertifikat.nazivAplikacije = $("#nazivAplikacija").val();
+			sertifikat.verzija = $("#verzijaAplikacija").val();
+		
+			$.ajax({
+				type: "POST",
+				url: "/Certificate/create",
+				data: JSON.stringify(sertifikat),
+				contentType: 'application/json',
+				success: function(data){
+					$.ajax({
+						type: "GET",
+						url: "/Certificate/getAll",
+						contentType: 'application/json',
+						success: function(data){
+							$("#tabelaNovihSertifikata").html("");
+							upisiSertifikate(data);
+						},
+					});
+				},
+			});
+		}
+		
+		else if(odabraniTip == "ORGANIZATION"){
+			var sertifikat = new Object();
+			sertifikat.nadSertifikatId = $("#comboSertifikat option:selected").val();
+			sertifikat.datumIzdavanja = $("#datumIzdavanjaOrganizacija").val();
+			sertifikat.datumIsteka = $("#datumIsticanjaOrganizacija").val();
+			sertifikat.authority = $("#dozvolaZaIzdavanjeOrganizacija").val();
+			sertifikat.nazivOrganizacije = $("#nazivOrganizacijeOrganizacija").val();
+			sertifikat.drzava = $("#drzavaOrganizacija").val();
+			sertifikat.PTT = $("#pttOrganizacija").val();
+			sertifikat.adresa = $("#adresaOrganizacija").val();
+		
+			$.ajax({
+				type: "POST",
+				url: "/Certificate/create",
+				data: JSON.stringify(sertifikat),
+				contentType: 'application/json',
+				success: function(data){
+					$.ajax({
+						type: "GET",
+						url: "/Certificate/getAll",
+						contentType: 'application/json',
+						success: function(data){
+							$("#tabelaNovihSertifikata").html("");
+							upisiSertifikate(data);
+						},
+					});
+				},
+			});
+		}
+		
+		else if(odabraniTip == "EQUIPMENT"){
+			var sertifikat = new Object();
+			sertifikat.nadSertifikatId = $("#comboSertifikat option:selected").val();
+			sertifikat.datumIzdavanja = $("#datumIzdavanjaOprema").val();
+			sertifikat.datumIsteka = $("#datumIsticanjaOprema").val();
+			sertifikat.authority = $("#dozvolaZaIzdavanjeOprema").val();
+			sertifikat.nazivOrganizacije = $("#nazivOrganizacijeOprema").val();	
+			sertifikat.MAC = $("#macOprema").val();
+			sertifikat.nazivOpreme = $("#nazivOprema").val();
+			sertifikat.drzava = $("#drzavaOprema").val();
+			sertifikat.idOpreme = $("#idOprema").val();
+		
+			$.ajax({
+				type: "POST",
+				url: "/Certificate/create",
+				data: JSON.stringify(sertifikat),
+				contentType: 'application/json',
+				success: function(data){
+					$.ajax({
+						type: "GET",
+						url: "/Certificate/getAll",
+						contentType: 'application/json',
+						success: function(data){
+							$("#tabelaNovihSertifikata").html("");
+							upisiSertifikate(data);
+						},
+					});
+				},
+			});
+		}
 		
 	});
 	
