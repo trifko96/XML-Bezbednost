@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.bezbednost.dbModel.CertificateDB;
+import com.example.bezbednost.dto.CertificateDTO;
 import com.example.bezbednost.repository.CertificateDBRepository;
 
 @Service
