@@ -93,7 +93,7 @@ $(document).ready(function(){
 						upisiSertifikate(data);
 						$.ajax({
 							type: "GET",
-							url: "/Certificate/getNoRevoke",
+							url: "/Certificate/unrevoked",
 							contentType: 'application/json',
 							success: function(data){
 								$("#comboSertifikat1").html("");
@@ -104,7 +104,7 @@ $(document).ready(function(){
 						
 						$.ajax({
 							type: "GET",
-							url: "/Certificate/getCa",
+							url: "/Certificate/authority",
 							contentType: 'application/json',
 							success: function(data){
 								$("#comboSertifikat").html("");
@@ -119,7 +119,7 @@ $(document).ready(function(){
 	
 	$.ajax({
 		type: "GET",
-		url: "/Certificate/getNoRevoke",
+		url: "/Certificate/unrevoked",
 		contentType: 'application/json',
 		success: function(data){
 			$("#comboSertifikat1").html("");
@@ -130,7 +130,7 @@ $(document).ready(function(){
 	
 	$.ajax({
 		type: "GET",
-		url: "/Certificate/getCa",
+		url: "/Certificate/authority",
 		contentType: 'application/json',
 		success: function(data){
 			$("#comboSertifikat").html("");
@@ -153,6 +153,21 @@ $(document).ready(function(){
 		}
 	}
 	
+	function vratiPocetno(){
+		$("#dodajSertifikat").html("");
+		var pom = '<tr><td>Kreiraj sertifikat za:</td>'+
+		'<td align="center"><select id="comboSertifikatN">'+
+		'<option value="ROOT">Korenski sertifikat</option>'+
+		'<option value="PERSON">Osobu</option>'+
+		'<option value="APPLICATION">Aplikaciju</option>'+
+		'<option value="ORGANIZATION">Organizaciju</option>'+
+		'<option value="EQUIPMENT">Opremu</option>'+
+		'</select></td><td>'+
+		'<td colspan="2" align="center"><button id="nastavi" class="btn btn-outline-dark">Nastavi</button>'+
+		'</td></tr>';
+		$("#dodajSertifikat").append(pom);
+	}
+	
 	function ocistiFormu(){
 		$("#nadSertifikat").val("");
 		$("#subject").val("");
@@ -164,10 +179,10 @@ $(document).ready(function(){
 	$("#kreirajSert").click(function(event){
 		if(odabraniTip == "ROOT"){
 			var sertifikat = new Object();
+			sertifikat.nazivOrganizacije = $("#nazivOrganizacijeRoot").val();
 			sertifikat.datumIzdavanja = $("#datumIzdavanjaRoot").val();
 			sertifikat.datumIsteka = $("#datumIsticanjaRoot").val();
 			sertifikat.tip = "ROOT";
-			sertifikat.nazivOrganizacije = $("#nazivOrganizacijeRoot").val();
 			
 			$.ajax({
 				type: "POST",
@@ -186,6 +201,7 @@ $(document).ready(function(){
 					});
 				},
 			});
+			vratiPocetno();
 			
 		} else if(odabraniTip == "PERSON"){
 			var sertifikat = new Object();
@@ -217,6 +233,7 @@ $(document).ready(function(){
 					});
 				},
 			});
+			vratiPocetno();
 		}
 		else if(odabraniTip == "APPLICATION"){
 			var sertifikat = new Object();
@@ -246,6 +263,7 @@ $(document).ready(function(){
 					});
 				},
 			});
+			vratiPocetno();
 		}
 		
 		else if(odabraniTip == "ORGANIZATION"){
@@ -277,6 +295,7 @@ $(document).ready(function(){
 					});
 				},
 			});
+			vratiPocetno();
 		}
 		
 		else if(odabraniTip == "EQUIPMENT"){
@@ -309,6 +328,7 @@ $(document).ready(function(){
 					});
 				},
 			});
+			vratiPocetno();
 		}
 		
 	});
@@ -316,22 +336,27 @@ $(document).ready(function(){
 	$("#nastavi").click(function(event){
 		odabraniTip = $("#comboSertifikatN option:selected").val();
 		if(odabraniTip == "ROOT"){
+			vratiPocetno();
 			dodajZaRoot();
 			dodajDugme();
 		}
 		else if(odabraniTip == "PERSON"){
+			vratiPocetno();
 			dodajZaOsobu();
 			dodajDugme();
 		}
 		else if(odabraniTip == "APPLICATION"){
+			vratiPocetno();
 			dodajZaAplikaciju();
 			dodajDugme();
 		}
 		else if(odabraniTip == "ORGANIZATION"){
+			vratiPocetno();
 			dodajZaOrganizaciju();
 			dodajDugme();
 		}
 		else if(odabraniTip == "EQUIPMENT"){
+			vratiPocetno();
 			dodajZaOpremu();
 			dodajDugme();
 		}
