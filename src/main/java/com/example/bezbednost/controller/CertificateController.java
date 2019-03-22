@@ -155,6 +155,20 @@ public class CertificateController {
 		return new ResponseEntity<>(certificatesDTO, HttpStatus.OK);
 	}
 	
+	@PostMapping(value="/revoke/{id}")
+	public ResponseEntity<CertificateDTO> revoke(@PathVariable long id){
+		CertificateDB cDB = service.findOne(id);
+		
+		if(cDB == null) {
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		
+		cDB.setRevoked(true);
+		service.save(cDB);
+		
+		return new ResponseEntity<CertificateDTO>(HttpStatus.OK);
+	}
+	
 	@PostMapping(value="/create")
 	public ResponseEntity<CertificateDTO> createCertificate (@RequestBody CertificateDTO cDTO){
 		
@@ -237,7 +251,6 @@ public class CertificateController {
 				    KeyStoreReader keyStoreReader = new KeyStoreReader();
 					CertificateDB cDB = service.findOne(cDTO.getNadSertifikatId());
 					if(!cDB.isAuthority() || cDB.isRevoked()) {
-						System.out.println("USAOOOOOOOOOOOOO");
 						return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 					}
 				    // Izvlacimo privatni kljuc nadsertifikata kojim cemo potpisati trazeni sertifikat
@@ -301,7 +314,7 @@ public class CertificateController {
 					}
 				    // Izvlacimo privatni kljuc nadsertifikata kojim cemo potpisati trazeni sertifikat
 				    IssuerData issuerData = keyStoreReader.readIssuerFromStore("KeyStore.ks", Long.toString(cDB.getId()), "111".toCharArray(),  "123".toCharArray());
-				    System.out.println("\n\n**** " + cDB.getId());
+				    //System.out.println("\n\n**** " + cDB.getId());
 					//Generisanje sertifikata
 				    CertificateGenerator cg = new CertificateGenerator();
 				    X509Certificate cert = cg.generateCertificate(subjectData, issuerData);
@@ -309,8 +322,8 @@ public class CertificateController {
 				    KeyFactory keyFactory = KeyFactory.getInstance("RSA");
 				    X509EncodedKeySpec publicKeySpec = new X509EncodedKeySpec(cDB.getPublicKey());
 				    PublicKey pk = keyFactory.generatePublic(publicKeySpec);
-				    System.out.println("\nPublic person from app: " + pk);
-				    System.out.println("\nPrivate person from app: " + issuerData.getPrivateKey());
+				    //System.out.println("\nPublic person from app: " + pk);
+				    //System.out.println("\nPrivate person from app: " + issuerData.getPrivateKey());
 				    cert.verify(pk);
 				    cDB = new CertificateDB(c, cDB.getNadSertifikatId());
 				    cDB.setAuthority(cDTO.isAuthority());
@@ -410,7 +423,6 @@ public class CertificateController {
 					String sn = Long.toString(System.currentTimeMillis());
 					//Podaci o vlasniku
 					X500NameBuilder builder = new X500NameBuilder(BCStyle.INSTANCE);	
-					System.out.println("********: " + c.getMac());
 				    builder.addRDN(BCStyle.SN, c.getMac());
 				    builder.addRDN(BCStyle.NAME, c.getNazivOpreme());
 				    builder.addRDN(BCStyle.COUNTRY_OF_RESIDENCE, c.getDrzava());
