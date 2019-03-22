@@ -11,13 +11,14 @@ $(document).ready(function(){
 		
 		if(korisnickoIme == "admin"){
 			if(lozinka == "admin"){
-				window.location.href = "html/admin.html";
+				window.location.href = "/html/admin.html";
 			}
 		} else {
-			$("#greskaKorIme").show().delay(4000).fadeOut();
-		}
-			
-			
-		}
+			$("#greskaLog").show().delay(4000).fadeOut();
+		}	
+		
 	});	
 });
+
+
+

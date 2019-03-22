@@ -5,6 +5,7 @@
 	<title>MegaTravel</title>
 	<script type="text/javascript" src="../skripte/jquery.min.js"></script>
 	<script type="text/javascript" src="../skripte/admin.js"></script>
+	<script type="text/javascript" src="../skripte/komunikacija.js"></script>
 	<link rel="stylesheet" type="text/css" href="../bootstrap/css/bootstrap.css">
 	<script type="text/javascript" src="../bootstrap/js/bootstrap.js"></script>
 	<style>
@@ -62,49 +63,36 @@
 	<div class="container-fluid" id="divSertifikat">
 	<div class="row">
 	
-	<div class="col" id="divDodSer">
+	<div class="col-4" id="divDodSer">
 		<h3>Kreiraj sertifikat:</h3>
 					<table class="table" id="dodajSertifikat">
 						<tr>
-							<td>Nadsertifikat:</td>
+							<td>Kreiraj sertifikat za:</td>
 							<td align="center">
-							<select id="comboSertifikat">
-								
+							<select id="comboSertifikatN">
+								<option value="ROOT">Korenski sertifikat</option>
+								<option value="PERSON">Osobu</option>
+								<option value="APPLICATION">Aplikaciju</option>
+								<option value="ORGANIZATION">Organizaciju</option>
+								<option value="EQUIPMENT">Opremu</option>
 							</select>
 							</td>
-						</tr>
-						<tr>
-							<td>Kome se izdaje:</td>
-							<td align="center"><input type="text" id="subject"/></td>
-						</tr>
-						<tr>
-							<td>Datum izdavanja:</td>
-							<td align="center"><input type="date" id="datumIzdavanja"/></td>
-						</tr>
-						<tr>
-							<td>Do kada vazi:</td>
-							<td align="center"><input type="date" id="datumIsticanja"/>
+							<td>
+								<td colspan="2" align="center"><button id="nastavi" class="btn btn-outline-dark">Nastavi</button>
 							</td>
-						</tr>
-						<tr>
-							<td>CA:</td>
-							<td align="center"><input type="checkbox" id="checkCA"/></td>
-						</tr>
-						<tr>
-							<td colspan="2" align="center"><button id="kreirajSert" class="btn btn-outline-dark">Kreiraj</button></td>
 						</tr>
 					</table>
 	</div>
 	
-	<div class="w-100"></div>
 	
-	<div class="col scroll" id="divSer">
+	
+	<div class="col-8 scroll" id="divSer">
 		<h2>Sertifikati:</h2>
 		<table id="tabelaSertifikata" class="table">
 			<thead class="thead-light">
 				<tr>
 					<th>Nadsertifikat</th>
-					<th>Pripada</th>
+					<th>Tip</th>
 					<th>Datum izdavanja</th>
 					<th>Vazi do</th>
 					<th>Status</th>
@@ -128,11 +116,10 @@
 		<table id="tabelaSertifikataKom" class="table">
 			<thead class="thead-light">
 				<tr>
-					<th>Nadsertifikat</th>
-					<th>Pripada</th>
-					<th>Datum izdavanja</th>
-					<th>Vazi do</th>
-					<th>Status</th>
+					<th>Sertifikat 1</th>
+					<th>Tip</th>
+					<th>Sertifikat 2</th>
+					<th>Tip</th>
 				</tr>
 			</thead>
 			<tbody id="tabelaNovihSertifikataKom">
@@ -142,7 +129,7 @@
 	</div>
 	<div class="w-100"></div>
 	
-	<div class="col" id="divTabelaKom">
+	<div class="col-6" id="divTabelaKom">
 		<h4>Izaberi sertifikate za komunikaciju:</h4>
 					<table class="table" id="dodajKomunikaciju">
 						<tr>
