@@ -1,14 +1,18 @@
 package com.example.bezbednost.controller;
 
 import java.security.InvalidKeyException;
+import java.security.KeyFactory;
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
 import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
+import java.security.PublicKey;
 import java.security.SecureRandom;
 import java.security.SignatureException;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
+import java.security.spec.InvalidKeySpecException;
+import java.security.spec.X509EncodedKeySpec;
 import java.util.Date;
 
 import org.bouncycastle.asn1.x500.X500NameBuilder;
@@ -25,6 +29,7 @@ import com.example.bezbednost.data.IssuerData;
 import com.example.bezbednost.data.SubjectData;
 import com.example.bezbednost.dbModel.CertificateDB;
 import com.example.bezbednost.dto.CertificateDTO;
+import com.example.bezbednost.keystore.KeyStoreReader;
 import com.example.bezbednost.keystore.KeyStoreWriter;
 import com.example.bezbednost.model.CertificatePerson;
 import com.example.bezbednost.model.CertificateRoot;
@@ -48,43 +53,40 @@ public class CertificateController {
 			case ROOT:
 				try {
 					CertificateRoot c = new CertificateRoot(cDTO);
-					
-					
 					//CertificateExample klasa
-					
-					//generateSubjectData
-					KeyPair keyPairSubject = generateKeyPair();
+						//generateSubjectData
+							// generisemo javni i privatni kljuc subjekta kojem izdajemo sertifikat
+							// posto je u pitanju root, koji potpisuje sam sebe, taj privatni ce se koristiti
+							// i kod issuer-a kako bi sertifikat bio samopotpisan
+					KeyPair keyPairSubject = generateKeyPair(); 
 					Date startDate = c.getDatumIzdavanja();
 					Date endDate = c.getDatumIsteka();
-					//Serijski broj sertifikata...kako generisati??
+							//Serijski broj sertifikata...kako generisati??
 					String sn = Long.toString(System.currentTimeMillis());
-					//Podaci o vlasniku
+						//Podaci o vlasniku
 					X500NameBuilder builder = new X500NameBuilder(BCStyle.INSTANCE);			
 				    builder.addRDN(BCStyle.O, c.getNazivOrganizacije());
 				    SubjectData subjectData = new SubjectData(keyPairSubject.getPublic(), builder.build(), sn, startDate, endDate);
 					
-				    //generateIssuerData
-					KeyPair keyPairIssuer = generateKeyPair();
+				    	//generateIssuerData
 					X500NameBuilder builder1 = new X500NameBuilder(BCStyle.INSTANCE);
 				    builder1.addRDN(BCStyle.O, c.getNazivOrganizacije());
-				    IssuerData issuerData = new IssuerData(keyPairIssuer.getPrivate(), builder1.build());
+				    IssuerData issuerData = new IssuerData(keyPairSubject.getPrivate(), builder1.build());
 						
-					//Generisanje sertifikata
+						//Generisanje sertifikata
 				    CertificateGenerator cg = new CertificateGenerator();
 				    X509Certificate cert = cg.generateCertificate(subjectData, issuerData);
+				    cert.verify(keyPairSubject.getPublic());
 				    
-				    cert.verify(keyPairIssuer.getPublic());
-				    
-				    
-
 				    CertificateDB cDB = new CertificateDB(c, null);
 				    cDB.setAuthority(true);
 				    cDB.setRoot(true);
-				    
+				    cDB.setPublicKey(keyPairSubject.getPublic().getEncoded());
 				    cDB = service.save(cDB);
 				    cDB.setNadSertifikatId(cDB.getId());
 				    cDB = service.save(cDB);
-				    keyStore.write(cDB.getId().toString(), keyPairIssuer.getPrivate(), "123".toCharArray(), cert);
+				    keyStore.write(cDB.getId().toString(), keyPairSubject.getPrivate(), "123".toCharArray(), cert);
+				    		//Sacuvati u KeyStore london, hong kong ili boston?
 				    keyStore.saveKeyStore("KeyStore.ks", "111".toCharArray());
 				    
 				}catch(CertificateException e) {
@@ -105,14 +107,13 @@ public class CertificateController {
 				try {
 					CertificatePerson c = new CertificatePerson(cDTO);					
 					//CertificateExample klasa
-					
-					//generateSubjectData
+						//generateSubjectData
 					KeyPair keyPairSubject = generateKeyPair();
 					Date startDate = c.getDatumIzdavanja();
 					Date endDate = c.getDatumIsteka();
-					//Serijski broj sertifikata...kako generisati??
+							//Serijski broj sertifikata...kako generisati??
 					String sn = Long.toString(System.currentTimeMillis());
-					//Podaci o vlasniku
+						//Podaci o vlasniku
 					X500NameBuilder builder = new X500NameBuilder(BCStyle.INSTANCE);			
 				    builder.addRDN(BCStyle.GIVENNAME, c.getIme());
 				    builder.addRDN(BCStyle.SURNAME, c.getPrezime());
@@ -121,28 +122,26 @@ public class CertificateController {
 				    builder.addRDN(BCStyle.O, c.getNazivOrganizacije());
 				    SubjectData subjectData = new SubjectData(keyPairSubject.getPublic(), builder.build(), sn, startDate, endDate);
 					
-				    //generateIssuerData
-				    
-				    // OVO VEROVATNO NE TREBA OVAKO, TREBA KORISTITI PARENT-ov PRIVATNI KLJUC
-					KeyPair keyPairIssuer = generateKeyPair();
+				    	//generateIssuerData
+				    KeyStoreReader keyStoreReader = new KeyStoreReader();
 					CertificateDB cDB = service.findOne(cDTO.getNadSertifikatId());
-					X500NameBuilder builder1 = new X500NameBuilder(BCStyle.INSTANCE);
-				    builder1.addRDN(BCStyle.O, cDB.getNazivOrganizacije());
-				    IssuerData issuerData = new IssuerData(keyPairIssuer.getPrivate(), builder1.build());
-						
-					//Generisanje sertifikata
+				    	// Izvlacimo privatni kljuc nadsertifikata kojim cemo potpisati trazeni sertifikat
+				    IssuerData issuerData = keyStoreReader.readIssuerFromStore("KeyStore.ks", Long.toString(cDB.getId()), "111".toCharArray(),  "123".toCharArray());
+						//Generisanje sertifikata
 				    CertificateGenerator cg = new CertificateGenerator();
 				    X509Certificate cert = cg.generateCertificate(subjectData, issuerData);
 				    
-				    cert.verify(keyPairIssuer.getPublic());
+				    KeyFactory keyFactory = KeyFactory.getInstance("RSA");
+				    X509EncodedKeySpec publicKeySpec = new X509EncodedKeySpec(cDB.getPublicKey());
+				    PublicKey pk = keyFactory.generatePublic(publicKeySpec);
 				    
-				    
+				    cert.verify(pk);
 				    cDB = new CertificateDB(c, cDB.getNadSertifikatId());
 				    cDB.setAuthority(cDTO.isAuthority());
 				    cDB.setRoot(false);
 				    
 				    cDB = service.save(cDB);
-				    keyStore.write(cDB.getId().toString(), keyPairIssuer.getPrivate(), "123".toCharArray(), cert);
+				    keyStore.write(cDB.getId().toString(), issuerData.getPrivateKey(), "123".toCharArray(), cert);
 
 				    keyStore.saveKeyStore("KeyStore.ks", "111".toCharArray());
 				    
@@ -155,6 +154,8 @@ public class CertificateController {
 				} catch (NoSuchProviderException e) {
 					e.printStackTrace();
 				} catch (SignatureException e) {
+					e.printStackTrace();
+				} catch (InvalidKeySpecException e) {
 					e.printStackTrace();
 				}
 				

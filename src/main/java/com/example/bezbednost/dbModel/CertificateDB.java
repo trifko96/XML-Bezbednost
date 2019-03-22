@@ -1,5 +1,6 @@
 package com.example.bezbednost.dbModel;
 
+import java.security.PublicKey;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -7,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.Table;
 
 import com.example.bezbednost.model.Certificate;
@@ -45,12 +47,15 @@ public class CertificateDB {
 	@Column(name = "tip")
 	private CertificateType tip;
 	
+	@Column(name = "javniKljuc", length=1000)
+	private byte[] publicKey;
+	
 	public CertificateDB() {
 		
 	}
 
 	public CertificateDB(Long nadSertifikatId, Date datumIzdavanja, Date datumIsteka, boolean revoked,
-			boolean root, boolean authority, CertificateType tip, String nazivOrganizacije) {
+			boolean root, boolean authority, CertificateType tip, String nazivOrganizacije,  byte[] publicKey) {
 		this.nadSertifikatId = nadSertifikatId;
 		this.datumIzdavanja = datumIzdavanja;
 		this.datumIsteka = datumIsteka;
@@ -59,6 +64,7 @@ public class CertificateDB {
 		this.authority = authority;
 		this.tip = tip;
 		this.nazivOrganizacije = nazivOrganizacije;
+		this.publicKey = publicKey;
 	}
 	
 	public CertificateDB(Certificate c, Long nadSertifikatId) {
@@ -142,6 +148,14 @@ public class CertificateDB {
 
 	public void setTip(CertificateType tip) {
 		this.tip = tip;
+	}
+
+	public  byte[] getPublicKey() {
+		return publicKey;
+	}
+
+	public void setPublicKey( byte[] publicKey) {
+		this.publicKey = publicKey;
 	}
 	
 }
