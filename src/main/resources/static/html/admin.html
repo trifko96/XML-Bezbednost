@@ -62,36 +62,23 @@
 	<div class="container-fluid" id="divSertifikat">
 	<div class="row">
 	
-	<div class="col" id="divDodSer">
+	<div class="col-6" id="divDodSer">
 		<h3>Kreiraj sertifikat:</h3>
 					<table class="table" id="dodajSertifikat">
 						<tr>
-							<td>Nadsertifikat:</td>
+							<td>Kreiraj sertifikat za:</td>
 							<td align="center">
 							<select id="comboSertifikat">
-								
+								<option value="ROOT">Korenski sertifikat</option>
+								<option value="PERSON">Osobu</option>
+								<option value="APLICATION">Aplikaciju</option>
+								<option value="ORGANIZATION">Organizaciju</option>
+								<option value="EQUIPMENT">Opremu</option>
 							</select>
 							</td>
-						</tr>
-						<tr>
-							<td>Kome se izdaje:</td>
-							<td align="center"><input type="text" id="subject"/></td>
-						</tr>
-						<tr>
-							<td>Datum izdavanja:</td>
-							<td align="center"><input type="date" id="datumIzdavanja"/></td>
-						</tr>
-						<tr>
-							<td>Do kada vazi:</td>
-							<td align="center"><input type="date" id="datumIsticanja"/>
+							<td>
+								<td colspan="2" align="center"><button id="nastavi" class="btn btn-outline-dark">Nastavi</button>
 							</td>
-						</tr>
-						<tr>
-							<td>CA:</td>
-							<td align="center"><input type="checkbox" id="checkCA"/></td>
-						</tr>
-						<tr>
-							<td colspan="2" align="center"><button id="kreirajSert" class="btn btn-outline-dark">Kreiraj</button></td>
 						</tr>
 					</table>
 	</div>
@@ -104,7 +91,7 @@
 			<thead class="thead-light">
 				<tr>
 					<th>Nadsertifikat</th>
-					<th>Pripada</th>
+					<th>Tip</th>
 					<th>Datum izdavanja</th>
 					<th>Vazi do</th>
 					<th>Status</th>
@@ -129,7 +116,7 @@
 			<thead class="thead-light">
 				<tr>
 					<th>Nadsertifikat</th>
-					<th>Pripada</th>
+					<th>Tip</th>
 					<th>Datum izdavanja</th>
 					<th>Vazi do</th>
 					<th>Status</th>
