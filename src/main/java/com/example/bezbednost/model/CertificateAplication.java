@@ -1,5 +1,7 @@
 package com.example.bezbednost.model;
 
+import com.example.bezbednost.dto.CertificateDTO;
+
 public class CertificateAplication extends Certificate{
 	
 	private String nazivAplikacije;
@@ -15,6 +17,13 @@ public class CertificateAplication extends Certificate{
 		this.nazivAplikacije = nazivAplikacije;
 		this.nazivOrganizacije = nazivOrganizacije;
 		this.verzija = verzija;
+	}
+	
+	public CertificateAplication(CertificateDTO c) {
+		super(c.getId(), c.getNadSertifikatId(), c.getDatumIzdavanja(), c.getDatumIsteka(), c.isRevoked(), c.isRoot(), c.isAuthority(), c.getTip(), c.getNazivOrganizacije());
+		this.nazivAplikacije = c.getNazivAplikacije();
+		this.nazivOrganizacije = c.getNazivOrganizacije();
+		this.verzija = c.getVerzija();
 	}
 	
 	public String getNazivAplikacije() {

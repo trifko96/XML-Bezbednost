@@ -1,5 +1,7 @@
 package com.example.bezbednost.model;
 
+import com.example.bezbednost.dto.CertificateDTO;
+
 public class CertificateEquipment extends Certificate{
 	
 	private String MAC;
@@ -22,6 +24,15 @@ public class CertificateEquipment extends Certificate{
 		this.idOpreme = idOpreme;
 	}
 
+	public CertificateEquipment(CertificateDTO c) {
+		super(c.getId(), c.getNadSertifikatId(), c.getDatumIzdavanja(), c.getDatumIsteka(), c.isRevoked(), c.isRoot(), c.isAuthority(), c.getTip(), c.getNazivOrganizacije());
+		this.MAC = c.getMAC();
+		this.nazivOpreme = c.getNazivOpreme();
+		this.drzava = c.getDrzava();
+		this.nazivOrganizacije = c.getNazivOrganizacije();
+		this.idOpreme = c.getIdOpreme();
+	}
+	
 	public String getMAC() {
 		return MAC;
 	}
