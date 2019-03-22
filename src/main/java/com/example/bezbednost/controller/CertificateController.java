@@ -25,6 +25,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -35,6 +36,7 @@ import com.example.bezbednost.data.IssuerData;
 import com.example.bezbednost.data.SubjectData;
 import com.example.bezbednost.dbModel.CertificateDB;
 import com.example.bezbednost.dto.CertificateDTO;
+import com.example.bezbednost.dto.UserDTO;
 import com.example.bezbednost.keystore.KeyStoreReader;
 import com.example.bezbednost.keystore.KeyStoreWriter;
 import com.example.bezbednost.model.CertificateAplication;
@@ -52,6 +54,121 @@ public class CertificateController {
 	CertificateDBService service;
 	
 	static KeyStoreWriter keyStore = new KeyStoreWriter();
+	
+	@GetMapping(value="/{id}")
+	public ResponseEntity<CertificateDTO> getCertificate(@PathVariable long id){
+		CertificateDB cDB = service.findOne(id);
+		
+		if(cDB == null) {
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		
+		CertificateDTO cDTO = new CertificateDTO(cDB);
+		
+		KeyStoreReader keyStoreReader = new KeyStoreReader();
+	    IssuerData issuerData = keyStoreReader.readIssuerFromStore("KeyStore.ks", Long.toString(cDB.getId()), "111".toCharArray(),  "123".toCharArray());
+	    ASN1ObjectIdentifier[] identifiers = issuerData.getX500name().getAttributeTypes();
+	    
+	    switch (cDTO.getTip()) {
+		case ROOT:
+			for(ASN1ObjectIdentifier identifier: identifiers) {
+				RDN[] rdnS = issuerData.getX500name().getRDNs(identifier);
+				for(RDN rdn: rdnS) {
+					
+					if(identifier.intern().equals(BCStyle.O)) {
+						cDTO.setNazivOrganizacije(rdn.getFirst().getValue().toString());
+					}
+				}
+			}
+			break;
+		case PERSON:
+			for(ASN1ObjectIdentifier identifier: identifiers) {
+				RDN[] rdnS = issuerData.getX500name().getRDNs(identifier);
+				for(RDN rdn: rdnS) {
+					if(identifier.intern().equals(BCStyle.GIVENNAME)) {
+						cDTO.setIme(rdn.getFirst().getValue().toString());
+					}
+					if(identifier.intern().equals(BCStyle.SURNAME)) {
+						cDTO.setPrezime(rdn.getFirst().getValue().toString());
+					}
+					if(identifier.intern().equals(BCStyle.COUNTRY_OF_RESIDENCE)) {
+						cDTO.setDrzava(rdn.getFirst().getValue().toString());
+					}
+					if(identifier.intern().equals(BCStyle.EmailAddress)) {
+						cDTO.setEmail(rdn.getFirst().getValue().toString());
+					}
+					if(identifier.intern().equals(BCStyle.O)) {
+						cDTO.setNazivOrganizacije(rdn.getFirst().getValue().toString());
+					}
+				}
+			}
+			break;
+		case APPLICATION:
+			for(ASN1ObjectIdentifier identifier: identifiers) {
+				RDN[] rdnS = issuerData.getX500name().getRDNs(identifier);
+				for(RDN rdn: rdnS) {
+					
+					if(identifier.intern().equals(BCStyle.NAME)) {
+						cDTO.setNazivAplikacije(rdn.getFirst().getValue().toString());
+					}
+					if(identifier.intern().equals(BCStyle.CN)) {
+						cDTO.setVerzija(rdn.getFirst().getValue().toString());
+					}
+					if(identifier.intern().equals(BCStyle.O)) {
+						cDTO.setNazivOrganizacije(rdn.getFirst().getValue().toString());
+					}
+				}
+			}
+			break;
+		case ORGANIZATION:
+			for(ASN1ObjectIdentifier identifier: identifiers) {
+				RDN[] rdnS = issuerData.getX500name().getRDNs(identifier);
+				for(RDN rdn: rdnS) {
+					
+					if(identifier.intern().equals(BCStyle.POSTAL_CODE)) {
+						cDTO.setPtt(rdn.getFirst().getValue().toString());
+					}
+					if(identifier.intern().equals(BCStyle.COUNTRY_OF_RESIDENCE)) {
+						cDTO.setDrzava(rdn.getFirst().getValue().toString());
+					}
+					if(identifier.intern().equals(BCStyle.POSTAL_ADDRESS)) {
+						cDTO.setAdresa(rdn.getFirst().getValue().toString());
+					}
+					if(identifier.intern().equals(BCStyle.O)) {
+						cDTO.setNazivOrganizacije(rdn.getFirst().getValue().toString());
+					}
+				}
+			}
+			break;
+		case EQUIPMENT:
+			for(ASN1ObjectIdentifier identifier: identifiers) {
+				RDN[] rdnS = issuerData.getX500name().getRDNs(identifier);
+				for(RDN rdn: rdnS) {
+					
+					if(identifier.intern().equals(BCStyle.SN)) {
+						cDTO.setMac(rdn.getFirst().getValue().toString());
+					}
+					if(identifier.intern().equals(BCStyle.NAME)) {
+						cDTO.setNazivOpreme(rdn.getFirst().getValue().toString());
+					}
+					if(identifier.intern().equals(BCStyle.COUNTRY_OF_RESIDENCE)) {
+						cDTO.setDrzava(rdn.getFirst().getValue().toString());
+					}
+					if(identifier.intern().equals(BCStyle.SERIALNUMBER)) {
+						cDTO.setIdOpreme(rdn.getFirst().getValue().toString());
+					}
+					if(identifier.intern().equals(BCStyle.O)) {
+						cDTO.setNazivOrganizacije(rdn.getFirst().getValue().toString());
+					}
+				}
+			}
+			break;
+		default:
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
+		
+		return new ResponseEntity<CertificateDTO>(cDTO, HttpStatus.OK);
+	}
 	
 	@GetMapping(value="/getAll")
 	public ResponseEntity<List<CertificateDTO>> findAll(){
