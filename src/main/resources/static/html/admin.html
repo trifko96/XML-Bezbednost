@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>MegaTravel</title>
+	<script type="text/javascript" src="../skripte/jquery.min.js"></script>
+	<script type="text/javascript" src="../skripte/admin.js"></script>
+	<link rel="stylesheet" type="text/css" href="../bootstrap/css/bootstrap.css">
+	<script type="text/javascript" src="../bootstrap/js/bootstrap.js"></script>
+	<style>
+	
+		
+		
+		ul {
+    		list-style-type: none;
+    		margin: 0;
+    		padding: 0;
+    		overflow: hidden;
+    		
+		}
+
+		li {
+    		float: left;
+		}
+
+		li a {
+		    display: block;
+    		color: black;
+    		text-align: center;
+    		padding: 14px 16px;
+    		text-decoration: none;
+		}
+
+		li a:hover {
+    		background-color: #141616;
+		}
+		
+		li a:hover:not(.active) {
+    		background-color: #141616;
+		}
+		
+		.active {
+    		background-color: #ffffff;
+		}
+		
+		.scroll {
+			overflow-y: auto;
+		}
+	
+	</style>
+</head>
+<body>
+
+	<nav class="navbar bg-dark">
+		  <a class="navbar-brand text-white" href=""></a>
+		  <ul>
+  			<li><a class="active navbar-link" id="tabSer" href="#">Kreiranje sertifikata</a></li>
+  			<li><a class="navbar-link" id="tabKom" href="#">Komunikacija</a></li>
+		</ul>
+	</nav>
+	
+	<div class="container-fluid" id="divSertifikat">
+	<div class="row">
+	
+	<div class="col" id="divDodSer">
+		<h3>Kreiraj sertifikat:</h3>
+					<table class="table" id="dodajSertifikat">
+						<tr>
+							<td>Nadsertifikat:</td>
+							<td align="center">
+							<select id="comboSertifikat">
+								
+							</select>
+							</td>
+						</tr>
+						<tr>
+							<td>Kome se izdaje:</td>
+							<td align="center"><input type="text" id="subject"/></td>
+						</tr>
+						<tr>
+							<td>Datum izdavanja:</td>
+							<td align="center"><input type="date" id="datumIzdavanja"/></td>
+						</tr>
+						<tr>
+							<td>Do kada vazi:</td>
+							<td align="center"><input type="date" id="datumIsticanja"/>
+							</td>
+						</tr>
+						<tr>
+							<td>CA:</td>
+							<td align="center"><input type="checkbox" id="checkCA"/></td>
+						</tr>
+						<tr>
+							<td colspan="2" align="center"><button id="kreirajSert" class="btn btn-outline-dark">Kreiraj</button></td>
+						</tr>
+					</table>
+	</div>
+	
+	<div class="w-100"></div>
+	
+	<div class="col scroll" id="divSer">
+		<h2>Sertifikati:</h2>
+		<table id="tabelaSertifikata" class="table">
+			<thead class="thead-light">
+				<tr>
+					<th>Nadsertifikat</th>
+					<th>Pripada</th>
+					<th>Datum izdavanja</th>
+					<th>Vazi do</th>
+					<th>Status</th>
+					<th>&nbsp</th>
+				</tr>
+			</thead>
+			<tbody id="tabelaNovihSertifikata">
+				
+			</tbody>
+		</table>
+	</div>
+	</div>
+	</div>
+	
+	<div class="container-fluid" id="divKomunikacija">
+	<div class="row">
+	
+	
+	<div class="col scroll" id="divSer">
+		<h2>Sertifikati:</h2>
+		<table id="tabelaSertifikataKom" class="table">
+			<thead class="thead-light">
+				<tr>
+					<th>Nadsertifikat</th>
+					<th>Pripada</th>
+					<th>Datum izdavanja</th>
+					<th>Vazi do</th>
+					<th>Status</th>
+				</tr>
+			</thead>
+			<tbody id="tabelaNovihSertifikataKom">
+				
+			</tbody>
+		</table>
+	</div>
+	<div class="w-100"></div>
+	
+	<div class="col" id="divTabelaKom">
+		<h4>Izaberi sertifikate za komunikaciju:</h4>
+					<table class="table" id="dodajKomunikaciju">
+						<tr>
+							<td>Sertifikat 1:</td>
+							<td align="center">
+							<select id="comboSertifikat1">
+								
+							</select>
+							</td>
+						</tr>
+						<tr>
+							<td>Sertifikat 2:</td>
+							<td align="center">
+							<select id="comboSertifikat2">
+								
+							</select>
+							</td>
+						</tr>
+						<tr>
+							<td colspan="2" align="center"><button id="kreirajKom" class="btn btn-outline-dark">Kreiraj</button></td>
+						</tr>
+					</table>
+	</div>
+	</div>
+	</div>

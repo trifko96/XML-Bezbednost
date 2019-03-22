@@ -324,6 +324,5 @@ public class CertificateDTO {
 
 	public void setIdOpreme(String idOpreme) {
 		this.idOpreme = idOpreme;
-	}
-	
+	}	
 }

@@ -1,7 +1,6 @@
 package com.example.bezbednost.model;
 
 import java.security.PublicKey;
-import java.security.cert.X509Certificate;
 import java.util.Date;
 
 import org.bouncycastle.asn1.x500.X500Name;
@@ -21,8 +20,7 @@ public class Certificate {
 	private boolean authority;
 	private CertificateType tip;
 	
-	private String nazivOrganizacije;
-	
+	private String nazivOrganizacije;	
 	
 	public Certificate() {
 		super();
@@ -30,9 +28,7 @@ public class Certificate {
 
 	public Certificate(Long id, Long nadSertifikatId, Date datumIzdavanja,
 			Date datumIsteka, boolean revoked, boolean root, boolean authority, CertificateType tip, String nazivOrganizacije) {
-		super();
 		this.id = id;
-		this.naziv = naziv;
 		this.nadSertifikatId = nadSertifikatId;
 		this.publicKey = publicKey;
 		this.datumIzdavanja = datumIzdavanja;

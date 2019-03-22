@@ -5,13 +5,10 @@ import java.security.KeyPair;
 import java.security.KeyPairGenerator;
 import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
-import java.security.PrivateKey;
 import java.security.SecureRandom;
 import java.security.SignatureException;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import org.bouncycastle.asn1.x500.X500NameBuilder;
@@ -88,7 +85,7 @@ public class CertificateController {
 				    cDB.setNadSertifikatId(cDB.getId());
 				    cDB = service.save(cDB);
 				    keyStore.write(cDB.getId().toString(), keyPairIssuer.getPrivate(), "123".toCharArray(), cert);
-				    keyStore.saveKeyStore("KeyStore", "111".toCharArray());
+				    keyStore.saveKeyStore("KeyStore.ks", "111".toCharArray());
 				    
 				}catch(CertificateException e) {
 					e.printStackTrace();
@@ -147,7 +144,7 @@ public class CertificateController {
 				    cDB = service.save(cDB);
 				    keyStore.write(cDB.getId().toString(), keyPairIssuer.getPrivate(), "123".toCharArray(), cert);
 
-				    keyStore.saveKeyStore("KeyStore", "111".toCharArray());
+				    keyStore.saveKeyStore("KeyStore.ks", "111".toCharArray());
 				    
 				}catch(CertificateException e) {
 					e.printStackTrace();
@@ -187,5 +184,4 @@ public class CertificateController {
 		}
         return null;
 	}
-	
 }
