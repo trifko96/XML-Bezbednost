@@ -1,11 +1,12 @@
 package com.example.bezbednost.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.example.bezbednost.model.Communication;
 import com.example.bezbednost.repository.CommunicationRepository;
 
-
+@Service
 public class CommunicationService {
 
 	@Autowired
