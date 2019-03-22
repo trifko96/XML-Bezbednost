@@ -249,6 +249,9 @@ public class CertificateController {
 					
 				    //generateIssuerData
 				    KeyStoreReader keyStoreReader = new KeyStoreReader();
+				    if(service.findOne(cDTO.getNadSertifikatId()) == null) {
+				    	return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+				    }
 					CertificateDB cDB = service.findOne(cDTO.getNadSertifikatId());
 					if(!cDB.isAuthority() || cDB.isRevoked()) {
 						return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -308,6 +311,9 @@ public class CertificateController {
 					
 				    //generateIssuerData
 				    KeyStoreReader keyStoreReader = new KeyStoreReader();
+				    if(service.findOne(cDTO.getNadSertifikatId()) == null) {
+				    	return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+				    }
 					CertificateDB cDB = service.findOne(cDTO.getNadSertifikatId());
 					if(!cDB.isAuthority() || cDB.isRevoked()) {
 						return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -371,6 +377,9 @@ public class CertificateController {
 					
 				    //generateIssuerData
 				    KeyStoreReader keyStoreReader = new KeyStoreReader();
+				    if(service.findOne(cDTO.getNadSertifikatId()) == null) {
+				    	return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+				    }
 					CertificateDB cDB = service.findOne(cDTO.getNadSertifikatId());
 					if(!cDB.isAuthority() || cDB.isRevoked()) {
 						return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -432,6 +441,9 @@ public class CertificateController {
 					
 				    //generateIssuerData
 				    KeyStoreReader keyStoreReader = new KeyStoreReader();
+				    if(service.findOne(cDTO.getNadSertifikatId()) == null) {
+				    	return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+				    }
 					CertificateDB cDB = service.findOne(cDTO.getNadSertifikatId());
 					if(!cDB.isAuthority() || cDB.isRevoked()) {
 						return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
