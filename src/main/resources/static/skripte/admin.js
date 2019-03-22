@@ -338,7 +338,7 @@ $(document).ready(function(){
 		if(odabraniTip == "ROOT"){
 			vratiPocetno();
 			dodajZaRoot();
-			dodajDugme();
+			//dodajDugme();
 		}
 		else if(odabraniTip == "PERSON"){
 			vratiPocetno();
