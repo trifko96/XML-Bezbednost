@@ -17,7 +17,7 @@ $(document).ready(function(){
 			success: function(data){
 				$.ajax({
 					type: "GET",
-					url: "/Certificate/getCertificate"+idPrvog,
+					url: "/Certificate/"+idPrvog,
 					contentType: 'application/json',
 					success: function(data){
 						id1 = data.id;
@@ -26,7 +26,7 @@ $(document).ready(function(){
 				});
 				$.ajax({
 					type: "GET",
-					url: "/Certificate/getCertificate"+idDrugog,
+					url: "/Certificate/"+idDrugog,
 					contentType: 'application/json',
 					success: function(data){
 						id2 = data.id;

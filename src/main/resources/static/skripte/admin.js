@@ -166,6 +166,7 @@ $(document).ready(function(){
 			var sertifikat = new Object();
 			sertifikat.datumIzdavanja = $("#datumIzdavanjaRoot").val();
 			sertifikat.datumIsteka = $("#datumIsticanjaRoot").val();
+			sertifikat.tip = "ROOT";
 			sertifikat.nazivOrganizacije = $("#nazivOrganizacijeRoot").val();
 			
 			$.ajax({
@@ -192,6 +193,7 @@ $(document).ready(function(){
 			sertifikat.datumIzdavanja = $("#datumIzdavanjaOsoba").val();
 			sertifikat.datumIsteka = $("#datumIsticanjaOsoba").val();
 			sertifikat.authority = $("#dozvolaZaIzdavanjeOsoba").val();
+			sertifikat.tip = "PERSON";
 			sertifikat.nazivOrganizacije = $("#nazivOrganizacijeOsoba").val();
 			sertifikat.ime = $("#imeOsoba").val();
 			sertifikat.prezime = $("#prezimeOsoba").val();
@@ -222,6 +224,7 @@ $(document).ready(function(){
 			sertifikat.datumIzdavanja = $("#datumIzdavanjaAplikacija").val();
 			sertifikat.datumIsteka = $("#datumIsticanjaAplikacija").val();
 			sertifikat.authority = $("#dozvolaZaIzdavanjeAplikacija").val();
+			sertifikat.tip = "APPLICATION";
 			sertifikat.nazivOrganizacije = $("#nazivOrganizacijeAplikacija").val();
 			sertifikat.nazivAplikacije = $("#nazivAplikacija").val();
 			sertifikat.verzija = $("#verzijaAplikacija").val();
@@ -251,6 +254,7 @@ $(document).ready(function(){
 			sertifikat.datumIzdavanja = $("#datumIzdavanjaOrganizacija").val();
 			sertifikat.datumIsteka = $("#datumIsticanjaOrganizacija").val();
 			sertifikat.authority = $("#dozvolaZaIzdavanjeOrganizacija").val();
+			sertifikat.tip = "ORGANIZATION";
 			sertifikat.nazivOrganizacije = $("#nazivOrganizacijeOrganizacija").val();
 			sertifikat.drzava = $("#drzavaOrganizacija").val();
 			sertifikat.PTT = $("#pttOrganizacija").val();
@@ -281,6 +285,7 @@ $(document).ready(function(){
 			sertifikat.datumIzdavanja = $("#datumIzdavanjaOprema").val();
 			sertifikat.datumIsteka = $("#datumIsticanjaOprema").val();
 			sertifikat.authority = $("#dozvolaZaIzdavanjeOprema").val();
+			sertifikat.tip = "EQUIPMENT";
 			sertifikat.nazivOrganizacije = $("#nazivOrganizacijeOprema").val();	
 			sertifikat.MAC = $("#macOprema").val();
 			sertifikat.nazivOpreme = $("#nazivOprema").val();
