@@ -202,12 +202,37 @@ $(document).ready(function(){
 	}
 	
 	$("#kreirajSert").click(function(event){
-		
+		if(odabraniTip == "ROOT"){
+			var sertifikat = new Object();
+			sertifikat.datumIzdavanja = $("#datumIzdavanjaRoot").val();
+			sertifikat.datumIsteka = $("#datumIsticanjaRoot").val();
+			sertifikat.nazivOrganizacije = $("#nazivOrganizacijeRoot").val();
+			
+			$.ajax({
+				type: "POST",
+				url: "/Certificate/create",
+				data: JSON.stringify(sertifikat),
+				contentType: 'application/json',
+				success: function(data){
+					$.ajax({
+						type: "GET",
+						url: "/Certificate/getAll",
+						contentType: 'application/json',
+						success: function(data){
+							$("#tabelaNovihSertifikata").html("");
+							$("#tabelaNovihSertifikataKom").html("");
+							upisiSertifikate(data);
+							upisiZaKomunikaciju(data);
+						},
+					});
+				},
+			});
+		} else if
 		
 	});
 	
 	$("#nastavi").click(function(event){
-		odabraniTip = $("#comboSertifikat option:selected").val();
+		odabraniTip = $("#comboSertifikatN option:selected").val();
 		if(odabraniTip == "ROOT"){
 			dodajZaRoot();
 			dodajDugme();
@@ -218,7 +243,9 @@ $(document).ready(function(){
 		var pom = '<tr><td>Datum izdavanja:</td>'+
 		'<td><input type="date" id="datumIzdavanjaRoot"/></td></tr>'+
 		'<tr><td>Datum isticanja:</td>'+
-		'<td><input type="date" id="datumIsticanjaRoot"/></td></tr>';
+		'<td><input type="date" id="datumIsticanjaRoot"/></td></tr>'+
+		'<tr><td>Naziv organizacije:</td>'+
+		'<td><input type="text" id="nazivOrganizacijeRoot"/></td></tr>';
 		$("#dodajSertifikat").append(pom);
 	}
 	
