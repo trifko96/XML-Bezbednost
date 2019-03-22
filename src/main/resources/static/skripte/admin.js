@@ -33,9 +33,7 @@ $(document).ready(function(){
 		contentType: 'application/json',
 		success: function(data){
 			$("#tabelaNovihSertifikata").html("");
-			$("#tabelaNovihSertifikataKom").html("");
 			upisiSertifikate(data);
-			upisiZaKomunikaciju(data);
 		},
 	});
 	
@@ -78,42 +76,6 @@ $(document).ready(function(){
 		}
 	}
 	
-	function upisiZaKomunikaciju(data) {
-		for(i = 0; i < data.length; i++){
-			if(data[i].revoked == true){
-				if(data[i].idNadSertifikata != null){
-					var pom = '<tr><td>'+data[i].idNadSertifikata+'</td>'+
-					'<td>'+data[i].tip+'</td>'+
-					'<td>'+data[i].datumIzdavanja+'</td>'+
-					'<td>'+data[i].datumIsteka+'</td>'+
-					'<td> POVUCEN </td></tr>';
-				} else {
-					var pom = '<tr><td>/</td>'+
-					'<td>'+data[i].tip+'</td>'+
-					'<td>'+data[i].datumIzdavanja+'</td>'+
-					'<td>'+data[i].datumIsteka+'</td>'+
-					'<td> POVUCEN </td></tr>';
-				}
-			}
-				
-			else {
-				if(data[i].idNadSertifikata != null){
-					var pom = '<tr><td>'+data[i].idNadSertifikata+'</td>'+
-					'<td>'+data[i].tip+'</td>'+
-					'<td>'+data[i].datumIzdavanja+'</td>'+
-					'<td>'+data[i].datumIsteka+'</td>'+
-					'<td> VALIDAN </td>';
-				} else {
-					var pom = '<tr><td>/</td>'+
-					'<td>'+data[i].tip+'</td>'+
-					'<td>'+data[i].datumIzdavanja+'</td>'+
-					'<td>'+data[i].datumIsteka+'</td>'+
-					'<td> VALIDAN </td>';
-				}
-			}
-			$("#tabelaNovihSertifikataKom").append(pom);
-		}
-	}
 	
 	$("#tabelaNovihSertifikata").on('click', 'button', function(event){
 		var id = $(this).attr('id');
@@ -128,9 +90,7 @@ $(document).ready(function(){
 					contentType: 'application/json',
 					success: function(data){
 						$("#tabelaNovihSertifikata").html("");
-						$("#tabelaNovihSertifikataKom").html("");
 						upisiSertifikate(data);
-						upisiZaKomunikaciju(data);
 						$.ajax({
 							type: "GET",
 							url: "/Certificate/getNoRevoke",
@@ -220,9 +180,7 @@ $(document).ready(function(){
 						contentType: 'application/json',
 						success: function(data){
 							$("#tabelaNovihSertifikata").html("");
-							$("#tabelaNovihSertifikataKom").html("");
 							upisiSertifikate(data);
-							upisiZaKomunikaciju(data);
 						},
 					});
 				},
