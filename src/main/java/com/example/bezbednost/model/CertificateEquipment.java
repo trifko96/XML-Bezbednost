@@ -4,7 +4,7 @@ import com.example.bezbednost.dto.CertificateDTO;
 
 public class CertificateEquipment extends Certificate{
 	
-	private String MAC;
+	private String mac;
 	private String nazivOpreme;
 	private String drzava;
 	private String nazivOrganizacije;
@@ -14,31 +14,33 @@ public class CertificateEquipment extends Certificate{
 		super();
 	}
 
-	public CertificateEquipment(String mAC, String nazivOpreme, String drzava, String nazivOrganizacije,
+	public CertificateEquipment(String mac, String nazivOpreme, String drzava, String nazivOrganizacije,
 			String idOpreme) {
 		super();
-		MAC = mAC;
 		this.nazivOpreme = nazivOpreme;
 		this.drzava = drzava;
 		this.nazivOrganizacije = nazivOrganizacije;
 		this.idOpreme = idOpreme;
+		this.mac = mac;
 	}
 
 	public CertificateEquipment(CertificateDTO c) {
 		super(c.getId(), c.getNadSertifikatId(), c.getDatumIzdavanja(), c.getDatumIsteka(), c.isRevoked(), c.isRoot(), c.isAuthority(), c.getTip(), c.getNazivOrganizacije());
-		this.MAC = c.getMAC();
 		this.nazivOpreme = c.getNazivOpreme();
 		this.drzava = c.getDrzava();
 		this.nazivOrganizacije = c.getNazivOrganizacije();
 		this.idOpreme = c.getIdOpreme();
+		this.mac = c.getMac();
 	}
-	
-	public String getMAC() {
-		return MAC;
+
+	public String getMac() {
+		return mac;
 	}
-	public void setMAC(String mAC) {
-		MAC = mAC;
+
+	public void setMac(String mac) {
+		this.mac = mac;
 	}
+
 	public String getNazivOpreme() {
 		return nazivOpreme;
 	}

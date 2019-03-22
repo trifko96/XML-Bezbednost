@@ -13,13 +13,18 @@ import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.X509EncodedKeySpec;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
+import org.bouncycastle.asn1.ASN1ObjectIdentifier;
+import org.bouncycastle.asn1.x500.RDN;
 import org.bouncycastle.asn1.x500.X500NameBuilder;
 import org.bouncycastle.asn1.x500.style.BCStyle;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -47,6 +52,122 @@ public class CertificateController {
 	CertificateDBService service;
 	
 	static KeyStoreWriter keyStore = new KeyStoreWriter();
+	
+	@GetMapping(value="/getAll")
+	public ResponseEntity<List<CertificateDTO>> findAll(){
+		List<CertificateDB> certificates = service.findAll();
+		
+		List<CertificateDTO> certificatesDTO = new ArrayList<CertificateDTO>();
+		
+		for(CertificateDB c : certificates) {
+			CertificateDTO cDTO = new CertificateDTO(c);
+			
+			KeyStoreReader keyStoreReader = new KeyStoreReader();
+		    IssuerData issuerData = keyStoreReader.readIssuerFromStore("KeyStore.ks", Long.toString(c.getId()), "111".toCharArray(),  "123".toCharArray());
+		    ASN1ObjectIdentifier[] identifiers = issuerData.getX500name().getAttributeTypes();
+		    
+		    switch (cDTO.getTip()) {
+				case ROOT:
+					for(ASN1ObjectIdentifier identifier: identifiers) {
+						RDN[] rdnS = issuerData.getX500name().getRDNs(identifier);
+						for(RDN rdn: rdnS) {
+							
+							if(identifier.intern().equals(BCStyle.O)) {
+								cDTO.setNazivOrganizacije(rdn.getFirst().getValue().toString());
+							}
+						}
+					}
+					break;
+				case PERSON:
+					for(ASN1ObjectIdentifier identifier: identifiers) {
+						RDN[] rdnS = issuerData.getX500name().getRDNs(identifier);
+						for(RDN rdn: rdnS) {
+							if(identifier.intern().equals(BCStyle.GIVENNAME)) {
+								cDTO.setIme(rdn.getFirst().getValue().toString());
+							}
+							if(identifier.intern().equals(BCStyle.SURNAME)) {
+								cDTO.setPrezime(rdn.getFirst().getValue().toString());
+							}
+							if(identifier.intern().equals(BCStyle.COUNTRY_OF_RESIDENCE)) {
+								cDTO.setDrzava(rdn.getFirst().getValue().toString());
+							}
+							if(identifier.intern().equals(BCStyle.EmailAddress)) {
+								cDTO.setEmail(rdn.getFirst().getValue().toString());
+							}
+							if(identifier.intern().equals(BCStyle.O)) {
+								cDTO.setNazivOrganizacije(rdn.getFirst().getValue().toString());
+							}
+						}
+					}
+					break;
+				case APPLICATION:
+					for(ASN1ObjectIdentifier identifier: identifiers) {
+						RDN[] rdnS = issuerData.getX500name().getRDNs(identifier);
+						for(RDN rdn: rdnS) {
+							
+							if(identifier.intern().equals(BCStyle.NAME)) {
+								cDTO.setNazivAplikacije(rdn.getFirst().getValue().toString());
+							}
+							if(identifier.intern().equals(BCStyle.CN)) {
+								cDTO.setVerzija(rdn.getFirst().getValue().toString());
+							}
+							if(identifier.intern().equals(BCStyle.O)) {
+								cDTO.setNazivOrganizacije(rdn.getFirst().getValue().toString());
+							}
+						}
+					}
+					break;
+				case ORGANIZATION:
+					for(ASN1ObjectIdentifier identifier: identifiers) {
+						RDN[] rdnS = issuerData.getX500name().getRDNs(identifier);
+						for(RDN rdn: rdnS) {
+							
+							if(identifier.intern().equals(BCStyle.POSTAL_CODE)) {
+								cDTO.setPtt(rdn.getFirst().getValue().toString());
+							}
+							if(identifier.intern().equals(BCStyle.COUNTRY_OF_RESIDENCE)) {
+								cDTO.setDrzava(rdn.getFirst().getValue().toString());
+							}
+							if(identifier.intern().equals(BCStyle.POSTAL_ADDRESS)) {
+								cDTO.setAdresa(rdn.getFirst().getValue().toString());
+							}
+							if(identifier.intern().equals(BCStyle.O)) {
+								cDTO.setNazivOrganizacije(rdn.getFirst().getValue().toString());
+							}
+						}
+					}
+					break;
+				case EQUIPMENT:
+					for(ASN1ObjectIdentifier identifier: identifiers) {
+						RDN[] rdnS = issuerData.getX500name().getRDNs(identifier);
+						for(RDN rdn: rdnS) {
+							
+							if(identifier.intern().equals(BCStyle.SN)) {
+								cDTO.setMac(rdn.getFirst().getValue().toString());
+							}
+							if(identifier.intern().equals(BCStyle.NAME)) {
+								cDTO.setNazivOpreme(rdn.getFirst().getValue().toString());
+							}
+							if(identifier.intern().equals(BCStyle.COUNTRY_OF_RESIDENCE)) {
+								cDTO.setDrzava(rdn.getFirst().getValue().toString());
+							}
+							if(identifier.intern().equals(BCStyle.SERIALNUMBER)) {
+								cDTO.setIdOpreme(rdn.getFirst().getValue().toString());
+							}
+							if(identifier.intern().equals(BCStyle.O)) {
+								cDTO.setNazivOrganizacije(rdn.getFirst().getValue().toString());
+							}
+						}
+					}
+					break;
+				default:
+					return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		    }
+			
+			certificatesDTO.add(cDTO);
+		}
+		return new ResponseEntity<>(certificatesDTO, HttpStatus.OK);
+	}
 	
 	@PostMapping(value="/create")
 	public ResponseEntity<CertificateDTO> createCertificate (@RequestBody CertificateDTO cDTO){
@@ -111,6 +232,8 @@ public class CertificateController {
 					//CertificateExample klasa
 					//generateSubjectData
 					KeyPair keyPairSubject = generateKeyPair();
+					System.out.println("\nPublic person: " + keyPairSubject.getPublic());
+					System.out.println("\nPrivate person: " + keyPairSubject.getPrivate());
 					Date startDate = c.getDatumIzdavanja();
 					Date endDate = c.getDatumIsteka();
 					//Serijski broj sertifikata...kako generisati??
@@ -191,6 +314,7 @@ public class CertificateController {
 					}
 				    // Izvlacimo privatni kljuc nadsertifikata kojim cemo potpisati trazeni sertifikat
 				    IssuerData issuerData = keyStoreReader.readIssuerFromStore("KeyStore.ks", Long.toString(cDB.getId()), "111".toCharArray(),  "123".toCharArray());
+				    System.out.println("\n\n**** " + cDB.getId());
 					//Generisanje sertifikata
 				    CertificateGenerator cg = new CertificateGenerator();
 				    X509Certificate cert = cg.generateCertificate(subjectData, issuerData);
@@ -198,7 +322,8 @@ public class CertificateController {
 				    KeyFactory keyFactory = KeyFactory.getInstance("RSA");
 				    X509EncodedKeySpec publicKeySpec = new X509EncodedKeySpec(cDB.getPublicKey());
 				    PublicKey pk = keyFactory.generatePublic(publicKeySpec);
-				    
+				    System.out.println("\nPublic person from app: " + pk);
+				    System.out.println("\nPrivate person from app: " + issuerData.getPrivateKey());
 				    cert.verify(pk);
 				    cDB = new CertificateDB(c, cDB.getNadSertifikatId());
 				    cDB.setAuthority(cDTO.isAuthority());
@@ -237,8 +362,8 @@ public class CertificateController {
 					//Serijski broj sertifikata...kako generisati??
 					String sn = Long.toString(System.currentTimeMillis());
 					//Podaci o vlasniku
-					X500NameBuilder builder = new X500NameBuilder(BCStyle.INSTANCE);			
-				    builder.addRDN(BCStyle.POSTAL_CODE, c.getPTT());
+					X500NameBuilder builder = new X500NameBuilder(BCStyle.INSTANCE);
+				    builder.addRDN(BCStyle.POSTAL_CODE, c.getPtt());
 				    builder.addRDN(BCStyle.COUNTRY_OF_RESIDENCE, c.getDrzava());
 				    builder.addRDN(BCStyle.POSTAL_ADDRESS, c.getAdresa());
 				    builder.addRDN(BCStyle.O, c.getNazivOrganizacije());
@@ -255,11 +380,11 @@ public class CertificateController {
 					//Generisanje sertifikata
 				    CertificateGenerator cg = new CertificateGenerator();
 				    X509Certificate cert = cg.generateCertificate(subjectData, issuerData);
-				    
+
 				    KeyFactory keyFactory = KeyFactory.getInstance("RSA");
 				    X509EncodedKeySpec publicKeySpec = new X509EncodedKeySpec(cDB.getPublicKey());
 				    PublicKey pk = keyFactory.generatePublic(publicKeySpec);
-				    
+
 				    cert.verify(pk);
 				    cDB = new CertificateDB(c, cDB.getNadSertifikatId());
 				    cDB.setAuthority(cDTO.isAuthority());
@@ -297,8 +422,9 @@ public class CertificateController {
 					//Serijski broj sertifikata...kako generisati??
 					String sn = Long.toString(System.currentTimeMillis());
 					//Podaci o vlasniku
-					X500NameBuilder builder = new X500NameBuilder(BCStyle.INSTANCE);			
-				    builder.addRDN(BCStyle.SN, c.getMAC());
+					X500NameBuilder builder = new X500NameBuilder(BCStyle.INSTANCE);	
+					System.out.println("********: " + c.getMac());
+				    builder.addRDN(BCStyle.SN, c.getMac());
 				    builder.addRDN(BCStyle.NAME, c.getNazivOpreme());
 				    builder.addRDN(BCStyle.COUNTRY_OF_RESIDENCE, c.getDrzava());
 				    builder.addRDN(BCStyle.SERIALNUMBER, c.getIdOpreme());

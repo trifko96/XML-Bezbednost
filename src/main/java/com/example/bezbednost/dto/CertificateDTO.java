@@ -1,17 +1,14 @@
 package com.example.bezbednost.dto;
 
-import java.security.PublicKey;
-import java.security.cert.X509Certificate;
 import java.util.Date;
 
-import org.bouncycastle.asn1.x500.X500Name;
 
+import com.example.bezbednost.dbModel.CertificateDB;
 import com.example.bezbednost.model.Certificate;
 import com.example.bezbednost.model.CertificateAplication;
 import com.example.bezbednost.model.CertificateEquipment;
 import com.example.bezbednost.model.CertificateOrganization;
 import com.example.bezbednost.model.CertificatePerson;
-import com.example.bezbednost.model.CertificateRoot;
 import com.example.bezbednost.model.CertificateType;
 
 public class CertificateDTO {
@@ -20,7 +17,7 @@ public class CertificateDTO {
 	
 	//private X500Name naziv;
 	private Long nadSertifikatId;
-	private PublicKey publicKey;
+	//private PublicKey publicKey;
 	private Date datumIzdavanja;
 	private Date datumIsteka;
 	private boolean revoked;
@@ -40,7 +37,7 @@ public class CertificateDTO {
 	
 	//Organization
 	//private String drzava;
-	private String PTT;
+	private String ptt;
 	private String adresa;
 	
 	//Aplication
@@ -48,7 +45,7 @@ public class CertificateDTO {
 	private String verzija;
 	
 	//Equipment
-	private String MAC;
+	private String mac;
 	private String nazivOpreme;
 	//private String drzava;
 	private String idOpreme;
@@ -57,39 +54,33 @@ public class CertificateDTO {
 		
 	}	
 	
-	public CertificateDTO(Certificate c) {
+	public CertificateDTO(CertificateDB c) {
 		this.id = c.getId();
-		//this.naziv = c.getNaziv();
-		//this.nadSertifikat = c.getNadSertifikat();
-		this.publicKey = c.getPublicKey();
+		this.nazivOrganizacije = c.getNazivOrganizacije();
+		this.nadSertifikatId = c.getNadSertifikatId();
 		this.datumIzdavanja = c.getDatumIzdavanja();
 		this.datumIsteka = c.getDatumIsteka();
 		this.revoked = c.isRevoked();
 		this.root = c.isRoot();
 		this.authority = c.isAuthority();
-		this.tip = c.getTip();
+		this.tip = c.getTip();	
 	}
 
-	public CertificateDTO(CertificateRoot c) {
+	public CertificateDTO(Certificate c) {
 		this.id = c.getId();
-		//this.naziv = c.getNaziv();
-		//this.nadSertifikat = c.getNadSertifikat();
-		this.publicKey = c.getPublicKey();
+		//this.publicKey = c.getPublicKey();
 		this.datumIzdavanja = c.getDatumIzdavanja();
 		this.datumIsteka = c.getDatumIsteka();
 		this.revoked = c.isRevoked();
 		this.root = c.isRoot();
 		this.authority = c.isAuthority();
 		this.tip = c.getTip();
-		
 		this.nazivOrganizacije = c.getNazivOrganizacije();
 	}
 	
 	public CertificateDTO(CertificatePerson c) {
 		this.id = c.getId();
-		//this.naziv = c.getNaziv();
-		//this.nadSertifikat = c.getNadSertifikat();
-		this.publicKey = c.getPublicKey();
+		//this.publicKey = c.getPublicKey();
 		this.datumIzdavanja = c.getDatumIzdavanja();
 		this.datumIsteka = c.getDatumIsteka();
 		this.revoked = c.isRevoked();
@@ -106,27 +97,22 @@ public class CertificateDTO {
 	
 	public CertificateDTO(CertificateOrganization c) {
 		this.id = c.getId();
-		//this.naziv = c.getNaziv();
-		//this.nadSertifikat = c.getNadSertifikat();
-		this.publicKey = c.getPublicKey();
+		//this.publicKey = c.getPublicKey();
 		this.datumIzdavanja = c.getDatumIzdavanja();
 		this.datumIsteka = c.getDatumIsteka();
 		this.revoked = c.isRevoked();
 		this.root = c.isRoot();
 		this.authority = c.isAuthority();
 		this.tip = c.getTip();
-
+		this.ptt = c.getPtt();
 		this.drzava = c.getDrzava();
 		this.nazivOrganizacije = c.getNazivOrganizacije();
-		this.PTT = c.getPTT();
 		this.adresa = c.getAdresa();
 	}
 	
 	public CertificateDTO(CertificateAplication c) {
 		this.id = c.getId();
-		//this.naziv = c.getNaziv();
-		//this.nadSertifikat = c.getNadSertifikat();
-		this.publicKey = c.getPublicKey();
+		//this.publicKey = c.getPublicKey();
 		this.datumIzdavanja = c.getDatumIzdavanja();
 		this.datumIsteka = c.getDatumIsteka();
 		this.revoked = c.isRevoked();
@@ -142,9 +128,7 @@ public class CertificateDTO {
 	public CertificateDTO(CertificateEquipment c) {
 		super();
 		this.id = c.getId();
-		//this.naziv = c.getNaziv();
-		//this.nadSertifikat = c.getNadSertifikat();
-		this.publicKey = c.getPublicKey();
+		//this.publicKey = c.getPublicKey();
 		this.datumIzdavanja = c.getDatumIzdavanja();
 		this.datumIsteka = c.getDatumIsteka();
 		this.revoked = c.isRevoked();
@@ -152,7 +136,7 @@ public class CertificateDTO {
 		this.authority = c.isAuthority();
 		this.tip = c.getTip();
 		
-		this.MAC = c.getMAC();
+		this.mac = 
 		this.nazivOpreme = c.getNazivOpreme();
 		this.drzava = c.getDrzava();
 		this.nazivOrganizacije = c.getNazivOrganizacije();
@@ -198,13 +182,13 @@ public class CertificateDTO {
 //		this.naziv = naziv;
 //	}
 
-	public PublicKey getPublicKey() {
-		return publicKey;
-	}
-
-	public void setPublicKey(PublicKey publicKey) {
-		this.publicKey = publicKey;
-	}
+//	public PublicKey getPublicKey() {
+//		return publicKey;
+//	}
+//
+//	public void setPublicKey(PublicKey publicKey) {
+//		this.publicKey = publicKey;
+//	}
 
 	public boolean isRoot() {
 		return root;
@@ -270,12 +254,12 @@ public class CertificateDTO {
 		this.email = email;
 	}
 
-	public String getPTT() {
-		return PTT;
+	public String getPtt() {
+		return ptt;
 	}
 
-	public void setPTT(String pTT) {
-		PTT = pTT;
+	public void setPtt(String ptt) {
+		this.ptt = ptt;
 	}
 
 	public String getAdresa() {
@@ -301,13 +285,13 @@ public class CertificateDTO {
 	public void setVerzija(String verzija) {
 		this.verzija = verzija;
 	}
-
-	public String getMAC() {
-		return MAC;
+	
+	public String getMac() {
+		return mac;
 	}
 
-	public void setMAC(String mAC) {
-		MAC = mAC;
+	public void setMac(String mac) {
+		this.mac = mac;
 	}
 
 	public String getNazivOpreme() {

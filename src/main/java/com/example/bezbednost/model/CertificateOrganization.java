@@ -6,18 +6,18 @@ public class CertificateOrganization extends Certificate{
 	
 	private String drzava;
 	private String nazivOrganizacije;
-	private String PTT;
+	private String ptt;
 	private String adresa;
 	
 	public CertificateOrganization() {
 		super();
 	}
 	
-	public CertificateOrganization(String drzava, String nazivOrganizacije, String pTT, String adresa) {
+	public CertificateOrganization(String drzava, String nazivOrganizacije, String ptt, String adresa) {
 		super();
 		this.drzava = drzava;
 		this.nazivOrganizacije = nazivOrganizacije;
-		PTT = pTT;
+		this.ptt = ptt;
 		this.adresa = adresa;
 	}
 	
@@ -25,7 +25,7 @@ public class CertificateOrganization extends Certificate{
 		super(c.getId(), c.getNadSertifikatId(), c.getDatumIzdavanja(), c.getDatumIsteka(), c.isRevoked(), c.isRoot(), c.isAuthority(), c.getTip(), c.getNazivOrganizacije());
 		this.drzava = c.getDrzava();
 		this.nazivOrganizacije = c.getNazivOrganizacije();
-		this.PTT = c.getPTT();
+		this.ptt = c.getPtt();
 		this.adresa = c.getAdresa();
 	}
 	
@@ -41,12 +41,15 @@ public class CertificateOrganization extends Certificate{
 	public void setNazivOrganizacije(String nazivOrganizacije) {
 		this.nazivOrganizacije = nazivOrganizacije;
 	}
-	public String getPTT() {
-		return PTT;
+	
+	public String getPtt() {
+		return ptt;
 	}
-	public void setPTT(String pTT) {
-		this.PTT = pTT;
+
+	public void setPtt(String ptt) {
+		this.ptt = ptt;
 	}
+
 	public String getAdresa() {
 		return adresa;
 	}

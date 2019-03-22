@@ -1,5 +1,7 @@
 package com.example.bezbednost.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +16,10 @@ public class CertificateDBService {
 	
 	public CertificateDB save(CertificateDB c) {
 		return repository.save(c);
+	}
+	
+	public List<CertificateDB> findAll() {
+		return repository.findAll();
 	}
 	
 	public CertificateDB findOne(Long id) {
