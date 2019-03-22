@@ -1,5 +1,7 @@
 package com.example.bezbednost.model;
 
+import com.example.bezbednost.dto.CertificateDTO;
+
 public class CertificateOrganization extends Certificate{
 	
 	private String drzava;
@@ -19,6 +21,14 @@ public class CertificateOrganization extends Certificate{
 		this.adresa = adresa;
 	}
 	
+	public CertificateOrganization(CertificateDTO c) {
+		super(c.getId(), c.getNadSertifikatId(), c.getDatumIzdavanja(), c.getDatumIsteka(), c.isRevoked(), c.isRoot(), c.isAuthority(), c.getTip(), c.getNazivOrganizacije());
+		this.drzava = c.getDrzava();
+		this.nazivOrganizacije = c.getNazivOrganizacije();
+		this.PTT = c.getPTT();
+		this.adresa = c.getAdresa();
+	}
+	
 	public String getDrzava() {
 		return drzava;
 	}
@@ -35,7 +45,7 @@ public class CertificateOrganization extends Certificate{
 		return PTT;
 	}
 	public void setPTT(String pTT) {
-		PTT = pTT;
+		this.PTT = pTT;
 	}
 	public String getAdresa() {
 		return adresa;

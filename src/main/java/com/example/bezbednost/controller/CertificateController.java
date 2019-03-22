@@ -18,6 +18,7 @@ import java.util.Date;
 import org.bouncycastle.asn1.x500.X500NameBuilder;
 import org.bouncycastle.asn1.x500.style.BCStyle;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -31,6 +32,9 @@ import com.example.bezbednost.dbModel.CertificateDB;
 import com.example.bezbednost.dto.CertificateDTO;
 import com.example.bezbednost.keystore.KeyStoreReader;
 import com.example.bezbednost.keystore.KeyStoreWriter;
+import com.example.bezbednost.model.CertificateAplication;
+import com.example.bezbednost.model.CertificateEquipment;
+import com.example.bezbednost.model.CertificateOrganization;
 import com.example.bezbednost.model.CertificatePerson;
 import com.example.bezbednost.model.CertificateRoot;
 import com.example.bezbednost.service.CertificateDBService;
@@ -47,33 +51,31 @@ public class CertificateController {
 	@PostMapping(value="/create")
 	public ResponseEntity<CertificateDTO> createCertificate (@RequestBody CertificateDTO cDTO){
 		
-		
-		
 		switch(cDTO.getTip()){
 			case ROOT:
 				try {
 					CertificateRoot c = new CertificateRoot(cDTO);
 					//CertificateExample klasa
-						//generateSubjectData
-							// generisemo javni i privatni kljuc subjekta kojem izdajemo sertifikat
-							// posto je u pitanju root, koji potpisuje sam sebe, taj privatni ce se koristiti
-							// i kod issuer-a kako bi sertifikat bio samopotpisan
+					//generateSubjectData
+					// generisemo javni i privatni kljuc subjekta kojem izdajemo sertifikat
+					// posto je u pitanju root, koji potpisuje sam sebe, taj privatni ce se koristiti
+					// i kod issuer-a kako bi sertifikat bio samopotpisan
 					KeyPair keyPairSubject = generateKeyPair(); 
 					Date startDate = c.getDatumIzdavanja();
 					Date endDate = c.getDatumIsteka();
-							//Serijski broj sertifikata...kako generisati??
+					//Serijski broj sertifikata...kako generisati??
 					String sn = Long.toString(System.currentTimeMillis());
-						//Podaci o vlasniku
+					//Podaci o vlasniku
 					X500NameBuilder builder = new X500NameBuilder(BCStyle.INSTANCE);			
 				    builder.addRDN(BCStyle.O, c.getNazivOrganizacije());
 				    SubjectData subjectData = new SubjectData(keyPairSubject.getPublic(), builder.build(), sn, startDate, endDate);
 					
-				    	//generateIssuerData
+				    //generateIssuerData
 					X500NameBuilder builder1 = new X500NameBuilder(BCStyle.INSTANCE);
 				    builder1.addRDN(BCStyle.O, c.getNazivOrganizacije());
 				    IssuerData issuerData = new IssuerData(keyPairSubject.getPrivate(), builder1.build());
 						
-						//Generisanje sertifikata
+					//Generisanje sertifikata
 				    CertificateGenerator cg = new CertificateGenerator();
 				    X509Certificate cert = cg.generateCertificate(subjectData, issuerData);
 				    cert.verify(keyPairSubject.getPublic());
@@ -86,7 +88,7 @@ public class CertificateController {
 				    cDB.setNadSertifikatId(cDB.getId());
 				    cDB = service.save(cDB);
 				    keyStore.write(cDB.getId().toString(), keyPairSubject.getPrivate(), "123".toCharArray(), cert);
-				    		//Sacuvati u KeyStore london, hong kong ili boston?
+				    //Sacuvati u KeyStore london, hong kong ili boston?
 				    keyStore.saveKeyStore("KeyStore.ks", "111".toCharArray());
 				    
 				}catch(CertificateException e) {
@@ -107,13 +109,13 @@ public class CertificateController {
 				try {
 					CertificatePerson c = new CertificatePerson(cDTO);					
 					//CertificateExample klasa
-						//generateSubjectData
+					//generateSubjectData
 					KeyPair keyPairSubject = generateKeyPair();
 					Date startDate = c.getDatumIzdavanja();
 					Date endDate = c.getDatumIsteka();
-							//Serijski broj sertifikata...kako generisati??
+					//Serijski broj sertifikata...kako generisati??
 					String sn = Long.toString(System.currentTimeMillis());
-						//Podaci o vlasniku
+					//Podaci o vlasniku
 					X500NameBuilder builder = new X500NameBuilder(BCStyle.INSTANCE);			
 				    builder.addRDN(BCStyle.GIVENNAME, c.getIme());
 				    builder.addRDN(BCStyle.SURNAME, c.getPrezime());
@@ -122,12 +124,15 @@ public class CertificateController {
 				    builder.addRDN(BCStyle.O, c.getNazivOrganizacije());
 				    SubjectData subjectData = new SubjectData(keyPairSubject.getPublic(), builder.build(), sn, startDate, endDate);
 					
-				    	//generateIssuerData
+				    //generateIssuerData
 				    KeyStoreReader keyStoreReader = new KeyStoreReader();
 					CertificateDB cDB = service.findOne(cDTO.getNadSertifikatId());
-				    	// Izvlacimo privatni kljuc nadsertifikata kojim cemo potpisati trazeni sertifikat
+					if(!cDB.isAuthority()) {
+						return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+					}
+				    // Izvlacimo privatni kljuc nadsertifikata kojim cemo potpisati trazeni sertifikat
 				    IssuerData issuerData = keyStoreReader.readIssuerFromStore("KeyStore.ks", Long.toString(cDB.getId()), "111".toCharArray(),  "123".toCharArray());
-						//Generisanje sertifikata
+					//Generisanje sertifikata
 				    CertificateGenerator cg = new CertificateGenerator();
 				    X509Certificate cert = cg.generateCertificate(subjectData, issuerData);
 				    
@@ -139,6 +144,7 @@ public class CertificateController {
 				    cDB = new CertificateDB(c, cDB.getNadSertifikatId());
 				    cDB.setAuthority(cDTO.isAuthority());
 				    cDB.setRoot(false);
+				    cDB.setPublicKey(keyPairSubject.getPublic().getEncoded());
 				    
 				    cDB = service.save(cDB);
 				    keyStore.write(cDB.getId().toString(), issuerData.getPrivateKey(), "123".toCharArray(), cert);
@@ -160,16 +166,193 @@ public class CertificateController {
 				}
 				
 				break;
-			case APLICATION:
+			case APPLICATION:
+				try {
+					CertificateAplication c = new CertificateAplication(cDTO);					
+					//CertificateExample klasa
+					//generateSubjectData
+					KeyPair keyPairSubject = generateKeyPair();
+					Date startDate = c.getDatumIzdavanja();
+					Date endDate = c.getDatumIsteka();
+					//Serijski broj sertifikata...kako generisati??
+					String sn = Long.toString(System.currentTimeMillis());
+					//Podaci o vlasniku
+					X500NameBuilder builder = new X500NameBuilder(BCStyle.INSTANCE);			
+				    builder.addRDN(BCStyle.NAME, c.getNazivAplikacije());
+				    builder.addRDN(BCStyle.CN, c.getVerzija());
+				    builder.addRDN(BCStyle.O, c.getNazivOrganizacije());
+				    SubjectData subjectData = new SubjectData(keyPairSubject.getPublic(), builder.build(), sn, startDate, endDate);
+					
+				    //generateIssuerData
+				    KeyStoreReader keyStoreReader = new KeyStoreReader();
+					CertificateDB cDB = service.findOne(cDTO.getNadSertifikatId());
+					if(!cDB.isAuthority()) {
+						return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+					}
+				    // Izvlacimo privatni kljuc nadsertifikata kojim cemo potpisati trazeni sertifikat
+				    IssuerData issuerData = keyStoreReader.readIssuerFromStore("KeyStore.ks", Long.toString(cDB.getId()), "111".toCharArray(),  "123".toCharArray());
+					//Generisanje sertifikata
+				    CertificateGenerator cg = new CertificateGenerator();
+				    X509Certificate cert = cg.generateCertificate(subjectData, issuerData);
+				    
+				    KeyFactory keyFactory = KeyFactory.getInstance("RSA");
+				    X509EncodedKeySpec publicKeySpec = new X509EncodedKeySpec(cDB.getPublicKey());
+				    PublicKey pk = keyFactory.generatePublic(publicKeySpec);
+				    
+				    cert.verify(pk);
+				    cDB = new CertificateDB(c, cDB.getNadSertifikatId());
+				    cDB.setAuthority(cDTO.isAuthority());
+				    cDB.setRoot(false);
+				    cDB.setPublicKey(keyPairSubject.getPublic().getEncoded());
+				    
+				    cDB = service.save(cDB);
+				    keyStore.write(cDB.getId().toString(), issuerData.getPrivateKey(), "123".toCharArray(), cert);
+
+				    keyStore.saveKeyStore("KeyStore.ks", "111".toCharArray());
+				    
+				}catch(CertificateException e) {
+					e.printStackTrace();
+				} catch (InvalidKeyException e) {
+					e.printStackTrace();
+				} catch (NoSuchAlgorithmException e) {
+					e.printStackTrace();
+				} catch (NoSuchProviderException e) {
+					e.printStackTrace();
+				} catch (SignatureException e) {
+					e.printStackTrace();
+				} catch (InvalidKeySpecException e) {
+					e.printStackTrace();
+				}
+				
+				break;
 				
 			case ORGANIZATION:
+				try {
+					CertificateOrganization c = new CertificateOrganization(cDTO);					
+					//CertificateExample klasa
+					//generateSubjectData
+					KeyPair keyPairSubject = generateKeyPair();
+					Date startDate = c.getDatumIzdavanja();
+					Date endDate = c.getDatumIsteka();
+					//Serijski broj sertifikata...kako generisati??
+					String sn = Long.toString(System.currentTimeMillis());
+					//Podaci o vlasniku
+					X500NameBuilder builder = new X500NameBuilder(BCStyle.INSTANCE);			
+				    builder.addRDN(BCStyle.POSTAL_CODE, c.getPTT());
+				    builder.addRDN(BCStyle.COUNTRY_OF_RESIDENCE, c.getDrzava());
+				    builder.addRDN(BCStyle.POSTAL_ADDRESS, c.getAdresa());
+				    builder.addRDN(BCStyle.O, c.getNazivOrganizacije());
+				    SubjectData subjectData = new SubjectData(keyPairSubject.getPublic(), builder.build(), sn, startDate, endDate);
+					
+				    //generateIssuerData
+				    KeyStoreReader keyStoreReader = new KeyStoreReader();
+					CertificateDB cDB = service.findOne(cDTO.getNadSertifikatId());
+					if(!cDB.isAuthority()) {
+						return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+					}
+				    // Izvlacimo privatni kljuc nadsertifikata kojim cemo potpisati trazeni sertifikat
+				    IssuerData issuerData = keyStoreReader.readIssuerFromStore("KeyStore.ks", Long.toString(cDB.getId()), "111".toCharArray(),  "123".toCharArray());
+					//Generisanje sertifikata
+				    CertificateGenerator cg = new CertificateGenerator();
+				    X509Certificate cert = cg.generateCertificate(subjectData, issuerData);
+				    
+				    KeyFactory keyFactory = KeyFactory.getInstance("RSA");
+				    X509EncodedKeySpec publicKeySpec = new X509EncodedKeySpec(cDB.getPublicKey());
+				    PublicKey pk = keyFactory.generatePublic(publicKeySpec);
+				    
+				    cert.verify(pk);
+				    cDB = new CertificateDB(c, cDB.getNadSertifikatId());
+				    cDB.setAuthority(cDTO.isAuthority());
+				    cDB.setRoot(false);
+				    cDB.setPublicKey(keyPairSubject.getPublic().getEncoded());
+				    
+				    cDB = service.save(cDB);
+				    keyStore.write(cDB.getId().toString(), issuerData.getPrivateKey(), "123".toCharArray(), cert);
+
+				    keyStore.saveKeyStore("KeyStore.ks", "111".toCharArray());
+				    
+				}catch(CertificateException e) {
+					e.printStackTrace();
+				} catch (InvalidKeyException e) {
+					e.printStackTrace();
+				} catch (NoSuchAlgorithmException e) {
+					e.printStackTrace();
+				} catch (NoSuchProviderException e) {
+					e.printStackTrace();
+				} catch (SignatureException e) {
+					e.printStackTrace();
+				} catch (InvalidKeySpecException e) {
+					e.printStackTrace();
+				}
 				
+				break;
 			case EQUIPMENT:
+				try {
+					CertificateEquipment c = new CertificateEquipment(cDTO);					
+					//CertificateExample klasa
+					//generateSubjectData
+					KeyPair keyPairSubject = generateKeyPair();
+					Date startDate = c.getDatumIzdavanja();
+					Date endDate = c.getDatumIsteka();
+					//Serijski broj sertifikata...kako generisati??
+					String sn = Long.toString(System.currentTimeMillis());
+					//Podaci o vlasniku
+					X500NameBuilder builder = new X500NameBuilder(BCStyle.INSTANCE);			
+				    builder.addRDN(BCStyle.SN, c.getMAC());
+				    builder.addRDN(BCStyle.NAME, c.getNazivOpreme());
+				    builder.addRDN(BCStyle.COUNTRY_OF_RESIDENCE, c.getDrzava());
+				    builder.addRDN(BCStyle.SERIALNUMBER, c.getIdOpreme());
+				    builder.addRDN(BCStyle.O, c.getNazivOrganizacije());
+				    SubjectData subjectData = new SubjectData(keyPairSubject.getPublic(), builder.build(), sn, startDate, endDate);
+					
+				    //generateIssuerData
+				    KeyStoreReader keyStoreReader = new KeyStoreReader();
+					CertificateDB cDB = service.findOne(cDTO.getNadSertifikatId());
+					if(!cDB.isAuthority()) {
+						return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+					}
+				    // Izvlacimo privatni kljuc nadsertifikata kojim cemo potpisati trazeni sertifikat
+				    IssuerData issuerData = keyStoreReader.readIssuerFromStore("KeyStore.ks", Long.toString(cDB.getId()), "111".toCharArray(),  "123".toCharArray());
+					//Generisanje sertifikata
+				    CertificateGenerator cg = new CertificateGenerator();
+				    X509Certificate cert = cg.generateCertificate(subjectData, issuerData);
+				    
+				    KeyFactory keyFactory = KeyFactory.getInstance("RSA");
+				    X509EncodedKeySpec publicKeySpec = new X509EncodedKeySpec(cDB.getPublicKey());
+				    PublicKey pk = keyFactory.generatePublic(publicKeySpec);
+				    
+				    cert.verify(pk);
+				    cDB = new CertificateDB(c, cDB.getNadSertifikatId());
+				    cDB.setAuthority(cDTO.isAuthority());
+				    cDB.setRoot(false);
+				    cDB.setPublicKey(keyPairSubject.getPublic().getEncoded());
+				    
+				    cDB = service.save(cDB);
+				    keyStore.write(cDB.getId().toString(), issuerData.getPrivateKey(), "123".toCharArray(), cert);
+
+				    keyStore.saveKeyStore("KeyStore.ks", "111".toCharArray());
+				    
+				}catch(CertificateException e) {
+					e.printStackTrace();
+				} catch (InvalidKeyException e) {
+					e.printStackTrace();
+				} catch (NoSuchAlgorithmException e) {
+					e.printStackTrace();
+				} catch (NoSuchProviderException e) {
+					e.printStackTrace();
+				} catch (SignatureException e) {
+					e.printStackTrace();
+				} catch (InvalidKeySpecException e) {
+					e.printStackTrace();
+				}
 				
+				break;
+			default: 
+				return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 			
 		}
 		
-		return null;
+		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	
 	private KeyPair generateKeyPair() {
