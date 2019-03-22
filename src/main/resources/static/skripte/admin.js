@@ -81,7 +81,7 @@ $(document).ready(function(){
 		var id = $(this).attr('id');
 		$.ajax({
 			type: "POST",
-			url: "/Certificate/"+id,
+			url: "/Certificate/revoke/"+id,
 			contentType: 'application/json',
 			success: function(data){
 				$.ajax({
@@ -154,18 +154,7 @@ $(document).ready(function(){
 	}
 	
 	function vratiPocetno(){
-		$("#dodajSertifikat").html("");
-		var pom = '<tr><td>Kreiraj sertifikat za:</td>'+
-		'<td align="center"><select id="comboSertifikatN">'+
-		'<option value="ROOT">Korenski sertifikat</option>'+
-		'<option value="PERSON">Osobu</option>'+
-		'<option value="APPLICATION">Aplikaciju</option>'+
-		'<option value="ORGANIZATION">Organizaciju</option>'+
-		'<option value="EQUIPMENT">Opremu</option>'+
-		'</select></td><td>'+
-		'<td colspan="2" align="center"><button id="nastavi" class="btn btn-outline-dark">Nastavi</button>'+
-		'</td></tr>';
-		$("#dodajSertifikat").append(pom);
+		$("#pomtabela").html("");
 	}
 	
 	function ocistiFormu(){
@@ -343,22 +332,22 @@ $(document).ready(function(){
 		else if(odabraniTip == "PERSON"){
 			vratiPocetno();
 			dodajZaOsobu();
-			dodajDugme();
+			//dodajDugme();
 		}
 		else if(odabraniTip == "APPLICATION"){
 			vratiPocetno();
 			dodajZaAplikaciju();
-			dodajDugme();
+			//dodajDugme();
 		}
 		else if(odabraniTip == "ORGANIZATION"){
 			vratiPocetno();
 			dodajZaOrganizaciju();
-			dodajDugme();
+			//dodajDugme();
 		}
 		else if(odabraniTip == "EQUIPMENT"){
 			vratiPocetno();
 			dodajZaOpremu();
-			dodajDugme();
+			//dodajDugme();
 		}
 	});
 	
@@ -369,7 +358,7 @@ $(document).ready(function(){
 		'<td><input type="date" id="datumIsticanjaRoot"/></td></tr>'+
 		'<tr><td>Naziv organizacije:</td>'+
 		'<td><input type="text" id="nazivOrganizacijeRoot"/></td></tr>';
-		$("#dodajSertifikat").append(pom);
+		$("#pomtabela").append(pom);
 	}
 	
 	function dodajZaOsobu(){
@@ -391,7 +380,7 @@ $(document).ready(function(){
 		'<td><input type="text" id="drzavaOsoba"/></td></tr>'+
 		'<tr><td>Email:</td>'+
 		'<td><input type="text" id="emailOsoba"/></td></tr>';
-		$("#dodajSertifikat").append(pom);
+		$("#pomtabela").append(pom);
 	}
 	
 	function dodajZaAplikaciju(){
@@ -409,7 +398,7 @@ $(document).ready(function(){
 		'<td><input type="text" id="nazivAplikacija"/></td></tr>'+
 		'<tr><td>Verzija:</td>'+
 		'<td><input type="text" id="verzijaAplikacija"/></td></tr>';
-		$("#dodajSertifikat").append(pom);
+		$("#pomtabela").append(pom);
 	}
 	
 	function dodajZaOrganizaciju(){
@@ -429,7 +418,7 @@ $(document).ready(function(){
 		'<td><input type="text" id="drzavaOrganizacija"/></td></tr>'+
 		'<tr><td>Adresa:</td>'+
 		'<td><input type="text" id="adresaOrganizacija"/></td></tr>';
-		$("#dodajSertifikat").append(pom);
+		$("#pomtabela").append(pom);
 	}
 	
 	function dodajZaOpremu(){
@@ -451,7 +440,7 @@ $(document).ready(function(){
 		'<td><input type="text" id="drzavaOprema"/></td></tr>'+
 		'<tr><td>ID opreme:</td>'+
 		'<td><input type="text" id="idOprema"/></td></tr>';
-		$("#dodajSertifikat").append(pom);
+		$("#pomtabela").append(pom);
 	}
 	
 	function dodajDugme(){
