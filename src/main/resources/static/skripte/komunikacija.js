@@ -9,6 +9,8 @@ $(document).ready(function(){
 		
 		var idPrvog = $("#comboSertifikat1 option:selected").val();
 		var idDrugog = $("#comboSertifikat2 option:selected").val();
+		id1 = idPrvog;
+		id2 = idDrugog;
 		
 		$.ajax({
 			type: "POST",
@@ -20,8 +22,8 @@ $(document).ready(function(){
 					url: "/Certificate/"+idPrvog,
 					contentType: 'application/json',
 					success: function(data){
-						id1 = data.id;
-						tip1 = data.tip;
+						//id1 = data.id;
+						tip1 = data;
 					},
 				});
 				$.ajax({
@@ -29,8 +31,8 @@ $(document).ready(function(){
 					url: "/Certificate/"+idDrugog,
 					contentType: 'application/json',
 					success: function(data){
-						id2 = data.id;
-						tip2 = data.tip;
+						//id2 = data.id;
+						tip2 = data;
 					},
 				});
 				//$("#tabelaNovihSertifikataKom").html("");
@@ -41,9 +43,7 @@ $(document).ready(function(){
 	
 	function upisiZaKomunikaciju(id1,id2,tip1,tip2) {
 		var pom = '<tr><td>'+id1+'</td>'+
-				'<td>'+tip1+'</td>'+
-				'<td>'+id2+'</td>'+
-				'<td>'+tip2+'</td></tr>';
+				'<td>'+id2+'</td>';
 		$("#tabelaNovihSertifikataKom").append(pom);
 	}
 	

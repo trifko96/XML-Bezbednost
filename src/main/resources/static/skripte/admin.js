@@ -32,8 +32,10 @@ $(document).ready(function(){
 		url: "/Certificate/getAll",
 		contentType: 'application/json',
 		success: function(data){
-			$("#tabelaNovihSertifikata").html("");
-			upisiSertifikate(data);
+			if(data){
+				$("#tabelaNovihSertifikata").html("");
+				upisiSertifikate(data);
+			}
 		},
 	});
 	
@@ -122,9 +124,11 @@ $(document).ready(function(){
 		url: "/Certificate/unrevoked",
 		contentType: 'application/json',
 		success: function(data){
-			$("#comboSertifikat1").html("");
-			$("#comboSertifikat2").html("");
-			upisiValidne(data);
+			if(data){
+				$("#comboSertifikat1").html("");
+				$("#comboSertifikat2").html("");
+				upisiValidne(data);
+			}
 		},
 	});
 	
@@ -133,8 +137,10 @@ $(document).ready(function(){
 		url: "/Certificate/authority",
 		contentType: 'application/json',
 		success: function(data){
-			$("#comboSertifikat").html("");
-			upisiCa(data);
+			if(data){
+				$("#comboSertifikat").html("");
+				upisiCa(data);
+			}
 		},
 	});
 	
@@ -167,6 +173,7 @@ $(document).ready(function(){
 	
 	$("#kreirajSert").click(function(event){
 		if(odabraniTip == "ROOT"){
+			var a = 0;
 			var sertifikat = new Object();
 			sertifikat.nazivOrganizacije = $("#nazivOrganizacijeRoot").val();
 			sertifikat.datumIzdavanja = $("#datumIzdavanjaRoot").val();
@@ -186,6 +193,16 @@ $(document).ready(function(){
 						success: function(data){
 							$("#tabelaNovihSertifikata").html("");
 							upisiSertifikate(data);
+						},
+					});
+					$.ajax({
+						type: "GET",
+						url: "/Certificate/unrevoked",
+						contentType: 'application/json',
+						success: function(data){
+							$("#comboSertifikat1").html("");
+							$("#comboSertifikat2").html("");
+							upisiValidne(data);
 						},
 					});
 				},
@@ -220,11 +237,22 @@ $(document).ready(function(){
 							upisiSertifikate(data);
 						},
 					});
+					$.ajax({
+						type: "GET",
+						url: "/Certificate/unrevoked",
+						contentType: 'application/json',
+						success: function(data){
+							$("#comboSertifikat1").html("");
+							$("#comboSertifikat2").html("");
+							upisiValidne(data);
+						},
+					});
 				},
 			});
 			vratiPocetno();
 		}
 		else if(odabraniTip == "APPLICATION"){
+			var a = $("#comboSertifikat option:selected").val();
 			var sertifikat = new Object();
 			sertifikat.nadSertifikatId = $("#comboSertifikat option:selected").val();
 			sertifikat.datumIzdavanja = $("#datumIzdavanjaAplikacija").val();
@@ -248,6 +276,16 @@ $(document).ready(function(){
 						success: function(data){
 							$("#tabelaNovihSertifikata").html("");
 							upisiSertifikate(data);
+						},
+					});
+					$.ajax({
+						type: "GET",
+						url: "/Certificate/unrevoked",
+						contentType: 'application/json',
+						success: function(data){
+							$("#comboSertifikat1").html("");
+							$("#comboSertifikat2").html("");
+							upisiValidne(data);
 						},
 					});
 				},
@@ -280,6 +318,16 @@ $(document).ready(function(){
 						success: function(data){
 							$("#tabelaNovihSertifikata").html("");
 							upisiSertifikate(data);
+						},
+					});
+					$.ajax({
+						type: "GET",
+						url: "/Certificate/unrevoked",
+						contentType: 'application/json',
+						success: function(data){
+							$("#comboSertifikat1").html("");
+							$("#comboSertifikat2").html("");
+							upisiValidne(data);
 						},
 					});
 				},
@@ -315,6 +363,16 @@ $(document).ready(function(){
 							upisiSertifikate(data);
 						},
 					});
+					$.ajax({
+						type: "GET",
+						url: "/Certificate/unrevoked",
+						contentType: 'application/json',
+						success: function(data){
+							$("#comboSertifikat1").html("");
+							$("#comboSertifikat2").html("");
+							upisiValidne(data);
+						},
+					});
 				},
 			});
 			vratiPocetno();
@@ -332,21 +390,57 @@ $(document).ready(function(){
 		else if(odabraniTip == "PERSON"){
 			vratiPocetno();
 			dodajZaOsobu();
+			$.ajax({
+				type: "GET",
+				url: "/Certificate/authority",
+				contentType: 'application/json',
+				success: function(data){
+					$("#comboSertifikat").html("");
+					upisiCa(data);
+				},
+			});
 			//dodajDugme();
 		}
 		else if(odabraniTip == "APPLICATION"){
 			vratiPocetno();
 			dodajZaAplikaciju();
+			$.ajax({
+				type: "GET",
+				url: "/Certificate/authority",
+				contentType: 'application/json',
+				success: function(data){
+					$("#comboSertifikat").html("");
+					upisiCa(data);
+				},
+			});
 			//dodajDugme();
 		}
 		else if(odabraniTip == "ORGANIZATION"){
 			vratiPocetno();
 			dodajZaOrganizaciju();
+			$.ajax({
+				type: "GET",
+				url: "/Certificate/authority",
+				contentType: 'application/json',
+				success: function(data){
+					$("#comboSertifikat").html("");
+					upisiCa(data);
+				},
+			});
 			//dodajDugme();
 		}
 		else if(odabraniTip == "EQUIPMENT"){
 			vratiPocetno();
 			dodajZaOpremu();
+			$.ajax({
+				type: "GET",
+				url: "/Certificate/authority",
+				contentType: 'application/json',
+				success: function(data){
+					$("#comboSertifikat").html("");
+					upisiCa(data);
+				},
+			});
 			//dodajDugme();
 		}
 	});
@@ -381,6 +475,7 @@ $(document).ready(function(){
 		'<tr><td>Email:</td>'+
 		'<td><input type="text" id="emailOsoba"/></td></tr>';
 		$("#pomtabela").append(pom);
+		
 	}
 	
 	function dodajZaAplikaciju(){
