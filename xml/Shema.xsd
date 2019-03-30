@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+    targetNamespace="http://www.ftn.uns.ac.rs/megatravel"
+    xmlns="http://www.ftn.uns.ac.rs/megatravel">
+
+    <xs:complexType abstract="true" name="Korisnik">
+        <xs:sequence>
+            <xs:element name="Ime" type="xs:string"/>
+            <xs:element name="Prezime" type="xs:string"/>
+            <xs:element minOccurs="1" name="Korisnicko_ime" type="xs:string"/>
+            <xs:element name="Sifra" type="xs:string"/>
+            <xs:element name="JMBG">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:length value="13"/>
+                        <xs:pattern value=""/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="Registrovani_korisnik">
+        <xs:complexContent>
+            <xs:extension base="Korisnik"/>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="Agent">
+        <xs:complexContent>
+            <xs:extension base="Korisnik"/>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="Administrator">
+        <xs:complexContent>
+            <xs:extension base="Korisnik"/>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:element name="Smestaj">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element default="Hotel" name="Tip">
+                    <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                            <xs:enumeration value="Hotel"/>
+                            <xs:enumeration value="bed&amp;breakfast"/>
+                            <xs:enumeration value="Apartman"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:element>
+                <xs:element ref="Adresa"/>
+                <xs:element name="Opis" type="xs:string"/>
+                <xs:element maxOccurs="unbounded" ref="Soba"/>
+                <xs:element name="Dodatne_usluge">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element maxOccurs="unbounded" minOccurs="1" ref="Usluga"/>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element maxOccurs="unbounded" minOccurs="1" name="Slika_smestaja"
+                    type="xs:anyURI"/>
+                <xs:element name="Kapacitet" type="xs:positiveInteger"/>
+                <xs:element ref="Ocene"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="Usluga">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="Naziv" type="xs:string"/>
+                <xs:element name="Opis" type="xs:string"/>
+                <xs:element name="Cena">
+                    <xs:simpleType>
+                        <xs:restriction base="xs:double">
+                            <xs:minInclusive value="0"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:element>
+                <xs:element name="ID" type="xs:long"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="Adresa">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="Mesto" type="xs:string"/>
+                <xs:element name="Ulica" type="xs:string"/>
+                <xs:element name="Broj" type="xs:int"/>
+                <xs:element name="Koordinate" type="xs:float"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="Ocene">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="Vrednost">
+                    <xs:simpleType>
+                        <xs:restriction base="xs:int">
+                            <xs:minInclusive value="1"/>
+                            <xs:maxInclusive value="5"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:element>
+                <xs:element name="Komentar" type="xs:string"/>
+                <xs:element name="Registrovani_korisnik" type="Registrovani_korisnik"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="Soba">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="Cena">
+                    <xs:simpleType>
+                        <xs:restriction base="xs:double">
+                            <xs:minInclusive value="0"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:element>
+                <xs:element name="Broj_kreveta">
+                    <xs:simpleType>
+                        <xs:restriction base="xs:int">
+                            <xs:minInclusive value="1"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="Rezervacija">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="Od" type="xs:date"/>
+                <xs:element name="Do" type="xs:date"/>
+                <xs:element name="Datum" type="xs:date"/>
+                <xs:element name="Rok_za_odjavljivanje_sobe">
+                    <xs:simpleType>
+                        <xs:restriction base="xs:int">
+                            <xs:minInclusive value="0"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:element>
+                <xs:element ref="Smestaj"/>
+                <xs:element name="Cena">
+                    <xs:simpleType>
+                        <xs:restriction base="xs:double">
+                            <xs:minInclusive value="1"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:element>
+                <xs:element name="Registrovani_korisnik" type="Registrovani_korisnik"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>
