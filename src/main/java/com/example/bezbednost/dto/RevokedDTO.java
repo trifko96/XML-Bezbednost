@@ -1,0 +1,48 @@
+package com.example.bezbednost.dto;
+
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.util.Date;
+
+import com.example.bezbednost.dbModel.CertificateDB;
+
+public class RevokedDTO {
+
+	private Long id;
+	private boolean revoked;
+	private String timeStamp;
+	
+	public RevokedDTO(CertificateDB c) {
+		super();
+		this.id = c.getId();
+		this.revoked = c.isRevoked();
+		SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy. HH:mm:ss");
+		this.timeStamp = format.format(new Date());
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public boolean isRevoked() {
+		return revoked;
+	}
+
+	public void setRevoked(boolean revoked) {
+		this.revoked = revoked;
+	}
+
+	public String getTimeStamp() {
+		return timeStamp;
+	}
+
+	public void setTimeStamp(String timeStamp) {
+		this.timeStamp = timeStamp;
+	}
+}

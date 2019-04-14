@@ -36,6 +36,7 @@ import com.example.bezbednost.data.IssuerData;
 import com.example.bezbednost.data.SubjectData;
 import com.example.bezbednost.dbModel.CertificateDB;
 import com.example.bezbednost.dto.CertificateDTO;
+import com.example.bezbednost.dto.RevokedDTO;
 import com.example.bezbednost.keystore.KeyStoreReader;
 import com.example.bezbednost.keystore.KeyStoreWriter;
 import com.example.bezbednost.model.CertificateAplication;
@@ -53,6 +54,23 @@ public class CertificateController {
 	CertificateDBService service;
 	
 	static KeyStoreWriter keyStore = new KeyStoreWriter();
+	
+	@GetMapping(value="isRevoked/{id}")
+	public ResponseEntity<RevokedDTO> getAnswer(@PathVariable long id){
+		CertificateDB cDB = service.findOne(id);
+		
+		if(cDB == null) {
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		
+		RevokedDTO rDTO = new RevokedDTO(cDB);
+		
+		if(rDTO == null) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+		
+		return new ResponseEntity<RevokedDTO>(rDTO, HttpStatus.OK);
+	}
 	
 	@GetMapping(value="/{id}")
 	public ResponseEntity<CertificateDTO> getCertificate(@PathVariable long id){
