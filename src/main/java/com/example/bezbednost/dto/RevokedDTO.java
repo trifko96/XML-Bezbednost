@@ -1,9 +1,6 @@
 package com.example.bezbednost.dto;
 
-import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
-import java.time.Instant;
-import java.time.LocalDate;
 import java.util.Date;
 
 import com.example.bezbednost.dbModel.CertificateDB;

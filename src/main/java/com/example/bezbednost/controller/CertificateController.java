@@ -6,6 +6,7 @@ import java.security.KeyPair;
 import java.security.KeyPairGenerator;
 import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
+import java.security.PrivateKey;
 import java.security.PublicKey;
 import java.security.SecureRandom;
 import java.security.SignatureException;
@@ -64,10 +65,6 @@ public class CertificateController {
 		}
 		
 		RevokedDTO rDTO = new RevokedDTO(cDB);
-		
-		if(rDTO == null) {
-			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-		}
 		
 		return new ResponseEntity<RevokedDTO>(rDTO, HttpStatus.OK);
 	}
@@ -217,7 +214,9 @@ public class CertificateController {
 					//Generisanje sertifikata
 				    CertificateGenerator cg = new CertificateGenerator();
 				    X509Certificate cert = cg.generateCertificate(subjectData, issuerData);
+				    
 				    cert.verify(keyPairSubject.getPublic());
+				   
 				    
 				    CertificateDB cDB = new CertificateDB(c, null);
 				    cDB.setAuthority(true);
@@ -226,6 +225,7 @@ public class CertificateController {
 				    cDB = service.save(cDB);
 				    cDB.setNadSertifikatId(cDB.getId());
 				    cDB = service.save(cDB);
+				    
 				    keyStore.write(cDB.getId().toString(), keyPairSubject.getPrivate(), "123".toCharArray(), cert);
 				    //Sacuvati u KeyStore london, hong kong ili boston?
 				    keyStore.saveKeyStore("KeyStore.ks", "111".toCharArray());
@@ -264,7 +264,6 @@ public class CertificateController {
 				    builder.addRDN(BCStyle.EmailAddress, c.getEmail());
 				    builder.addRDN(BCStyle.O, c.getNazivOrganizacije());
 				    SubjectData subjectData = new SubjectData(keyPairSubject.getPublic(), builder.build(), sn, startDate, endDate);
-					
 				    //generateIssuerData
 				    KeyStoreReader keyStoreReader = new KeyStoreReader();
 				    if(service.findOne(cDTO.getNadSertifikatId()) == null) {
@@ -282,16 +281,17 @@ public class CertificateController {
 				    
 				    KeyFactory keyFactory = KeyFactory.getInstance("RSA");
 				    X509EncodedKeySpec publicKeySpec = new X509EncodedKeySpec(cDB.getPublicKey());
-				    PublicKey pk = keyFactory.generatePublic(publicKeySpec);
-				    
+				    PublicKey pk = keyFactory.generatePublic(publicKeySpec);		    
+
 				    cert.verify(pk);
+				    
 				    cDB = new CertificateDB(c, cDB.getNadSertifikatId());
 				    cDB.setAuthority(cDTO.isAuthority());
 				    cDB.setRoot(false);
 				    cDB.setPublicKey(keyPairSubject.getPublic().getEncoded());
-				    
 				    cDB = service.save(cDB);
-				    keyStore.write(cDB.getId().toString(), issuerData.getPrivateKey(), "123".toCharArray(), cert);
+				    
+				    keyStore.write(cDB.getId().toString(), keyPairSubject.getPrivate(), "123".toCharArray(), cert);
 
 				    keyStore.saveKeyStore("KeyStore.ks", "111".toCharArray());
 				    
@@ -338,7 +338,6 @@ public class CertificateController {
 					}
 				    // Izvlacimo privatni kljuc nadsertifikata kojim cemo potpisati trazeni sertifikat
 				    IssuerData issuerData = keyStoreReader.readIssuerFromStore("KeyStore.ks", Long.toString(cDB.getId()), "111".toCharArray(),  "123".toCharArray());
-				    //System.out.println("\n\n**** " + cDB.getId());
 					//Generisanje sertifikata
 				    CertificateGenerator cg = new CertificateGenerator();
 				    X509Certificate cert = cg.generateCertificate(subjectData, issuerData);
@@ -346,16 +345,17 @@ public class CertificateController {
 				    KeyFactory keyFactory = KeyFactory.getInstance("RSA");
 				    X509EncodedKeySpec publicKeySpec = new X509EncodedKeySpec(cDB.getPublicKey());
 				    PublicKey pk = keyFactory.generatePublic(publicKeySpec);
-				    //System.out.println("\nPublic person from app: " + pk);
-				    //System.out.println("\nPrivate person from app: " + issuerData.getPrivateKey());
+				    
 				    cert.verify(pk);
-				    cDB = new CertificateDB(c, cDB.getNadSertifikatId());
+				    
+				    cDB = new CertificateDB(c, cDB.getId());
 				    cDB.setAuthority(cDTO.isAuthority());
 				    cDB.setRoot(false);
 				    cDB.setPublicKey(keyPairSubject.getPublic().getEncoded());
 				    
 				    cDB = service.save(cDB);
-				    keyStore.write(cDB.getId().toString(), issuerData.getPrivateKey(), "123".toCharArray(), cert);
+				    
+				    keyStore.write(cDB.getId().toString(), keyPairSubject.getPrivate(), "123".toCharArray(), cert);
 
 				    keyStore.saveKeyStore("KeyStore.ks", "111".toCharArray());
 				    
@@ -413,13 +413,14 @@ public class CertificateController {
 				    PublicKey pk = keyFactory.generatePublic(publicKeySpec);
 
 				    cert.verify(pk);
-				    cDB = new CertificateDB(c, cDB.getNadSertifikatId());
+
+				    cDB = new CertificateDB(c, cDB.getId());
 				    cDB.setAuthority(cDTO.isAuthority());
 				    cDB.setRoot(false);
 				    cDB.setPublicKey(keyPairSubject.getPublic().getEncoded());
 				    
 				    cDB = service.save(cDB);
-				    keyStore.write(cDB.getId().toString(), issuerData.getPrivateKey(), "123".toCharArray(), cert);
+				    keyStore.write(cDB.getId().toString(), keyPairSubject.getPrivate(), "123".toCharArray(), cert);
 
 				    keyStore.saveKeyStore("KeyStore.ks", "111".toCharArray());
 				    
@@ -477,13 +478,14 @@ public class CertificateController {
 				    PublicKey pk = keyFactory.generatePublic(publicKeySpec);
 				    
 				    cert.verify(pk);
-				    cDB = new CertificateDB(c, cDB.getNadSertifikatId());
+
+				    cDB = new CertificateDB(c, cDB.getId());
 				    cDB.setAuthority(cDTO.isAuthority());
 				    cDB.setRoot(false);
 				    cDB.setPublicKey(keyPairSubject.getPublic().getEncoded());
 				    
 				    cDB = service.save(cDB);
-				    keyStore.write(cDB.getId().toString(), issuerData.getPrivateKey(), "123".toCharArray(), cert);
+				    keyStore.write(cDB.getId().toString(), keyPairSubject.getPrivate(), "123".toCharArray(), cert);
 
 				    keyStore.saveKeyStore("KeyStore.ks", "111".toCharArray());
 				    
