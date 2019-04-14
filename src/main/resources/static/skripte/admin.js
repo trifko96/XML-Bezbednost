@@ -42,8 +42,8 @@ $(document).ready(function(){
 	function upisiSertifikate(data) {
 		for(i = 0; i < data.length; i++){
 			if(data[i].revoked == true){
-				if(data[i].idNadSertifikata != null){
-					var pom = '<tr><td>'+data[i].idNadSertifikata+'</td>'+
+				if(data[i].nadSertifikatId != null){
+					var pom = '<tr><td>'+data[i].nadSertifikatId+'</td>'+
 					'<td>'+data[i].tip+'</td>'+
 					'<td>'+data[i].datumIzdavanja+'</td>'+
 					'<td>'+data[i].datumIsteka+'</td>'+
@@ -58,8 +58,8 @@ $(document).ready(function(){
 			}
 				
 			else {
-				if(data[i].idNadSertifikata != null){
-					var pom = '<tr><td>'+data[i].idNadSertifikata+'</td>'+
+				if(data[i].nadSertifikatId != null){
+					var pom = '<tr><td>'+data[i].nadSertifikatId+'</td>'+
 					'<td>'+data[i].tip+'</td>'+
 					'<td>'+data[i].datumIzdavanja+'</td>'+
 					'<td>'+data[i].datumIsteka+'</td>'+
@@ -214,7 +214,7 @@ $(document).ready(function(){
 			sertifikat.nadSertifikatId = $("#comboSertifikat option:selected").val();
 			sertifikat.datumIzdavanja = $("#datumIzdavanjaOsoba").val();
 			sertifikat.datumIsteka = $("#datumIsticanjaOsoba").val();
-			sertifikat.authority = $("#dozvolaZaIzdavanjeOsoba").val();
+			sertifikat.authority = $("#dozvolaZaIzdavanjeOsoba").is(":checked");
 			sertifikat.tip = "PERSON";
 			sertifikat.nazivOrganizacije = $("#nazivOrganizacijeOsoba").val();
 			sertifikat.ime = $("#imeOsoba").val();
@@ -257,7 +257,7 @@ $(document).ready(function(){
 			sertifikat.nadSertifikatId = $("#comboSertifikat option:selected").val();
 			sertifikat.datumIzdavanja = $("#datumIzdavanjaAplikacija").val();
 			sertifikat.datumIsteka = $("#datumIsticanjaAplikacija").val();
-			sertifikat.authority = $("#dozvolaZaIzdavanjeAplikacija").val();
+			sertifikat.authority = $("#dozvolaZaIzdavanjeAplikacija").is(":checked");
 			sertifikat.tip = "APPLICATION";
 			sertifikat.nazivOrganizacije = $("#nazivOrganizacijeAplikacija").val();
 			sertifikat.nazivAplikacije = $("#nazivAplikacija").val();
@@ -298,11 +298,11 @@ $(document).ready(function(){
 			sertifikat.nadSertifikatId = $("#comboSertifikat option:selected").val();
 			sertifikat.datumIzdavanja = $("#datumIzdavanjaOrganizacija").val();
 			sertifikat.datumIsteka = $("#datumIsticanjaOrganizacija").val();
-			sertifikat.authority = $("#dozvolaZaIzdavanjeOrganizacija").val();
+			sertifikat.authority = $("#dozvolaZaIzdavanjeOrganizacija").is(":checked");
 			sertifikat.tip = "ORGANIZATION";
 			sertifikat.nazivOrganizacije = $("#nazivOrganizacijeOrganizacija").val();
 			sertifikat.drzava = $("#drzavaOrganizacija").val();
-			sertifikat.PTT = $("#pttOrganizacija").val();
+			sertifikat.ptt = $("#pttOrganizacija").val();
 			sertifikat.adresa = $("#adresaOrganizacija").val();
 		
 			$.ajax({
@@ -340,10 +340,10 @@ $(document).ready(function(){
 			sertifikat.nadSertifikatId = $("#comboSertifikat option:selected").val();
 			sertifikat.datumIzdavanja = $("#datumIzdavanjaOprema").val();
 			sertifikat.datumIsteka = $("#datumIsticanjaOprema").val();
-			sertifikat.authority = $("#dozvolaZaIzdavanjeOprema").val();
+			sertifikat.authority = $("#dozvolaZaIzdavanjeOprema").is(":checked");
 			sertifikat.tip = "EQUIPMENT";
 			sertifikat.nazivOrganizacije = $("#nazivOrganizacijeOprema").val();	
-			sertifikat.MAC = $("#macOprema").val();
+			sertifikat.mac = $("#macOprema").val();
 			sertifikat.nazivOpreme = $("#nazivOprema").val();
 			sertifikat.drzava = $("#drzavaOprema").val();
 			sertifikat.idOpreme = $("#idOprema").val();
