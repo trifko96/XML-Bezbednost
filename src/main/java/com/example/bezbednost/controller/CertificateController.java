@@ -223,9 +223,9 @@ public class CertificateController {
 				    cDB.setNadSertifikatId(cDB.getId());
 				    cDB = service.save(cDB);
 				    
-				    keyStore.write(cDB.getId().toString(), keyPairSubject.getPrivate(), "123".toCharArray(), cert);
+				    keyStore.write(cDB.getId().toString(), keyPairSubject.getPrivate(), "111".toCharArray(), cert);
 				    String nazivKeyStora = c.getNazivOrganizacije().concat(Long.toString(cDB.getId()));
-				    keyStore.saveKeyStore(nazivKeyStora.concat(".ks"), "111".toCharArray());
+				    keyStore.saveKeyStore(nazivKeyStora.concat(".p12"), "111".toCharArray());
 				    
 				}catch(CertificateException e) {
 					e.printStackTrace();
@@ -273,7 +273,7 @@ public class CertificateController {
 					
 					String keyStoreIssuera = cDB.getNazivOrganizacije().concat(Long.toString(cDB.getId()));
 				    // Izvlacimo privatni kljuc nadsertifikata kojim cemo potpisati trazeni sertifikat
-				    IssuerData issuerData = keyStoreReader.readIssuerFromStore(keyStoreIssuera.concat(".ks"), Long.toString(cDB.getId()), "111".toCharArray(),  "123".toCharArray());
+				    IssuerData issuerData = keyStoreReader.readIssuerFromStore(keyStoreIssuera.concat(".p12"), Long.toString(cDB.getId()), "111".toCharArray(),  "111".toCharArray());
 					//Generisanje sertifikata
 				    CertificateGenerator cg = new CertificateGenerator();
 				    X509Certificate cert = cg.generateCertificate(subjectData, issuerData);
@@ -290,9 +290,9 @@ public class CertificateController {
 				    cDB.setPublicKey(keyPairSubject.getPublic().getEncoded());
 				    cDB = service.save(cDB);
 				    
-				    keyStore.write(cDB.getId().toString(), keyPairSubject.getPrivate(), "123".toCharArray(), cert);
+				    keyStore.write(cDB.getId().toString(), keyPairSubject.getPrivate(), "111".toCharArray(), cert);
 				    String nazivKeyStora = c.getNazivOrganizacije().concat(Long.toString(cDB.getId()));
-				    keyStore.saveKeyStore(nazivKeyStora.concat(".ks"), "111".toCharArray());
+				    keyStore.saveKeyStore(nazivKeyStora.concat(".p12"), "111".toCharArray());
 				    
 				}catch(CertificateException e) {
 					e.printStackTrace();
@@ -337,7 +337,7 @@ public class CertificateController {
 					}
 					String keyStoreIssuera = cDB.getNazivOrganizacije().concat(Long.toString(cDB.getId()));
 				    // Izvlacimo privatni kljuc nadsertifikata kojim cemo potpisati trazeni sertifikat
-				    IssuerData issuerData = keyStoreReader.readIssuerFromStore(keyStoreIssuera.concat(".ks"), Long.toString(cDB.getId()), "111".toCharArray(),  "123".toCharArray());
+				    IssuerData issuerData = keyStoreReader.readIssuerFromStore(keyStoreIssuera.concat(".p12"), Long.toString(cDB.getId()), "111".toCharArray(),  "111".toCharArray());
 					//Generisanje sertifikata
 				    CertificateGenerator cg = new CertificateGenerator();
 				    X509Certificate cert = cg.generateCertificate(subjectData, issuerData);
@@ -355,9 +355,9 @@ public class CertificateController {
 				    
 				    cDB = service.save(cDB);
 				    
-				    keyStore.write(cDB.getId().toString(), keyPairSubject.getPrivate(), "123".toCharArray(), cert);
+				    keyStore.write(cDB.getId().toString(), keyPairSubject.getPrivate(), "111".toCharArray(), cert);
 				    String nazivKeyStora = c.getNazivOrganizacije().concat(Long.toString(cDB.getId()));
-				    keyStore.saveKeyStore(nazivKeyStora.concat(".ks"), "111".toCharArray());
+				    keyStore.saveKeyStore(nazivKeyStora.concat(".p12"), "111".toCharArray());
 				    
 				}catch(CertificateException e) {
 					e.printStackTrace();
@@ -404,7 +404,7 @@ public class CertificateController {
 					}
 					String keyStoreIssuera = cDB.getNazivOrganizacije().concat(Long.toString(cDB.getId()));
 				    // Izvlacimo privatni kljuc nadsertifikata kojim cemo potpisati trazeni sertifikat
-				    IssuerData issuerData = keyStoreReader.readIssuerFromStore(keyStoreIssuera.concat(".ks"), Long.toString(cDB.getId()), "111".toCharArray(),  "123".toCharArray());
+				    IssuerData issuerData = keyStoreReader.readIssuerFromStore(keyStoreIssuera.concat(".p12"), Long.toString(cDB.getId()), "111".toCharArray(),  "111".toCharArray());
 					//Generisanje sertifikata
 				    CertificateGenerator cg = new CertificateGenerator();
 				    X509Certificate cert = cg.generateCertificate(subjectData, issuerData);
@@ -421,9 +421,9 @@ public class CertificateController {
 				    cDB.setPublicKey(keyPairSubject.getPublic().getEncoded());
 				    
 				    cDB = service.save(cDB);
-				    keyStore.write(cDB.getId().toString(), keyPairSubject.getPrivate(), "123".toCharArray(), cert);
+				    keyStore.write(cDB.getId().toString(), keyPairSubject.getPrivate(), "111".toCharArray(), cert);
 				    String nazivKeyStora = c.getNazivOrganizacije().concat(Long.toString(cDB.getId()));
-				    keyStore.saveKeyStore(nazivKeyStora.concat(".ks"), "111".toCharArray());
+				    keyStore.saveKeyStore(nazivKeyStora.concat(".p12"), "111".toCharArray());
 				    
 				}catch(CertificateException e) {
 					e.printStackTrace();
@@ -470,7 +470,7 @@ public class CertificateController {
 					}
 					String keyStoreIssuera = cDB.getNazivOrganizacije().concat(Long.toString(cDB.getId()));
 				    // Izvlacimo privatni kljuc nadsertifikata kojim cemo potpisati trazeni sertifikat
-				    IssuerData issuerData = keyStoreReader.readIssuerFromStore(keyStoreIssuera.concat(".ks"), Long.toString(cDB.getId()), "111".toCharArray(),  "123".toCharArray());
+				    IssuerData issuerData = keyStoreReader.readIssuerFromStore(keyStoreIssuera.concat(".p12"), Long.toString(cDB.getId()), "111".toCharArray(),  "111".toCharArray());
 					//Generisanje sertifikata
 				    CertificateGenerator cg = new CertificateGenerator();
 				    X509Certificate cert = cg.generateCertificate(subjectData, issuerData);
@@ -487,9 +487,9 @@ public class CertificateController {
 				    cDB.setPublicKey(keyPairSubject.getPublic().getEncoded());
 				    
 				    cDB = service.save(cDB);
-				    keyStore.write(cDB.getId().toString(), keyPairSubject.getPrivate(), "123".toCharArray(), cert);
+				    keyStore.write(cDB.getId().toString(), keyPairSubject.getPrivate(), "111".toCharArray(), cert);
 				    String nazivKeyStora = c.getNazivOrganizacije().concat(Long.toString(cDB.getId()));
-				    keyStore.saveKeyStore(nazivKeyStora.concat(".ks"), "111".toCharArray());
+				    keyStore.saveKeyStore(nazivKeyStora.concat(".p12"), "111".toCharArray());
 				    
 				}catch(CertificateException e) {
 					e.printStackTrace();
@@ -531,7 +531,8 @@ public class CertificateController {
 	private CertificateDTO createValidDTO(CertificateDB cDB) {
 		CertificateDTO cDTO = new CertificateDTO(cDB);
 		KeyStoreReader keyStoreReader = new KeyStoreReader();
-	    IssuerData issuerData = keyStoreReader.readIssuerFromStore("KeyStore.ks", Long.toString(cDB.getId()), "111".toCharArray(),  "123".toCharArray());
+	    String nazivKeyStora = cDTO.getNazivOrganizacije().concat(Long.toString(cDB.getId()));
+	    IssuerData issuerData = keyStoreReader.readIssuerFromStore(nazivKeyStora.concat(".p12"), Long.toString(cDB.getId()), "111".toCharArray(),  "111".toCharArray());
 	    ASN1ObjectIdentifier[] identifiers = issuerData.getX500name().getAttributeTypes();
 	    
 	    switch (cDTO.getTip()) {
