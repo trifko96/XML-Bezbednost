@@ -12,13 +12,13 @@ $(document).ready(function(){
 		id1 = idPrvog;
 		id2 = idDrugog;
 		
-		$.ajax({
-			type: "POST",
+		customAjax({
+			method: 'POST',
 			url: "/Communication/create/"+idPrvog+"/"+idDrugog,
 			contentType: 'application/json',
 			success: function(data){
-				$.ajax({
-					type: "GET",
+				customAjax({
+					method: "GET",
 					url: "/Certificate/"+idPrvog,
 					contentType: 'application/json',
 					success: function(data){
@@ -26,8 +26,8 @@ $(document).ready(function(){
 						tip1 = data;
 					},
 				});
-				$.ajax({
-					type: "GET",
+				customAjax({
+					method: "GET",
 					url: "/Certificate/"+idDrugog,
 					contentType: 'application/json',
 					success: function(data){
