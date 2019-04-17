@@ -25,30 +25,39 @@ public class User {
 	@Column(name = "id", nullable = false, unique = true)
 	private Long id;
 	
-	@Column(name = "username", nullable = false, length = 50, unique = true)
-	private String username;
+	@Column(name = "email", nullable = false, length = 50, unique = true)
+	private String email;
 	
 	@Column(name = "password", nullable = false, length = 50)
 	private String password;
 	
+	private UserRole role;
+	
 //	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 //	@JoinTable(name = "users_roles", joinColumns=@JoinColumn(name = "user_id", referencedColumnName = "id"), inverseJoinColumns=@JoinColumn(name = "role_id", referencedColumnName = "id"))
 //	private List<UserRole> roles;
+	private String name;
 	
+	private String surname;
+	
+	private String phoneNumber;
 
 	public User() {
 		super();
 	}
 
-	public User(Long id, String username, String password) {
+	public User(Long id, String email, String password, String name, String surname, String phoneNumber) {
 		super();
 		this.id = id;
-		this.username = username;
+		this.email = email;
 		this.password = password;
+		this.name = name;
+		this.surname = surname;
+		this.phoneNumber = phoneNumber;
 	}
 	
 	public User(UserDTO user) {
-		this.username = user.getUsername();
+		this.email = user.getEmail();
 		this.password = user.getPassword();
 	}
 
@@ -60,12 +69,12 @@ public class User {
 		this.id = id;
 	}
 
-	public String getUsername() {
-		return username;
+	public String getEmail() {
+		return email;
 	}
 
-	public void setUsername(String username) {
-		this.username = username;
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 	public String getPassword() {
@@ -74,6 +83,38 @@ public class User {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	public UserRole getRole() {
+		return role;
+	}
+
+	public void setRole(UserRole role) {
+		this.role = role;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getSurname() {
+		return surname;
+	}
+
+	public void setSurname(String surname) {
+		this.surname = surname;
+	}
+
+	public String getPhoneNumber() {
+		return phoneNumber;
+	}
+
+	public void setPhoneNumber(String phoneNumber) {
+		this.phoneNumber = phoneNumber;
 	}
 
 }

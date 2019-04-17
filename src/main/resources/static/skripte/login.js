@@ -9,13 +9,7 @@ $(document).ready(function(){
 		var korisnickoIme = $("#korisIme").val();
 		var lozinka = $("#loz").val();
 		
-		if(korisnickoIme == "admin"){
-			if(lozinka == "admin"){
-				window.location.href = "/html/admin.html";
-			}
-		} else {
-			$("#greskaLog").show().delay(4000).fadeOut();
-		}	
+			
 		
 	});	
 });

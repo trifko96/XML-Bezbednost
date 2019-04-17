@@ -13,8 +13,8 @@ public class UserService {
 	@Autowired
 	UserRepository repository;
 	
-	public User findOne(String username) {
-		return repository.findOneByUsername(username);
+	public User findOne(String email) {
+		return repository.findOneByEmail(email);
 	}
 	
 	public User findOne(long id) {

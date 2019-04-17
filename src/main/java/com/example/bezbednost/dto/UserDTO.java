@@ -1,12 +1,17 @@
 package com.example.bezbednost.dto;
 
 import com.example.bezbednost.model.User;
+import com.example.bezbednost.model.UserRole;
 
 public class UserDTO {
 	
 	private Long id;
-	private String username;
+	private String email;
 	private String password;
+	private String name;
+	private String surname;
+	private String phoneNumber;
+	private UserRole role;
 	
 	public UserDTO() {
 		
@@ -15,8 +20,12 @@ public class UserDTO {
 	public UserDTO(User user) {
 		super();
 		this.id = user.getId();
-		this.username = user.getUsername();
+		this.email = user.getEmail();
 		//this.password = user.getPassword();
+		this.name = user.getName();
+		this.surname = user.getSurname();
+		this.phoneNumber = user.getPhoneNumber();
+		this.role = user.getRole();
 	}
 	
 	public String getPassword() {
@@ -35,11 +44,43 @@ public class UserDTO {
 		this.id = id;
 	}
 
-	public String getUsername() {
-		return username;
+	public String getEmail() {
+		return email;
 	}
 
-	public void setUsername(String username) {
-		this.username = username;
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getSurname() {
+		return surname;
+	}
+
+	public void setSurname(String surname) {
+		this.surname = surname;
+	}
+
+	public String getPhoneNumber() {
+		return phoneNumber;
+	}
+
+	public void setPhoneNumber(String phoneNumber) {
+		this.phoneNumber = phoneNumber;
+	}
+
+	public UserRole getRole() {
+		return role;
+	}
+
+	public void setRole(UserRole role) {
+		this.role = role;
 	}
 }

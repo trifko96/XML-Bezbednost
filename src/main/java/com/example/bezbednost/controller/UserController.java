@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.example.bezbednost.model.User;
 import com.example.bezbednost.service.UserService;
@@ -25,6 +26,9 @@ public class UserController {
 	
 	@Autowired
 	UserService service;
+	
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 	
 	@GetMapping(value="/{id}")
 	public ResponseEntity<UserDTO> getUser(@PathVariable long id){
@@ -53,6 +57,8 @@ public class UserController {
 	@PostMapping(value="/create")
 	public ResponseEntity<UserDTO> createUser(@RequestBody UserDTO userDTO){
 		User user = new User(userDTO);
+		user.setPassword(passwordEncoder.encode(userDTO.getPassword()));
+		
 		user = service.save(user);
 		
 		return new ResponseEntity<UserDTO>(new UserDTO(user), HttpStatus.OK);
