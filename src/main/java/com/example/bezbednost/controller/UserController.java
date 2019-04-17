@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.example.bezbednost.model.User;
+import com.example.bezbednost.security.Util;
 import com.example.bezbednost.service.UserService;
 import com.example.bezbednost.dto.UserDTO;
 
@@ -26,6 +27,9 @@ public class UserController {
 	
 	@Autowired
 	UserService service;
+	
+	@Autowired
+	Util util;
 	
 	@Autowired
 	private PasswordEncoder passwordEncoder;
@@ -68,6 +72,17 @@ public class UserController {
 	public void delete(@PathVariable long id){
 		User user = service.findOne(id);
 		service.delete(user);
+	}
+	
+	@GetMapping(value="/getCurrentUser")
+	public ResponseEntity<UserDTO> getCurrentUser(){
+		User user = util.getCurrentUser();
+		if(user == null) {
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		
+		return new ResponseEntity<>(new UserDTO(user), HttpStatus.OK);
+		
 	}
 	
 }

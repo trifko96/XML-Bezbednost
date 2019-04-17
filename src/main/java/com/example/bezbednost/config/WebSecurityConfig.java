@@ -62,8 +62,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 	//svim korisnicima dopusti da pristupe putanjama /auth/login
                 	.antMatchers("/auth/login").permitAll()
-                	.antMatchers("/User/register").permitAll()
-                	.antMatchers("/User/getCurrentUser").permitAll()
+                	.antMatchers("/User/create").permitAll()
                 	//svaki zahtev mora biti autorizovan
                 	.anyRequest().authenticated().and()
                 //presretni svaki zahtev filterom
@@ -78,9 +77,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
         web.ignoring().antMatchers(
                 HttpMethod.GET,
-                "/html/index.html",
-                "/html/aircompanyAdminPage.html",
+                "/html/login.html",
+                "/html/admin.html",
                 "/scripts/index.js",
+                "/skripte/pom1.js",
+                "/skripte/pom2.js",
                 "/login.html",
                 "/favicon.ico",
                 "/html/**",
@@ -88,7 +89,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 "/js/**",
                 "/css/**",
                 "/html/**",
-                "/scripts/**",
+                "/bootstrap/**",
                 "/datatables/**",
                 "/scripts/**"
                 

@@ -2,33 +2,10 @@ $(document).ready(function(){
 	
 	var odabraniTip = "";
 	
-	$(".navbar-link").click(function(event){
-		
-		$(".container-fluid").each(function(index, el) {
-            $(this).hide();
-        });
-		
-		var id = $(this).attr("id");
-		if(id === "tabSer"){
-			$("#tabSer").addClass('active');
-			$("#tabKom").removeClass('active');
-			$("#divSertifikat").show();
-		} else if (id === "tabKom"){
-			$("#tabKom").addClass('active');
-			$("#tabSer").removeClass('active');
-			$("#divKomunikacija").show();
-		}
-
-	});
 	
-	$("#tabSer").trigger('click');
-	
-	$("small").each(function(index, el){
-		$(this).hide();
-	});
 
 	customAjax({
-		method: "GET",
+		method: 'GET',
 		url: "/Certificate/getAll",
 		contentType: 'application/json',
 		success: function(data){
@@ -82,19 +59,19 @@ $(document).ready(function(){
 	$("#tabelaNovihSertifikata").on('click', 'button', function(event){
 		var id = $(this).attr('id');
 		customAjax({
-			method: "POST",
+			method: 'POST',
 			url: "/Certificate/revoke/"+id,
 			contentType: 'application/json',
 			success: function(data){
 				customAjax({
-					method: "GET",
+					method: 'GET',
 					url: "/Certificate/getAll",
 					contentType: 'application/json',
 					success: function(data){
 						$("#tabelaNovihSertifikata").html("");
 						upisiSertifikate(data);
 						customAjax({
-							method: "GET",
+							method: 'GET',
 							url: "/Certificate/unrevoked",
 							contentType: 'application/json',
 							success: function(data){
@@ -105,7 +82,7 @@ $(document).ready(function(){
 						});
 						
 						customAjax({
-							method: "GET",
+							method: 'GET',
 							url: "/Certificate/authority",
 							contentType: 'application/json',
 							success: function(data){
@@ -120,7 +97,7 @@ $(document).ready(function(){
 	});
 	
 	customAjax({
-		method: "GET",
+		method: 'GET',
 		url: "/Certificate/unrevoked",
 		contentType: 'application/json',
 		success: function(data){
@@ -133,7 +110,7 @@ $(document).ready(function(){
 	});
 	
 	customAjax({
-		method: "GET",
+		method: 'GET',
 		url: "/Certificate/authority",
 		contentType: 'application/json',
 		success: function(data){
@@ -181,13 +158,13 @@ $(document).ready(function(){
 			sertifikat.tip = "ROOT";
 			
 			customAjax({
-				method: "POST",
+				method: 'POST',
 				url: "/Certificate/create",
 				data: JSON.stringify(sertifikat),
 				contentType: 'application/json',
 				success: function(data){
 					customAjax({
-						method: "GET",
+						method: 'GET',
 						url: "/Certificate/getAll",
 						contentType: 'application/json',
 						success: function(data){
@@ -196,7 +173,7 @@ $(document).ready(function(){
 						},
 					});
 					customAjax({
-						method: "GET",
+						method: 'GET',
 						url: "/Certificate/unrevoked",
 						contentType: 'application/json',
 						success: function(data){
@@ -223,13 +200,13 @@ $(document).ready(function(){
 			sertifikat.email = $("#emailOsoba").val();
 			
 			customAjax({
-				method: "POST",
+				method: 'POST',
 				url: "/Certificate/create",
 				data: JSON.stringify(sertifikat),
 				contentType: 'application/json',
 				success: function(data){
 					$.ajax({
-						type: "GET",
+						method: 'GET',
 						url: "/Certificate/getAll",
 						contentType: 'application/json',
 						success: function(data){
@@ -238,7 +215,7 @@ $(document).ready(function(){
 						},
 					});
 					customAjax({
-						method: "GET",
+						method: 'GET',
 						url: "/Certificate/unrevoked",
 						contentType: 'application/json',
 						success: function(data){
@@ -264,13 +241,13 @@ $(document).ready(function(){
 			sertifikat.verzija = $("#verzijaAplikacija").val();
 		
 			customAjax({
-				method: "POST",
+				method: 'POST',
 				url: "/Certificate/create",
 				data: JSON.stringify(sertifikat),
 				contentType: 'application/json',
 				success: function(data){
 					customAjax({
-						method: "GET",
+						method: 'GET',
 						url: "/Certificate/getAll",
 						contentType: 'application/json',
 						success: function(data){
@@ -279,7 +256,7 @@ $(document).ready(function(){
 						},
 					});
 					customAjax({
-						method: "GET",
+						method: 'GET',
 						url: "/Certificate/unrevoked",
 						contentType: 'application/json',
 						success: function(data){
@@ -306,13 +283,13 @@ $(document).ready(function(){
 			sertifikat.adresa = $("#adresaOrganizacija").val();
 		
 			customAjax({
-				method: "POST",
+				method: 'POST',
 				url: "/Certificate/create",
 				data: JSON.stringify(sertifikat),
 				contentType: 'application/json',
 				success: function(data){
 					customAjax({
-						method: "GET",
+						method: 'GET',
 						url: "/Certificate/getAll",
 						contentType: 'application/json',
 						success: function(data){
@@ -321,7 +298,7 @@ $(document).ready(function(){
 						},
 					});
 					customAjax({
-						method: "GET",
+						method: 'GET',
 						url: "/Certificate/unrevoked",
 						contentType: 'application/json',
 						success: function(data){
@@ -349,13 +326,13 @@ $(document).ready(function(){
 			sertifikat.idOpreme = $("#idOprema").val();
 		
 			customAjax({
-				method: "POST",
+				method: 'POST',
 				url: "/Certificate/create",
 				data: JSON.stringify(sertifikat),
 				contentType: 'application/json',
 				success: function(data){
 					customAjax({
-						method: "GET",
+						method: 'GET',
 						url: "/Certificate/getAll",
 						contentType: 'application/json',
 						success: function(data){
@@ -364,7 +341,7 @@ $(document).ready(function(){
 						},
 					});
 					customAjax({
-						method: "GET",
+						method: 'GET',
 						url: "/Certificate/unrevoked",
 						contentType: 'application/json',
 						success: function(data){
@@ -391,7 +368,7 @@ $(document).ready(function(){
 			vratiPocetno();
 			dodajZaOsobu();
 			customAjax({
-				method: "GET",
+				method: 'GET',
 				url: "/Certificate/authority",
 				contentType: 'application/json',
 				success: function(data){
@@ -405,7 +382,7 @@ $(document).ready(function(){
 			vratiPocetno();
 			dodajZaAplikaciju();
 			customAjax({
-				method: "GET",
+				method: 'GET',
 				url: "/Certificate/authority",
 				contentType: 'application/json',
 				success: function(data){
@@ -419,7 +396,7 @@ $(document).ready(function(){
 			vratiPocetno();
 			dodajZaOrganizaciju();
 			customAjax({
-				method: "GET",
+				method: 'GET',
 				url: "/Certificate/authority",
 				contentType: 'application/json',
 				success: function(data){
@@ -433,7 +410,7 @@ $(document).ready(function(){
 			vratiPocetno();
 			dodajZaOpremu();
 			customAjax({
-				method: "GET",
+				method: 'GET',
 				url: "/Certificate/authority",
 				contentType: 'application/json',
 				success: function(data){
