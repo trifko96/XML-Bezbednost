@@ -77,11 +77,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
         web.ignoring().antMatchers(
                 HttpMethod.GET,
-                "/html/login.html",
-                "/html/admin.html",
-                "/scripts/index.js",
-                "/skripte/pom1.js",
-                "/skripte/pom2.js",
                 "/login.html",
                 "/favicon.ico",
                 "/html/**",
@@ -91,7 +86,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 "/html/**",
                 "/bootstrap/**",
                 "/datatables/**",
-                "/scripts/**"
+                "/skripte/**"
                 
             );
     }

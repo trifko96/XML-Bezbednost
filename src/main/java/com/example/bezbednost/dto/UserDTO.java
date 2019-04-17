@@ -25,7 +25,6 @@ public class UserDTO {
 		this.name = user.getName();
 		this.surname = user.getSurname();
 		this.phoneNumber = user.getPhoneNumber();
-		this.role = user.getRole();
 	}
 	
 	public String getPassword() {
@@ -74,13 +73,5 @@ public class UserDTO {
 
 	public void setPhoneNumber(String phoneNumber) {
 		this.phoneNumber = phoneNumber;
-	}
-
-	public UserRole getRole() {
-		return role;
-	}
-
-	public void setRole(UserRole role) {
-		this.role = role;
 	}
 }

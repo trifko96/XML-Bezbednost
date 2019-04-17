@@ -3,6 +3,8 @@ package com.example.bezbednost.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.security.RolesAllowed;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,10 +16,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.example.bezbednost.model.User;
+import com.example.bezbednost.model.UserRole;
 import com.example.bezbednost.security.Util;
+import com.example.bezbednost.service.UserRoleService;
 import com.example.bezbednost.service.UserService;
 import com.example.bezbednost.dto.UserDTO;
 
@@ -27,6 +32,9 @@ public class UserController {
 	
 	@Autowired
 	UserService service;
+	
+	@Autowired
+	UserRoleService roleService;
 	
 	@Autowired
 	Util util;
@@ -61,13 +69,23 @@ public class UserController {
 	@PostMapping(value="/create")
 	public ResponseEntity<UserDTO> createUser(@RequestBody UserDTO userDTO){
 		User user = new User(userDTO);
+		List<UserRole> roles = new ArrayList<UserRole>();
+		roles.add(roleService.findByName("ROLE_USER"));
+		user.setRoles(roles);
 		user.setPassword(passwordEncoder.encode(userDTO.getPassword()));
+		System.out.println(passwordEncoder.encode(userDTO.getPassword()));
 		
 		user = service.save(user);
 		
 		return new ResponseEntity<UserDTO>(new UserDTO(user), HttpStatus.OK);
 	}
 	
+	// Ako zelimo da dozvolimo korisniku koji mora da ima i jednu i drugu rolu
+	//@PreAuthorize("hasRole('ADMIN') and hasRole('AGENT')")
+	// Ako zelimo da dozvolimo korisniku koji ima ili jednu ili drugu rolu
+	//@PreAuthorize("hasRole('ADMIN') or hasRole('AGENT')")
+	// Ako zelimo da dozvolimo korisniku koji ima samo tu rolu
+	@PreAuthorize("hasRole('ADMIN')")
 	@DeleteMapping(value="/{id}")
 	public void delete(@PathVariable long id){
 		User user = service.findOne(id);
