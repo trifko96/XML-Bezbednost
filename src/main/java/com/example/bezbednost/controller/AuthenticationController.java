@@ -65,7 +65,7 @@ public class AuthenticationController {
 		return new ResponseEntity<String>(jws, HttpStatus.OK);
 	}
 
-	@PreAuthorize("hasRole('REGULAR_USER')")
+	@PreAuthorize("hasRole('USER')")
 	@GetMapping(value = "/current-user")
 	public ResponseEntity<User> getCurrentUser(Principal principal) {
 		if (principal == null) {
@@ -79,7 +79,7 @@ public class AuthenticationController {
 	}
 
 	@PostMapping(value = "/change-password")
-	@PreAuthorize("hasRole('REGULAR_USER')")
+	@PreAuthorize("hasRole('USER')")
 	public ResponseEntity<?> changePassword(@RequestBody PasswordChanger passwordChanger) {
 		userDetailsService.changePassword(passwordChanger.oldPassword, passwordChanger.newPassword);
 		Map<String, String> result = new HashMap<>();

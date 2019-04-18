@@ -36,6 +36,7 @@ import org.bouncycastle.operator.jcajce.JcaContentSignerBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -65,6 +66,7 @@ public class CertificateController {
 	@Autowired
 	CertificateDBService service;
 	
+	@PreAuthorize("hasRole('USER')")
 	@GetMapping(value="isRevoked/{id}")
 	public ResponseEntity<RevokedDTO> getAnswer(@PathVariable long id){
 		CertificateDB cDB = service.findOne(id);
@@ -78,6 +80,7 @@ public class CertificateController {
 		return new ResponseEntity<RevokedDTO>(rDTO, HttpStatus.OK);
 	}
 	
+	@PreAuthorize("hasRole('USER')")
 	@GetMapping(value="/{id}")
 	public ResponseEntity<CertificateDTO> getCertificate(@PathVariable long id){
 		CertificateDB cDB = service.findOne(id);
@@ -95,6 +98,7 @@ public class CertificateController {
 		return new ResponseEntity<CertificateDTO>(cDTO, HttpStatus.OK);
 	}
 	
+	@PreAuthorize("hasRole('USER')")
 	@GetMapping(value="/getAll")
 	public ResponseEntity<List<CertificateDTO>> findAll(){
 		List<CertificateDB> certificates = service.findAll();
@@ -116,6 +120,7 @@ public class CertificateController {
 		return new ResponseEntity<>(certificatesDTO, HttpStatus.OK);
 	}
 	
+	@PreAuthorize("hasRole('ADMIN')")
 	@GetMapping(value="/authority")
 	public ResponseEntity<List<CertificateDTO>> findAuthorities(){
 		List<CertificateDB> certificates = service.findAll();
@@ -137,6 +142,7 @@ public class CertificateController {
 		return new ResponseEntity<>(certificatesDTO, HttpStatus.OK);
 	}
 	
+	@PreAuthorize("hasRole('ADMIN')")
 	@GetMapping(value="/unrevoked")
 	public ResponseEntity<List<CertificateDTO>> findUnrevoked(){
 		List<CertificateDB> certificates = service.findAll();
@@ -158,6 +164,7 @@ public class CertificateController {
 		return new ResponseEntity<>(certificatesDTO, HttpStatus.OK);
 	}
 	
+	@PreAuthorize("hasRole('ADMIN')")
 	@GetMapping(value="/revoked")
 	public ResponseEntity<List<CertificateDTO>> findRevoked(){
 		List<CertificateDB> certificates = service.findAll();
@@ -179,6 +186,7 @@ public class CertificateController {
 		return new ResponseEntity<>(certificatesDTO, HttpStatus.OK);
 	}
 	
+	@PreAuthorize("hasRole('ADMIN')")
 	@PostMapping(value="/revoke/{id}")
 	public ResponseEntity<CertificateDTO> revoke(@PathVariable long id){
 		CertificateDB cDB = service.findOne(id);
@@ -193,6 +201,7 @@ public class CertificateController {
 		return new ResponseEntity<CertificateDTO>(HttpStatus.OK);
 	}
 	
+	@PreAuthorize("hasRole('ADMIN')")
 	@PostMapping(value="/create")
 	public ResponseEntity<CertificateDTO> createCertificate (@RequestBody CertificateDTO cDTO) throws CertIOException{
 		KeyStoreWriter keyStore = new KeyStoreWriter();

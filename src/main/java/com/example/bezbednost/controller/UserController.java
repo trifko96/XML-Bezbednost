@@ -42,6 +42,7 @@ public class UserController {
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 	
+	@PreAuthorize("hasRole('USER')")
 	@GetMapping(value="/{id}")
 	public ResponseEntity<UserDTO> getUser(@PathVariable long id){
 		User user = service.findOne(id);
@@ -52,6 +53,7 @@ public class UserController {
 		return new ResponseEntity<UserDTO>(new UserDTO(user), HttpStatus.OK);
 	}
 	
+	@PreAuthorize("hasRole('ADMIN')")
 	@GetMapping(value="/getAll")
 	public ResponseEntity<List<UserDTO>> findAll(){
 		
@@ -66,6 +68,7 @@ public class UserController {
 		return new ResponseEntity<>(servicesDTO, HttpStatus.OK);
 	}
 	
+	@PreAuthorize("hasRole('USER')")
 	@PostMapping(value="/create")
 	public ResponseEntity<UserDTO> createUser(@RequestBody UserDTO userDTO){
 		User user = new User(userDTO);
@@ -92,6 +95,7 @@ public class UserController {
 		service.delete(user);
 	}
 	
+	@PreAuthorize("hasRole('USER')")
 	@GetMapping(value="/getCurrentUser")
 	public ResponseEntity<UserDTO> getCurrentUser(){
 		User user = util.getCurrentUser();
