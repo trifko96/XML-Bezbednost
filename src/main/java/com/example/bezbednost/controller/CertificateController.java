@@ -1,6 +1,5 @@
 package com.example.bezbednost.controller;
 
-import java.math.BigInteger;
 import java.security.InvalidKeyException;
 import java.security.KeyFactory;
 import java.security.KeyPair;
@@ -18,21 +17,13 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import org.bouncycastle.asn1.ASN1Encodable;
 import org.bouncycastle.asn1.ASN1ObjectIdentifier;
-import org.bouncycastle.asn1.DERSequence;
-import org.bouncycastle.asn1.x500.AttributeTypeAndValue;
 import org.bouncycastle.asn1.x500.RDN;
 import org.bouncycastle.asn1.x500.X500NameBuilder;
 import org.bouncycastle.asn1.x500.style.BCStyle;
-import org.bouncycastle.asn1.x509.Extension;
-import org.bouncycastle.asn1.x509.GeneralName;
-import org.bouncycastle.asn1.x509.X509Extensions;
 import org.bouncycastle.cert.CertIOException;
-import org.bouncycastle.cert.X509v3CertificateBuilder;
-import org.bouncycastle.cert.jcajce.JcaX509v3CertificateBuilder;
-import org.bouncycastle.operator.ContentSigner;
-import org.bouncycastle.operator.jcajce.JcaContentSignerBuilder;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -63,6 +54,8 @@ import com.example.bezbednost.service.CertificateDBService;
 @RequestMapping(value="/Certificate")
 public class CertificateController {
 	
+	Logger logger = LoggerFactory.getLogger(this.getClass());
+	
 	@Autowired
 	CertificateDBService service;
 	
@@ -72,11 +65,12 @@ public class CertificateController {
 		CertificateDB cDB = service.findOne(id);
 		
 		if(cDB == null) {
+			logger.warn("NP-SS: {}, NP_EVENT", id);
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		
 		RevokedDTO rDTO = new RevokedDTO(cDB);
-		
+		logger.info("P-SS: {}, NP_EVENT", id);
 		return new ResponseEntity<RevokedDTO>(rDTO, HttpStatus.OK);
 	}
 	
@@ -86,15 +80,18 @@ public class CertificateController {
 		CertificateDB cDB = service.findOne(id);
 		
 		if(cDB == null) {
+			logger.warn("NP-TS: {}, NP_EVENT", id);
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		
 		CertificateDTO cDTO = createValidDTO(cDB);
 		
 		if(cDTO == null) {
+			logger.error("GP-TS: {}, NP_EVENT", id);
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		
+		logger.info("P-TS: {}, NP_EVENT", id);
 		return new ResponseEntity<CertificateDTO>(cDTO, HttpStatus.OK);
 	}
 	
@@ -113,10 +110,12 @@ public class CertificateController {
 				certificatesDTO.add(cDTO);
 			}
 			else {
+				logger.error("GPS-S, NP_EVENT");
 				return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 			}
 			
 		}
+		logger.info("PS-S, NP_EVENT");
 		return new ResponseEntity<>(certificatesDTO, HttpStatus.OK);
 	}
 	
@@ -135,10 +134,12 @@ public class CertificateController {
 					certificatesDTO.add(cDTO);
 				}
 				else {
+					logger.error("GP-SD, NP_EVENT");
 					return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 				}	
 			}
 		}
+		logger.info("P-SD, NP_EVENT");
 		return new ResponseEntity<>(certificatesDTO, HttpStatus.OK);
 	}
 	
@@ -157,10 +158,12 @@ public class CertificateController {
 					certificatesDTO.add(cDTO);
 				}
 				else {
+					logger.error("GP-NS, NP_EVENT");
 					return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 				}	
 			}
 		}
+		logger.info("P-NS, NP_EVENT");
 		return new ResponseEntity<>(certificatesDTO, HttpStatus.OK);
 	}
 	
@@ -179,10 +182,12 @@ public class CertificateController {
 					certificatesDTO.add(cDTO);
 				}
 				else {
+					logger.error("GP-PS, NP_EVENT");
 					return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 				}	
 			}
 		}
+		logger.info("P-PS, NP_EVENT");
 		return new ResponseEntity<>(certificatesDTO, HttpStatus.OK);
 	}
 	
@@ -192,12 +197,14 @@ public class CertificateController {
 		CertificateDB cDB = service.findOne(id);
 		
 		if(cDB == null) {
+			logger.warn("NP-SP: {}, NP_EVENT", id);
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		
 		cDB.setRevoked(true);
 		service.save(cDB);
 		
+		logger.info("SP: {}, NP_EVENT", id);
 		return new ResponseEntity<CertificateDTO>(HttpStatus.OK);
 	}
 	
@@ -205,6 +212,7 @@ public class CertificateController {
 	@PostMapping(value="/create")
 	public ResponseEntity<CertificateDTO> createCertificate (@RequestBody CertificateDTO cDTO) throws CertIOException{
 		KeyStoreWriter keyStore = new KeyStoreWriter();
+		Long id = Long.parseLong("0");
 		switch(cDTO.getTip()){
 			case ROOT:
 				try {
@@ -254,6 +262,7 @@ public class CertificateController {
 				    cDB = service.save(cDB);
 				    cDB.setNadSertifikatId(cDB.getId());
 				    cDB = service.save(cDB);
+				    id = cDB.getId();
 				    
 				    keyStore.write(cDB.getId().toString(), keyPairSubject.getPrivate(), "111".toCharArray(), cert);
 				    String nazivKeyStora = c.getNazivOrganizacije().concat(Long.toString(cDB.getId()));
@@ -321,6 +330,7 @@ public class CertificateController {
 				    cDB.setRoot(false);
 				    cDB.setPublicKey(keyPairSubject.getPublic().getEncoded());
 				    cDB = service.save(cDB);
+				    id = cDB.getId();
 				    
 				    keyStore.write(cDB.getId().toString(), keyPairSubject.getPrivate(), "111".toCharArray(), cert);
 				    String nazivKeyStora = c.getNazivOrganizacije().concat(Long.toString(cDB.getId()));
@@ -386,6 +396,7 @@ public class CertificateController {
 				    cDB.setPublicKey(keyPairSubject.getPublic().getEncoded());
 				    
 				    cDB = service.save(cDB);
+				    id = cDB.getId();
 				    
 				    keyStore.write(cDB.getId().toString(), keyPairSubject.getPrivate(), "111".toCharArray(), cert);
 				    String nazivKeyStora = c.getNazivOrganizacije().concat(Long.toString(cDB.getId()));
@@ -451,6 +462,7 @@ public class CertificateController {
 				    cDB.setAuthority(cDTO.isAuthority());
 				    cDB.setRoot(false);
 				    cDB.setPublicKey(keyPairSubject.getPublic().getEncoded());
+				    id = cDB.getId();
 				    
 				    cDB = service.save(cDB);
 				    keyStore.write(cDB.getId().toString(), keyPairSubject.getPrivate(), "111".toCharArray(), cert);
@@ -517,6 +529,7 @@ public class CertificateController {
 				    cDB.setAuthority(cDTO.isAuthority());
 				    cDB.setRoot(false);
 				    cDB.setPublicKey(keyPairSubject.getPublic().getEncoded());
+				    id = cDB.getId();
 				    
 				    cDB = service.save(cDB);
 				    keyStore.write(cDB.getId().toString(), keyPairSubject.getPrivate(), "111".toCharArray(), cert);
@@ -539,10 +552,11 @@ public class CertificateController {
 				
 				break;
 			default: 
+				logger.error("GK-S, NP_EVENT");
 				return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 			
 		}
-		
+		logger.info("K-S: {}, NP_EVENT", id);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	

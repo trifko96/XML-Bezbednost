@@ -3,8 +3,9 @@ package com.example.bezbednost.controller;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.annotation.security.RolesAllowed;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,7 +15,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -29,6 +29,8 @@ import com.example.bezbednost.dto.UserDTO;
 @RestController
 @RequestMapping(value = "/User")
 public class UserController {
+	
+	Logger logger = LoggerFactory.getLogger(this.getClass());
 	
 	@Autowired
 	UserService service;
@@ -48,8 +50,10 @@ public class UserController {
 		User user = service.findOne(id);
 		
 		if(user == null) {
+			logger.warn("NP-K: {}, NP_EVENT", id);
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
+		logger.info("P-K: {}, NP_EVENT", id);
 		return new ResponseEntity<UserDTO>(new UserDTO(user), HttpStatus.OK);
 	}
 	
@@ -64,7 +68,7 @@ public class UserController {
 		for(User u : services) {
 			servicesDTO.add(new UserDTO(u));
 		}
-		
+		logger.info("PS-K, NP_EVENT");
 		return new ResponseEntity<>(servicesDTO, HttpStatus.OK);
 	}
 	
@@ -80,6 +84,7 @@ public class UserController {
 		
 		user = service.save(user);
 		
+		logger.info("R-K: {}, NP_EVENT", user.getId());
 		return new ResponseEntity<UserDTO>(new UserDTO(user), HttpStatus.OK);
 	}
 	
@@ -92,6 +97,7 @@ public class UserController {
 	@DeleteMapping(value="/{id}")
 	public void delete(@PathVariable long id){
 		User user = service.findOne(id);
+		logger.info("O-K: {}, NP_EVENT", user.getId());
 		service.delete(user);
 	}
 	
@@ -100,9 +106,10 @@ public class UserController {
 	public ResponseEntity<UserDTO> getCurrentUser(){
 		User user = util.getCurrentUser();
 		if(user == null) {
+			logger.warn("NP-K, NP_EVENT");
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-		
+		logger.info("P-K: {}, NP_EVENT", user.getId());
 		return new ResponseEntity<>(new UserDTO(user), HttpStatus.OK);
 		
 	}

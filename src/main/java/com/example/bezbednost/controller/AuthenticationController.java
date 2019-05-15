@@ -4,6 +4,8 @@ import java.security.Principal;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -30,6 +32,8 @@ import com.example.bezbednost.service.UserService;
 @RequestMapping(value = "/auth")
 public class AuthenticationController {
 
+	Logger logger = LoggerFactory.getLogger(this.getClass());
+	
 	@Autowired
 	TokenHelper tokenHelper;
 
@@ -50,7 +54,7 @@ public class AuthenticationController {
 			authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(email, password));
 			//logger.info("User " + email + " successfully logged in");
 		} catch (AuthenticationException e) {
-			//logger.info("Someone tried to log in with wrong credentials");
+			logger.error("PK, SE_EVENT");
 			return new ResponseEntity<String>("Wrong email/password.", HttpStatus.FORBIDDEN);
 		}
 
@@ -62,6 +66,7 @@ public class AuthenticationController {
 		String jws = tokenHelper.generateToken(user.getEmail());
 
 		// Vrati token kao odgovor na uspesno autentifikaciju
+		logger.info("UL-K: {}, SE_EVENT", email);
 		return new ResponseEntity<String>(jws, HttpStatus.OK);
 	}
 
