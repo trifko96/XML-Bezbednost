@@ -1,0 +1,3 @@
+2019-05-14 14:59:06,662 INFO org.springframework.boot.StartupInfoLogger [main] Starting BezbednostApplication on Trifkovic-PC with PID 7328 (C:\Users\Trifkovic\bezbednost-workspace\XML-Bezbednost\target\classes started by Trifkovic in C:\Users\Trifkovic\bezbednost-workspace\XML-Bezbednost)
+2019-05-14 14:59:06,675 INFO org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
+2019-05-14 14:59:49,897 INFO org.springframework.boot.StartupInfoLogger [main] Started BezbednostApplication in 45.636 seconds (JVM running for 47.058)
