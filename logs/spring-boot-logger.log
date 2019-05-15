@@ -1,4 +1,12 @@
-2019-05-14 14:59:06,662 INFO org.springframework.boot.StartupInfoLogger [main] Starting BezbednostApplication on Trifkovic-PC with PID 7328 (C:\Users\Trifkovic\bezbednost-workspace\XML-Bezbednost\target\classes started by Trifkovic in C:\Users\Trifkovic\bezbednost-workspace\XML-Bezbednost)
-2019-05-14 14:59:06,673 DEBUG org.springframework.boot.StartupInfoLogger [main] Running with Spring Boot v2.1.3.RELEASE, Spring v5.1.5.RELEASE
-2019-05-14 14:59:06,675 INFO org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
-2019-05-14 14:59:49,897 INFO org.springframework.boot.StartupInfoLogger [main] Started BezbednostApplication in 45.636 seconds (JVM running for 47.058)
+2019-05-15 18:42:40,394 INFO org.springframework.boot.StartupInfoLogger [main] Starting BezbednostApplicationTests on Trifkovic-PC with PID 7200 (started by Trifkovic in C:\Users\Trifkovic\bezbednost-workspace\XML-Bezbednost)
+2019-05-15 18:42:40,464 DEBUG org.springframework.boot.StartupInfoLogger [main] Running with Spring Boot v2.1.3.RELEASE, Spring v5.1.5.RELEASE
+2019-05-15 18:42:40,466 INFO org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
+2019-05-15 18:43:23,669 INFO org.springframework.boot.StartupInfoLogger [main] Started BezbednostApplicationTests in 45.871 seconds (JVM running for 51.049)
+2019-05-15 20:52:36,145 INFO org.springframework.boot.StartupInfoLogger [main] Starting BezbednostApplication on Trifkovic-PC with PID 6732 (C:\Users\Trifkovic\bezbednost-workspace\XML-Bezbednost\target\classes started by Trifkovic in C:\Users\Trifkovic\bezbednost-workspace\XML-Bezbednost)
+2019-05-15 20:52:36,167 DEBUG org.springframework.boot.StartupInfoLogger [main] Running with Spring Boot v2.1.3.RELEASE, Spring v5.1.5.RELEASE
+2019-05-15 20:52:36,169 INFO org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
+2019-05-15 20:53:12,008 INFO org.springframework.boot.StartupInfoLogger [main] Started BezbednostApplication in 37.699 seconds (JVM running for 38.832)
+2019-05-15 20:55:00,777 INFO org.springframework.boot.StartupInfoLogger [main] Starting BezbednostApplicationTests on Trifkovic-PC with PID 4684 (started by Trifkovic in C:\Users\Trifkovic\bezbednost-workspace\XML-Bezbednost)
+2019-05-15 20:55:00,783 DEBUG org.springframework.boot.StartupInfoLogger [main] Running with Spring Boot v2.1.3.RELEASE, Spring v5.1.5.RELEASE
+2019-05-15 20:55:00,786 INFO org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
+2019-05-15 20:55:37,987 INFO org.springframework.boot.StartupInfoLogger [main] Started BezbednostApplicationTests in 39.19 seconds (JVM running for 42.22)
