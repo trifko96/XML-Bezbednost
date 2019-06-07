@@ -1,0 +1,15 @@
+2019-05-16 11:41:44,626 INFO org.springframework.boot.StartupInfoLogger [main] Starting BezbednostApplication on Trifkovic-PC with PID 3988 (C:\Users\Trifkovic\bezbednost-workspace\XML-Bezbednost\target\classes started by Trifkovic in C:\Users\Trifkovic\bezbednost-workspace\XML-Bezbednost)
+2019-05-16 11:41:44,681 DEBUG org.springframework.boot.StartupInfoLogger [main] Running with Spring Boot v2.1.3.RELEASE, Spring v5.1.5.RELEASE
+2019-05-16 11:41:44,686 INFO org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
+2019-05-16 11:42:25,869 INFO org.springframework.boot.StartupInfoLogger [main] Started BezbednostApplication in 43.119 seconds (JVM running for 44.385)
+2019-05-16 11:46:40,135 ERROR com.example.bezbednost.controller.AuthenticationController [https-jsse-nio-8221-exec-5] PK, SE_EVENT
+2019-05-16 11:49:11,391 INFO com.example.bezbednost.controller.AuthenticationController [https-jsse-nio-8221-exec-1] UL-K: admin@gmail.com, SE_EVENT
+2019-05-16 11:49:11,506 INFO com.example.bezbednost.controller.AuthenticationController [https-jsse-nio-8221-exec-6] UL-K: admin@gmail.com, SE_EVENT
+2019-05-16 11:49:11,506 INFO com.example.bezbednost.controller.UserController [https-jsse-nio-8221-exec-5] P-K: 1, NP_EVENT
+2019-05-16 11:49:11,776 INFO com.example.bezbednost.controller.UserController [https-jsse-nio-8221-exec-4] P-K: 1, NP_EVENT
+2019-05-16 11:49:12,352 INFO com.example.bezbednost.controller.CertificateController [https-jsse-nio-8221-exec-5] PS-S, NP_EVENT
+2019-05-16 11:49:12,392 INFO com.example.bezbednost.controller.CertificateController [https-jsse-nio-8221-exec-10] P-SD, NP_EVENT
+2019-05-16 11:49:12,422 INFO com.example.bezbednost.controller.CertificateController [https-jsse-nio-8221-exec-4] P-NS, NP_EVENT
+2019-05-16 11:49:29,701 INFO com.example.bezbednost.controller.CertificateController [https-jsse-nio-8221-exec-7] K-S: 1, NP_EVENT
+2019-05-16 11:49:29,846 INFO com.example.bezbednost.controller.CertificateController [https-jsse-nio-8221-exec-8] PS-S, NP_EVENT
+2019-05-16 11:49:29,846 INFO com.example.bezbednost.controller.CertificateController [https-jsse-nio-8221-exec-2] P-NS, NP_EVENT

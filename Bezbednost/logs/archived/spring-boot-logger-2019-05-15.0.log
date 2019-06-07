@@ -1,0 +1,21 @@
+2019-05-15 18:42:40,394 INFO org.springframework.boot.StartupInfoLogger [main] Starting BezbednostApplicationTests on Trifkovic-PC with PID 7200 (started by Trifkovic in C:\Users\Trifkovic\bezbednost-workspace\XML-Bezbednost)
+2019-05-15 18:42:40,464 DEBUG org.springframework.boot.StartupInfoLogger [main] Running with Spring Boot v2.1.3.RELEASE, Spring v5.1.5.RELEASE
+2019-05-15 18:42:40,466 INFO org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
+2019-05-15 18:43:23,669 INFO org.springframework.boot.StartupInfoLogger [main] Started BezbednostApplicationTests in 45.871 seconds (JVM running for 51.049)
+2019-05-15 20:52:36,145 INFO org.springframework.boot.StartupInfoLogger [main] Starting BezbednostApplication on Trifkovic-PC with PID 6732 (C:\Users\Trifkovic\bezbednost-workspace\XML-Bezbednost\target\classes started by Trifkovic in C:\Users\Trifkovic\bezbednost-workspace\XML-Bezbednost)
+2019-05-15 20:52:36,167 DEBUG org.springframework.boot.StartupInfoLogger [main] Running with Spring Boot v2.1.3.RELEASE, Spring v5.1.5.RELEASE
+2019-05-15 20:52:36,169 INFO org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
+2019-05-15 20:53:12,008 INFO org.springframework.boot.StartupInfoLogger [main] Started BezbednostApplication in 37.699 seconds (JVM running for 38.832)
+2019-05-15 20:55:00,777 INFO org.springframework.boot.StartupInfoLogger [main] Starting BezbednostApplicationTests on Trifkovic-PC with PID 4684 (started by Trifkovic in C:\Users\Trifkovic\bezbednost-workspace\XML-Bezbednost)
+2019-05-15 20:55:00,783 DEBUG org.springframework.boot.StartupInfoLogger [main] Running with Spring Boot v2.1.3.RELEASE, Spring v5.1.5.RELEASE
+2019-05-15 20:55:00,786 INFO org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
+2019-05-15 20:55:37,987 INFO org.springframework.boot.StartupInfoLogger [main] Started BezbednostApplicationTests in 39.19 seconds (JVM running for 42.22)
+2019-05-15 23:58:39,781 INFO org.springframework.boot.StartupInfoLogger [main] Starting BezbednostApplication on Trifkovic-PC with PID 7664 (C:\Users\Trifkovic\bezbednost-workspace\XML-Bezbednost\target\classes started by Trifkovic in C:\Users\Trifkovic\bezbednost-workspace\XML-Bezbednost)
+2019-05-15 23:58:39,791 DEBUG org.springframework.boot.StartupInfoLogger [main] Running with Spring Boot v2.1.3.RELEASE, Spring v5.1.5.RELEASE
+2019-05-15 23:58:39,796 INFO org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
+2019-05-15 23:59:11,445 INFO org.springframework.boot.StartupInfoLogger [main] Started BezbednostApplication in 33.475 seconds (JVM running for 34.842)
+2019-05-15 23:59:43,771 INFO com.example.bezbednost.controller.AuthenticationController [https-jsse-nio-8221-exec-4] UL-K: admin@gmail.com, SE_EVENT
+2019-05-15 23:59:44,026 INFO com.example.bezbednost.controller.UserController [https-jsse-nio-8221-exec-6] P-K: 1, NP_EVENT
+2019-05-15 23:59:44,777 INFO com.example.bezbednost.controller.CertificateController [https-jsse-nio-8221-exec-6] P-SD, NP_EVENT
+2019-05-15 23:59:44,812 INFO com.example.bezbednost.controller.CertificateController [https-jsse-nio-8221-exec-9] PS-S, NP_EVENT
+2019-05-15 23:59:44,824 INFO com.example.bezbednost.controller.CertificateController [https-jsse-nio-8221-exec-4] P-NS, NP_EVENT

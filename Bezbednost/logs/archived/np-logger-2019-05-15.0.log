@@ -1,0 +1,4 @@
+2019-05-15 23:59:44,026 INFO com.example.bezbednost.controller.UserController [https-jsse-nio-8221-exec-6] P-K: 1, NP_EVENT
+2019-05-15 23:59:44,777 INFO com.example.bezbednost.controller.CertificateController [https-jsse-nio-8221-exec-6] P-SD, NP_EVENT
+2019-05-15 23:59:44,812 INFO com.example.bezbednost.controller.CertificateController [https-jsse-nio-8221-exec-9] PS-S, NP_EVENT
+2019-05-15 23:59:44,824 INFO com.example.bezbednost.controller.CertificateController [https-jsse-nio-8221-exec-4] P-NS, NP_EVENT
