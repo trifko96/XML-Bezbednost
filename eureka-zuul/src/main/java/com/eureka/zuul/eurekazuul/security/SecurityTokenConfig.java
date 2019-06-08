@@ -35,11 +35,12 @@ public class SecurityTokenConfig extends WebSecurityConfigurerAdapter {
 		   .addFilterAfter(new JwtTokenAuthenticationFilter(jwtConfig), UsernamePasswordAuthenticationFilter.class)
 		// authorization requests config
 		.authorizeRequests()
+			.antMatchers("/**").permitAll()
 		   // allow all who are accessing "auth" service
 		   //.antMatchers("/admin/test").permitAll()  
 		   .antMatchers(HttpMethod.POST, jwtConfig.getUri()).permitAll()  
 		   // must be an admin if trying to access admin area (authentication is also required here)
-		   .antMatchers("/admin-service/**").hasRole("ADMIN")
+		   .antMatchers("/user-service/**").hasRole("ADMIN")
 		   // Any other request must be authenticated
 		   .anyRequest().authenticated(); 
 	}
