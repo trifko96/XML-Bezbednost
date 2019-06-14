@@ -29,6 +29,7 @@ public class JwtUsernameAndPasswordAuthenticationFilter extends UsernamePassword
 
 	private AuthenticationManager authManager;
 	
+	
 	private final JwtConfig jwtConfig;
     
 	public JwtUsernameAndPasswordAuthenticationFilter(AuthenticationManager authManager, JwtConfig jwtConfig) {
