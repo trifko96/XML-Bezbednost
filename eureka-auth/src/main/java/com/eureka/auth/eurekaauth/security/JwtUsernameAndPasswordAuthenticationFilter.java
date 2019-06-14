@@ -25,13 +25,13 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 
-public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
+public class JwtUsernameAndPasswordAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
 	private AuthenticationManager authManager;
 	
 	private final JwtConfig jwtConfig;
     
-	public AuthenticationFilter(AuthenticationManager authManager, JwtConfig jwtConfig) {
+	public JwtUsernameAndPasswordAuthenticationFilter(AuthenticationManager authManager, JwtConfig jwtConfig) {
 		this.authManager = authManager;
 		this.jwtConfig = jwtConfig;
 		
@@ -96,7 +96,7 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 			this.username = username;
 		}
 	    public String getPassword() {
-			return password;
+			return password;	
 		}
 	    public void setPassword(String password) {
 			this.password = password;
