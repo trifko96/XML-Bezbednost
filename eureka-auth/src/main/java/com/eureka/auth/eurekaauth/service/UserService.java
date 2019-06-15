@@ -13,16 +13,16 @@ public class UserService {
 	@Autowired
 	UserRepository repository;
 	
-	public String registration(User user)
+	public User registration(User user)
 	{
 		User u = new User(user.getName(), user.getSurname(), user.getEmail(), user.getPassword(), user.getUsername());
 		
 		User u1 = repository.findByUsername(user.getUsername());
 		if(u1 != null)
-			return "false";
+			return null;
 		else {
 			repository.save(u);
-			return "ok";
+			return u;
 		}
 	}
 

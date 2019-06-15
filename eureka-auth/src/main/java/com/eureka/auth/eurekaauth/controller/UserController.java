@@ -1,6 +1,9 @@
 package com.eureka.auth.eurekaauth.controller;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.eureka.auth.eurekaauth.service.UserService;
@@ -15,10 +18,15 @@ public class UserController {
 	UserService service;
 	
 	@RequestMapping(value="/registration", method = RequestMethod.POST, consumes="application/json")
-	public String registration(@RequestBody User user) {
+	public ResponseEntity<User> registration(@RequestBody User user) {
 		
-		String retVal = service.registration(user);
-		return retVal;
+		User retVal = service.registration(user);
+		if(retVal != null) {
+			return new ResponseEntity<>(retVal,HttpStatus.OK);
+		}
+		else {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
 	}
 	
 }
