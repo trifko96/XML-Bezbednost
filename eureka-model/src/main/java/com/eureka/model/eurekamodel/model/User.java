@@ -18,6 +18,7 @@ public class User {
 	private String email;
 	private String password;
 	private String username;
+	private UserRole role;
 	
 	public User() {
 		
@@ -78,6 +79,14 @@ public class User {
 
 	public void setUsername(String username) {
 		this.username = username;
+	}
+
+	public UserRole getRole() {
+		return role;
+	}
+
+	public void setRole(UserRole role) {
+		this.role = role;
 	}
 
 
