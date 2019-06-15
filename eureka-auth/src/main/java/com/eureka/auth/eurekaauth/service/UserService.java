@@ -30,5 +30,5 @@ public class UserService {
 			return u;
 		}
 	}
-	//insert into user (id, name, surname, email, password, username, role) values (1, 'Petar', 'Petrovic', 'admin@gmail.com', , 'admin', 0);
+	
 }
