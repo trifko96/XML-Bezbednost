@@ -14,8 +14,7 @@ public class UserService {
 	@Autowired
 	UserRepository repository;
 	
-	@Autowired
-	private BCryptPasswordEncoder encoder;
+	private BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 	
 	public User registration(User user)
 	{
@@ -30,5 +29,5 @@ public class UserService {
 			return u;
 		}
 	}
-//insert into user (id, name, surname, email, password, username, role) values (1, 'Petar', 'Petrovic', 'admin@gmail.com', , 'admin', 0);
+	//insert into user (id, name, surname, email, password, username, role) values (1, 'Petar', 'Petrovic', 'admin@gmail.com', , 'admin', 0);
 }
