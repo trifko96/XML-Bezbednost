@@ -10,10 +10,14 @@ public class Recension {
 	private long id;
 	
 	private String value;
-	private boolean approved;
+	private RecensionStatus recensionStatus;
 	
+	@ManyToOne(fetch=FetchType.EAGER)
+	@JoinColumn(name="idUser", referencedColumnName="userId")
 	private User user;
 	
+	@ManyToOne(fetch=FetchType.EAGER)
+	@JoinColumn(name="idAccommodation", referencedColumnName="accommodationId")
 	private Accommodation accommodation;
 	
 	public Recension() {
@@ -36,12 +40,12 @@ public class Recension {
 		this.value = value;
 	}
 
-	public boolean isApproved() {
-		return approved;
+	public RecensionStatus getRecensionStatus() {
+		return recensionStatus;
 	}
 
-	public void setApproved(boolean approved) {
-		this.approved = approved;
+	public void setRecensionStatus(RecensionStatus recensionStatus) {
+		this.recensionStatus = recensionStatus;
 	}
 
 	public User getUser() {

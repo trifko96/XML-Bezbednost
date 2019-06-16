@@ -9,12 +9,12 @@ public class Rating {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 	
-	@ManyToOne
-	@JoinColumn(name = "accomodation_unit_id", foreignKey = @ForeignKey(name = "PRICE_PLAN_ACCOMODATION_UNIT_ID_FK"))
+	@ManyToOne(fetch=FetchType.EAGER)
+	@JoinColumn(name="idAccommodation", referencedColumnName="accommodationId")
 	private Accommodation accommodation;
 	
-	@ManyToOne
-	@JoinColumn(name = "accomodation_unit_id", foreignKey = @ForeignKey(name = "PRICE_PLAN_ACCOMODATION_UNIT_ID_FK"))
+	@ManyToOne(fetch=FetchType.EAGER)
+	@JoinColumn(name="idUser", referencedColumnName="userId")
 	private User user;
 	
 	private String value;

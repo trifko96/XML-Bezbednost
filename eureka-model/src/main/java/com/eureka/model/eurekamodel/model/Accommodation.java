@@ -35,7 +35,6 @@ public class Accommodation {
 	
 	@OneToMany(mappedBy = "accommodation", orphanRemoval = true, cascade = CascadeType.ALL )
 	private List<Price> price;
-	
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

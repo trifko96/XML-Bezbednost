@@ -31,6 +31,9 @@ public class User {
 	@OneToMany(mappedBy = "user", orphanRemoval = true, cascade = CascadeType.ALL )
 	private List<Rating> rating;
 	
+	@OneToMany(mappedBy = "user", orphanRemoval = true, cascade = CascadeType.ALL )
+	private List<Recension> recension;
+	
 	public User() {
 		
 	}
@@ -148,7 +151,19 @@ public class User {
 
 	public void setBusinessId(String businessId) {
 		this.businessId = businessId;
+	}
+
+	public List<Recension> getRecension() {
+		if (recension == null) {
+            recension = new ArrayList<Recension>();
+        }
+        return this.recension;
+	}
+
+	public void setRecension(List<Recension> recension) {
+		this.recension = recension;
 	}	
+	
 	
 
 
