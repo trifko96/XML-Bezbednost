@@ -11,7 +11,7 @@ import javax.persistence.*;
 public class User {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long id;
+	private long userId;
 	
 	private String name;
 	private String surname;
@@ -19,6 +19,17 @@ public class User {
 	private String password;
 	private String username;
 	private UserRole role;
+	private UserStatus status;
+	private String businessId;
+	
+	@OneToMany(mappedBy = "send", orphanRemoval = true, cascade = CascadeType.ALL )
+	private List<Messagge> sendMessagge;
+	
+	@OneToMany(mappedBy = "receive", orphanRemoval = true, cascade = CascadeType.ALL )
+	private List<Messagge> receiveMessagge;
+
+	@OneToMany(mappedBy = "user", orphanRemoval = true, cascade = CascadeType.ALL )
+	private List<Rating> rating;
 	
 	public User() {
 		
@@ -33,12 +44,46 @@ public class User {
 		this.username = username;
 	}
 
-	public long getId() {
-		return id;
+
+	public long getUserId() {
+		return userId;
 	}
 
-	public void setId(long id) {
-		this.id = id;
+	public void setUserId(long userId) {
+		this.userId = userId;
+	}
+
+	public List<Messagge> getSendMessagge() {
+		if (sendMessagge == null) {
+            sendMessagge = new ArrayList<Messagge>();
+        }
+        return this.sendMessagge;
+	}
+
+	public void setSendMessage(List<Messagge> sendMessage) {
+		this.sendMessagge = sendMessage;
+	}
+
+	public List<Messagge> getReceiveMessage() {
+		if (receiveMessagge == null) {
+            receiveMessagge = new ArrayList<Messagge>();
+        }
+        return this.receiveMessagge;
+	}
+
+	public void setReceiveMessage(List<Messagge> receiveMessage) {
+		this.receiveMessagge = receiveMessage;
+	}
+
+	public List<Rating> getRating() {
+		if (rating == null) {
+            rating = new ArrayList<Rating>();
+        }
+        return this.rating;
+	}
+
+	public void setRating(List<Rating> rating) {
+		this.rating = rating;
 	}
 
 	public String getName() {
@@ -88,6 +133,23 @@ public class User {
 	public void setRole(UserRole role) {
 		this.role = role;
 	}
+	
+	public UserStatus getStatus() {
+		return status;
+	}
+
+	public void setStatus(UserStatus status) {
+		this.status = status;
+	}
+
+	public String getBusinessId() {
+		return businessId;
+	}
+
+	public void setBusinessId(String businessId) {
+		this.businessId = businessId;
+	}	
+	
 
 
 }

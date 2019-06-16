@@ -6,6 +6,7 @@ import org.springframework.stereotype.*;
 
 import com.eureka.auth.eurekaauth.repository.UserRepository;
 import com.eureka.model.eurekamodel.model.User;
+import com.eureka.model.eurekamodel.model.UserRole;
 
 
 @Service
@@ -21,6 +22,7 @@ public class UserService {
 	{
 		String tmp = encoder.encode(user.getPassword());
 		User u = new User(user.getName(), user.getSurname(), user.getEmail(), tmp, user.getUsername());
+		u.setRole(UserRole.USER);
 		
 		User u1 = repository.findByUsername(user.getUsername());
 		if(u1 != null)
