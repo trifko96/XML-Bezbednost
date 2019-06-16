@@ -11,7 +11,8 @@ public class Reservation {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 	
-	private User user;
+	
+	//private User user;
 	
 	private Date fromDate;
 	private Date toDate;
@@ -26,14 +27,6 @@ public class Reservation {
 
 	public void setId(long id) {
 		this.id = id;
-	}
-
-	public User getUser() {
-		return user;
-	}
-
-	public void setUser(User user) {
-		this.user = user;
 	}
 
 	public Date getFromDate() {

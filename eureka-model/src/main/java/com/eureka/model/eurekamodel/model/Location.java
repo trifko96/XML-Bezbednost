@@ -1,10 +1,14 @@
 package com.eureka.model.eurekamodel.model;
 
-import javax.persistence.Entity;
+import javax.persistence.*;
 
 @Entity
 public class Location {
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private long id;
+	
 	private float longitude;
 	private float lattitude;
 	
@@ -65,6 +69,15 @@ public class Location {
 	public void setNumber(int number) {
 		this.number = number;
 	}
+
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
+	}
+	
 	
 	
 }

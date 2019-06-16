@@ -14,11 +14,11 @@ public class Accommodation {
 	
 	private String description;
 
-	@OneToMany(mappedBy = "accomodation", orphanRemoval = true, cascade = CascadeType.ALL )
+	@OneToMany(mappedBy = "accommodation", orphanRemoval = true, cascade = CascadeType.ALL )
 	private List<Rating> rating;
 	
 	@ManyToMany(cascade = CascadeType.PERSIST)
-	@JoinTable(name = "ACCOMMODATION_SERVICE", 
+	@JoinTable(name = "ACCOMMODATION_SERVICE_UNIT", 
 			joinColumns= {@JoinColumn(name="accommodationId")},
 			inverseJoinColumns= {@JoinColumn(name="accommodationServiceId")})
 	private List<AccommodationService> accommodationService;
