@@ -1,0 +1,8 @@
+<ul class="nav nav-tabs bg-dark">
+    <li class="nav-item" *ngFor="let p of paths">
+      <a class="nav-link" [routerLink]="p.path" >{{p.label}}</a>
+    </li>
+</ul>
+
+
+<router-outlet></router-outlet>
