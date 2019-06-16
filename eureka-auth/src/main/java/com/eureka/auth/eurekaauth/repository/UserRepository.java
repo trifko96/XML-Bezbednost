@@ -12,6 +12,6 @@ public interface UserRepository extends  JpaRepository<User, Long> {
 	public User save(User user);
 	
 	//@Query("select user from User user where user.username = ?1")
-	public User findByUsername(String username);
+	public User findUserByUsername(String username);
 
 }

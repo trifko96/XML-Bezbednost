@@ -27,7 +27,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		
-		com.eureka.model.eurekamodel.model.User user = repository.findByUsername(username);
+		com.eureka.model.eurekamodel.model.User user = repository.findUserByUsername(username);
 		
 
 		if(user != null){
