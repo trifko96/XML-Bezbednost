@@ -54,7 +54,7 @@ export class HomeUserComponent implements OnInit {
         this.existAgent = "";
       },
       error => {
-        this.existAgent = "Agent with this username already exist!"
+        this.existAgent = "Agent with this username or businessId already exist!"
       }
     )
     
@@ -63,7 +63,11 @@ export class HomeUserComponent implements OnInit {
   activate(user : User){
     this.service.activateUser(user).subscribe(
       data => {
-        this.users = data;
+        this.service.getUsers().subscribe(
+          data => {
+            this.users = data;
+          }
+        )
       }
     )
   }
@@ -71,7 +75,11 @@ export class HomeUserComponent implements OnInit {
   block(user : User){
     this.service.blockUser(user).subscribe(
       data => {
-        this.users = data;
+        this.service.getUsers().subscribe(
+          data => {
+            this.users = data;
+          }
+        )
       }
     )
   }
