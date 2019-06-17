@@ -25,6 +25,8 @@ public interface AdminRepository extends JpaRepository<User, Long> {
 	
 	public User findUserByUserId(long id);
 	
+	public User findUserByBusinessId(String id);
+	
 	public List<User> findUserByRole(UserRole role);
 	
 	@Transactional

@@ -26,7 +26,7 @@ public class AdminController {
 	
 	@PostMapping(value = "/addNewAgent", consumes = "application/json")
 	public ResponseEntity<List<UserDTO>> addNewAgent(@RequestBody User user){
-		//uraditi proveru za jedinstvenost bussinesID
+		
 		User retVal = service.addNewAgent(user);
 		if(retVal != null) {
 			return new ResponseEntity<>(service.getAgents(), HttpStatus.OK);

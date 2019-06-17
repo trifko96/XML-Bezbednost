@@ -23,7 +23,8 @@ public class AdminService {
 		u.setBusinessId(user.getBusinessId());
 		
 		User u1 = repository.findUserByUsername(user.getUsername());
-		if(u1 != null)
+		User u2 = repository.findUserByBusinessId(user.getBusinessId());
+		if(u1 != null || u2 != null)
 			return null;
 		else {
 			repository.save(u);
