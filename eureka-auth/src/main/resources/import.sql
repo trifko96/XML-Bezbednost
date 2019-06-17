@@ -1,1 +1,2 @@
-insert into user (id, name, surname, email, password, username, role) values (1, 'Petar', 'Petrovic', 'admin@gmail.com', '$2a$10$jChdiiMSaPYPLHj6uMATKO/40fK/xojxb8uzMjc9ACZLG/QC4PpYK', 'admin', 0);
+insert into user (user_id, name, surname, email, password, username, role) values (1, 'Petar', 'Petrovic', 'admin@gmail.com', '$2a$10$jChdiiMSaPYPLHj6uMATKO/40fK/xojxb8uzMjc9ACZLG/QC4PpYK', 'admin', 0);
+insert into user (user_id, name, surname, email, password, username, role, status) values (2, 'User', 'User', 'user@gmail.com', '$2a$10$jChdiiMSaPYPLHj6uMATKO/40fK/xojxb8uzMjc9ACZLG/QC4PpYK', 'user', 1, 1);

@@ -32,7 +32,7 @@ public class AdminService {
 	}
 	
 	public User getUserById(long id) {
-		User u = repository.findUserById(id);
+		User u = repository.findUserByUserId(id);
 		return u;
 	}
 	
@@ -63,6 +63,6 @@ public class AdminService {
 	}
 	
 	public void removeUser(User user) {
-		repository.delete(user);
+		repository.delete(user.getUserId());
 	}
 }

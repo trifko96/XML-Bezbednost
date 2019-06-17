@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,7 +18,7 @@ import com.eureka.model.eurekamodel.model.UserRole;
 import com.eureka.model.eurekamodel.model.UserStatus;
 
 @RestController
-@RequestMapping(value = "/Admin")
+@RequestMapping(value = "/admin")
 public class AdminController {
 
 	@Autowired
@@ -36,34 +37,35 @@ public class AdminController {
 	@PostMapping(value = "/activateUser", consumes = "application/json")
 	public ResponseEntity<List<UserDTO>> activateUser(@RequestBody User user){
 		User u = service.getUserById(user.getUserId());
-		if(u.getStatus() != UserStatus.BLOCKED || u.getRole() != UserRole.USER)
-			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-		else {
-			service.activateUser(u);
-			return new ResponseEntity<>(service.getUsers(), HttpStatus.OK);
-		}
+		service.activateUser(u);
+		return new ResponseEntity<>(service.getUsers(), HttpStatus.OK);
+		
 	}
 	
 	@PostMapping(value = "/blockUser", consumes = "application/json")
 	public ResponseEntity<List<UserDTO>> blockUser(@RequestBody User user){
 		User u = service.getUserById(user.getUserId());
-		if(u.getStatus() != UserStatus.ACTIVATED || u.getRole() != UserRole.USER)
-			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-		else {
-			service.blockUser(u);
-			return new ResponseEntity<>(service.getUsers(), HttpStatus.OK);
-		}
+		service.blockUser(u);
+		return new ResponseEntity<>(service.getUsers(), HttpStatus.OK);
+		
 	}
 	
 	@PostMapping(value = "/removeUser", consumes = "application/json")
 	public ResponseEntity<List<UserDTO>> removeUser(@RequestBody User user){
 		User u = service.getUserById(user.getUserId());
-		if(u.getRole() != UserRole.USER)
-			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-		else {
-			service.removeUser(u);
-			return new ResponseEntity<>(service.getUsers(), HttpStatus.OK);
-		}
+		service.removeUser(u);
+		return new ResponseEntity<>(service.getUsers(), HttpStatus.OK);
+		
+	}
+	
+	@GetMapping(value = "/getAgents")
+	public ResponseEntity<List<UserDTO>> getAgents(){
+		return new ResponseEntity<>(service.getAgents(),HttpStatus.OK);
+	}
+	
+	@GetMapping(value = "/getUsers")
+	public ResponseEntity<List<UserDTO>> getUsers(){
+		return new ResponseEntity<>(service.getUsers(),HttpStatus.OK);
 	}
 	
 	

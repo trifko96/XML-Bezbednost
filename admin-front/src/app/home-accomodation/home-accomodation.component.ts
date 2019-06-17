@@ -11,6 +11,8 @@ export class HomeAccomodationComponent implements OnInit {
   isSubmit : boolean = false;
   isClicked1 : boolean = false;
   isSubmit1 : boolean = false;
+  isPressed : boolean = false;
+  isPressed1 : boolean = false;
 
   constructor() { }
 
@@ -18,23 +20,31 @@ export class HomeAccomodationComponent implements OnInit {
   }
 
   onClick(){
-    this.isClicked = !this.isClicked;
+    if(!this.isPressed){
+      this.isClicked = !this.isClicked;
+    }
     this.isSubmit = !this.isSubmit;
+    this.isPressed = true;
   }
 
   onSubmit(){
     this.isClicked = !this.isClicked;
     this.isSubmit = !this.isSubmit;
+    this.isPressed = false;
   }
 
   onClick1(){
-    this.isClicked1 = !this.isClicked1;
+    if(!this.isPressed1){
+      this.isClicked1 = !this.isClicked1;
+    }
     this.isSubmit1 = !this.isSubmit1;
+    this.isPressed1 = true;
   }
 
   onSubmit1(){
     this.isClicked1 = !this.isClicked1;
     this.isSubmit1 = !this.isSubmit1;
+    this.isPressed1 = false;
   }
 
 }

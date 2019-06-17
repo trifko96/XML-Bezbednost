@@ -32,7 +32,7 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-6" *ngIf = "isClicked && isSubmit">
+        <div class="col-6" *ngIf = "(isClicked && isSubmit) || isPressed">
             <br>
             <h4>Add new service:</h4>
               <form>
@@ -49,7 +49,7 @@
                   </div>
               </form>
         </div>  
-        <div class="col-6" *ngIf = "isClicked1 && isSubmit1">
+        <div class="col-6" *ngIf = "(isClicked1 && isSubmit1) || isPressed1">
             <br>
             <h4>Add new type:</h4>
               <form>

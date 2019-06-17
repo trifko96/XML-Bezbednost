@@ -20,17 +20,20 @@ public interface AdminRepository extends JpaRepository<User, Long> {
 	
 	@Transactional
 	@Modifying
-	@Query("update User user set user.status = com.eureka.model.eurekamodel.model.UserStatus.ACTIVATED where user.id = :id")
+	@Query("update User user set user.status = com.eureka.model.eurekamodel.model.UserStatus.ACTIVATED where user.userId = :id")
 	public void activateUser(@Param("id") long id);
 	
-	public User findUserById(long id);
+	public User findUserByUserId(long id);
 	
 	public List<User> findUserByRole(UserRole role);
 	
 	@Transactional
 	@Modifying
-	@Query("update User user set user.status = com.eureka.model.eurekamodel.model.UserStatus.BLOCKED where user.id = :id")
+	@Query("update User user set user.status = com.eureka.model.eurekamodel.model.UserStatus.BLOCKED where user.userId = :id")
 	public void blockUser(@Param("id") long id);
 	
-	public void delete(User user);
+	@Transactional
+	@Modifying
+	@Query("delete from User where userId = :id")
+	public void delete(@Param("id") long id);
 }
