@@ -16,7 +16,7 @@ public class AccomodationServiceService {
 	AccomodationServiceRepository repository;
 	
 	public AccommodationService findByName(AccommodationService acc) {
-		 return repository.findServiceByName(acc.getName());
+		 return repository.findAccommodationServiceByName(acc.getName());
 	}
 	
 	public void save(AccommodationService service) {

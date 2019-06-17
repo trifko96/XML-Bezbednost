@@ -15,12 +15,12 @@ public interface AccomodationServiceRepository extends JpaRepository<Accommodati
 
 	public AccommodationService save(AccommodationService acc);
 	
-	public AccommodationService findServiceByName(String name);
+	public AccommodationService findAccommodationServiceByName(String name);
 	
 	public List<AccommodationService> findAll();
 	
 	@Transactional
 	@Modifying
-	@Query("delete from AccomodationService where id = :id")
+	@Query("delete from AccommodationService where accommodationServiceId = :id")
 	public void delete(@Param("id") long id);
 }

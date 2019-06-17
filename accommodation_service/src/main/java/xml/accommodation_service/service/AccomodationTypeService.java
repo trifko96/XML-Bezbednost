@@ -17,7 +17,7 @@ public class AccomodationTypeService {
 	AccomodationTypeRepository repository;
 	
 	public AccommodationType findByName(AccommodationType acc) {
-		 return repository.findTypeByName(acc.getName());
+		 return repository.findAccommodationTypeByName(acc.getName());
 	}
 	
 	public void save(AccommodationType service) {
