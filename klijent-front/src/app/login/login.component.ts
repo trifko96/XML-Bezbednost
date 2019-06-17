@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { authService } from '../service/authService';
+import { Router } from '@angular/router';
+import { User } from '../model/User';
 
 @Component({
   selector: 'app-login',
@@ -8,15 +10,23 @@ import { HttpClient } from '@angular/common/http';
 })
 export class LoginComponent implements OnInit {
 
-  message : string
+  user : User = new User();
+  messagge : String;
 
-  constructor(private http: HttpClient) { 
-    this.http.get<string>("api/user-service/getResponse").subscribe(
-      data=>{
-        this.message = data;
-      }
-    );
-  }
+  constructor(private auth : authService, private router : Router) { 
+}
+
+ onClick(){
+   this.auth.login(this.user).subscribe(
+     data => {
+       if(data) {  
+         this.router.navigate(["/home"]);
+       } else {
+         this.messagge = "error";
+       } 
+     }
+   );
+ }
 
   ngOnInit() {
   }
