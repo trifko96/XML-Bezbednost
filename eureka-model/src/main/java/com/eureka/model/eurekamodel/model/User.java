@@ -5,8 +5,6 @@ import java.util.List;
 
 import javax.persistence.*;
 
-
-
 @Entity
 public class User {
 	@Id
@@ -21,6 +19,12 @@ public class User {
 	private UserRole role;
 	private UserStatus status;
 	private String businessId;
+	
+	@OneToMany(mappedBy = "agent", orphanRemoval = true, cascade = CascadeType.ALL )
+	private List<Accommodation> agentAccommodation;
+	
+	@OneToMany(mappedBy = "user", orphanRemoval = true, cascade = CascadeType.ALL )
+	private List<Reservation> reservation;
 	
 	@OneToMany(mappedBy = "send", orphanRemoval = true, cascade = CascadeType.ALL )
 	private List<Messagge> sendMessagge;
@@ -162,9 +166,28 @@ public class User {
 
 	public void setRecension(List<Recension> recension) {
 		this.recension = recension;
+	}
+
+	public List<Reservation> getReservation() {
+		if (reservation == null) {
+            reservation = new ArrayList<Reservation>();
+        }
+        return this.reservation;
+	}
+
+	public void setReservation(List<Reservation> reservation) {
+		this.reservation = reservation;
+	}
+
+	public List<Accommodation> getAgentAccommodation() {
+		if (agentAccommodation == null) {
+            agentAccommodation = new ArrayList<Accommodation>();
+        }
+        return this.agentAccommodation;
+	}
+
+	public void setAgentAccommodation(List<Accommodation> agentAccommodation) {
+		this.agentAccommodation = agentAccommodation;
 	}	
 	
-	
-
-
 }

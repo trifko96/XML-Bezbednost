@@ -11,8 +11,13 @@ public class Reservation {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 	
+	@ManyToOne(fetch=FetchType.EAGER)
+	@JoinColumn(name="idAccommodation", referencedColumnName="accommodationId")
+	private Accommodation accommodation;
 	
-	//private User user;
+	@ManyToOne(fetch=FetchType.EAGER)
+	@JoinColumn(name="idUser", referencedColumnName="userId")
+	private User user;
 	
 	private Date fromDate;
 	private Date toDate;
@@ -43,6 +48,22 @@ public class Reservation {
 
 	public void setToDate(Date toDate) {
 		this.toDate = toDate;
+	}
+
+	public Accommodation getAccommodation() {
+		return accommodation;
+	}
+
+	public void setAccommodation(Accommodation accommodation) {
+		this.accommodation = accommodation;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
 	}
 	
 	

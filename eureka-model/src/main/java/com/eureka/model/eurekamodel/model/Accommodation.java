@@ -7,6 +7,13 @@ import javax.persistence.*;
 
 @Entity
 public class Accommodation {
+	
+	@ManyToOne(fetch=FetchType.EAGER)
+	@JoinColumn(name="idAgent", referencedColumnName="userId")
+	private User agent;
+	
+	@OneToMany(mappedBy = "accommodation", orphanRemoval = true, cascade = CascadeType.ALL)
+	private List<Reservation> reservation;
 
 	@OneToOne
 	@JoinColumn(name = "accomodation_type_id")
@@ -137,6 +144,26 @@ public class Accommodation {
 	public void setCapacity(int capacity) {
 		this.capacity = capacity;
 	}
+
+	public List<Reservation> getReservation() {
+		if (reservation == null) {
+            reservation = new ArrayList<Reservation>();
+        }
+        return this.reservation;
+	}
+
+	public void setReservation(List<Reservation> reservation) {
+		this.reservation = reservation;
+	}
+
+	public User getAgent() {
+		return agent;
+	}
+
+	public void setAgent(User agent) {
+		this.agent = agent;
+	}
+	
 	
 	
 
