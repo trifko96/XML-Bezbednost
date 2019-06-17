@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { User } from '../model/User';
 import { HomeUserService } from '../service/HomeUserService';
+import * as $ from 'jquery';
 
 @Component({
   selector: 'app-home-user',
@@ -16,6 +17,7 @@ export class HomeUserComponent implements OnInit {
   users : User[] = [];
   agent : User = new User();
   existAgent : string;
+  messagge : string;
 
   constructor(private service : HomeUserService) {
 
@@ -44,19 +46,33 @@ export class HomeUserComponent implements OnInit {
   }
 
   onSubmit(){
-    this.service.addNewAgent(this.agent).subscribe(
-      data => {
-        this.agents = data;
-        this.isSubmit = !this.isSubmit;
-        this.isClicked = !this.isClicked;
-        this.isPressed = false;
-        this.agent = new User();
-        this.existAgent = "";
-      },
-      error => {
-        this.existAgent = "Agent with this username or businessId already exist!"
+    let check : boolean = false;
+    $(".form-control").each(function(){
+      if($(this).val() == ""){
+        $(this).addClass("border border-danger");
+        check = true;
+      } else {
+        $(this).removeClass("border border-danger");
       }
-    )
+    })
+    if(!check){
+      this.messagge = "";
+      this.service.addNewAgent(this.agent).subscribe(
+        data => {
+          this.agents = data;
+          this.isSubmit = !this.isSubmit;
+          this.isClicked = !this.isClicked;
+          this.isPressed = false;
+          this.agent = new User();
+          this.existAgent = "";
+        },
+        error => {
+          this.existAgent = "Agent with this username or businessId already exist!"
+        }
+      )
+    } else {
+      this.messagge = "Fill required fields!";
+    }
     
   }
 
