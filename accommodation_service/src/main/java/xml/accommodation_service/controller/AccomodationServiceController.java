@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -37,6 +38,11 @@ public class AccomodationServiceController {
 		//provera
 		List<AccommodationService> accServices = service.delete(accService);
 		return new ResponseEntity<>(accServices, HttpStatus.OK);
+	}
+	
+	@GetMapping(value = "/getServices")
+	public ResponseEntity<List<AccommodationService>> getServices(){
+		return new ResponseEntity<>(service.getAll(),HttpStatus.OK);
 	}
 	
 }

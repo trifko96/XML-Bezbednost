@@ -9,7 +9,7 @@ import { HomeAccomodationComponent } from './home-accomodation/home-accomodation
 import { HomeCommentsComponent } from './home-comments/home-comments.component';
 
 const routes: Route[] = [
-  {path: '', redirectTo: '/home/user', pathMatch: 'full'},
+  {path: '', redirectTo: '/login', pathMatch: 'full'},
   {path: 'login', component: LoginComponent, canActivate: [AuthGuard]},
   {path: 'home', component: HomeComponent, canActivate: [RandomGuard],
     children : [

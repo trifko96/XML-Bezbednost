@@ -28,5 +28,11 @@ export class AccomodationService {
         return this.http.post<AccomodationType[]>("api/accomodation/accType/removeAccType",type);
     }
 
+    getServices() {
+        return this.http.get<AccomodationServiceModel[]>("api/accomodation/accService/getServices");
+    }
 
+    getTypes() {
+        return this.http.get<AccomodationType[]>("api/accomodation/accType/getTypes");
+    }
 }
