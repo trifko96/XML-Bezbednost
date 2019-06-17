@@ -14,6 +14,8 @@ import { AuthInterceptor } from './http-interceptor/interceptor';
 import { HomeUserComponent } from './home-user/home-user.component';
 import { HomeAccomodationComponent } from './home-accomodation/home-accomodation.component';
 import { HomeCommentsComponent } from './home-comments/home-comments.component';
+import { HomeUserService } from './service/HomeUserService';
+import { AccomodationService } from './service/AccomodationService';
 
 @NgModule({
   declarations: [
@@ -34,6 +36,8 @@ import { HomeCommentsComponent } from './home-comments/home-comments.component';
     AuthService,
     AuthGuard,
     RandomGuard,
+    HomeUserService,
+    AccomodationService,
     { provide : HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi : true},
   ],
   bootstrap: [AppComponent]

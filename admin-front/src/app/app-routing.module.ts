@@ -11,7 +11,7 @@ import { HomeCommentsComponent } from './home-comments/home-comments.component';
 const routes: Route[] = [
   {path: '', redirectTo: '/home/user', pathMatch: 'full'},
   {path: 'login', component: LoginComponent, canActivate: [AuthGuard]},
-  {path: 'home', component: HomeComponent, canActivate: [AuthGuard],
+  {path: 'home', component: HomeComponent, canActivate: [RandomGuard],
     children : [
       {path: '', redirectTo: 'user', pathMatch: 'full'},
       {path: 'user', component: HomeUserComponent},
