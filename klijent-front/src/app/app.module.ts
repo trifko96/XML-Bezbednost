@@ -9,13 +9,15 @@ import { HttpClientModule } from '@angular/common/http';
 import { RegistrationComponent } from './registration/registration.component';
 import { HomeComponent } from './home/home.component';
 import {authService} from './service/authService';
+import { HomeAccommodationComponent } from './home-accommodation/home-accommodation.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     RegistrationComponent,
-    HomeComponent
+    HomeComponent,
+    HomeAccommodationComponent
   ],
   imports: [
     BrowserModule,
