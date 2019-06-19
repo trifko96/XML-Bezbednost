@@ -4,39 +4,46 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.*;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlType;
 
 @Entity
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlType(name = "user", propOrder = {
+	"userId",
+	"name",
+	"surname",
+	"email",
+	"password",
+	"username",
+	"role",
+	"status",
+	"businessId"
+})
 public class User {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@XmlElement(required = true)
 	private long userId;
-	
+	@XmlElement(required = true)
 	private String name;
+	@XmlElement(required = true)
 	private String surname;
+	@XmlElement(required = true)
 	private String email;
+	@XmlElement(required = true)
 	private String password;
+	@XmlElement(required = true)
 	private String username;
+	@XmlElement(required = true)
 	private UserRole role;
+	@XmlElement(required = true)
 	private UserStatus status;
+	@XmlElement(required = true)
 	private String businessId;
 	
-	@OneToMany(mappedBy = "agent", orphanRemoval = true, cascade = CascadeType.ALL )
-	private List<Accommodation> agentAccommodation;
-	
-	@OneToMany(mappedBy = "user", orphanRemoval = true, cascade = CascadeType.ALL )
-	private List<Reservation> reservation;
-	
-	@OneToMany(mappedBy = "send", orphanRemoval = true, cascade = CascadeType.ALL )
-	private List<Messagge> sendMessagge;
-	
-	@OneToMany(mappedBy = "receive", orphanRemoval = true, cascade = CascadeType.ALL )
-	private List<Messagge> receiveMessagge;
-
-	@OneToMany(mappedBy = "user", orphanRemoval = true, cascade = CascadeType.ALL )
-	private List<Rating> rating;
-	
-	@OneToMany(mappedBy = "user", orphanRemoval = true, cascade = CascadeType.ALL )
-	private List<Recension> recension;
 	
 	public User() {
 		
@@ -58,39 +65,6 @@ public class User {
 
 	public void setUserId(long userId) {
 		this.userId = userId;
-	}
-
-	public List<Messagge> getSendMessagge() {
-		if (sendMessagge == null) {
-            sendMessagge = new ArrayList<Messagge>();
-        }
-        return this.sendMessagge;
-	}
-
-	public void setSendMessage(List<Messagge> sendMessage) {
-		this.sendMessagge = sendMessage;
-	}
-
-	public List<Messagge> getReceiveMessage() {
-		if (receiveMessagge == null) {
-            receiveMessagge = new ArrayList<Messagge>();
-        }
-        return this.receiveMessagge;
-	}
-
-	public void setReceiveMessage(List<Messagge> receiveMessage) {
-		this.receiveMessagge = receiveMessage;
-	}
-
-	public List<Rating> getRating() {
-		if (rating == null) {
-            rating = new ArrayList<Rating>();
-        }
-        return this.rating;
-	}
-
-	public void setRating(List<Rating> rating) {
-		this.rating = rating;
 	}
 
 	public String getName() {
@@ -157,37 +131,5 @@ public class User {
 		this.businessId = businessId;
 	}
 
-	public List<Recension> getRecension() {
-		if (recension == null) {
-            recension = new ArrayList<Recension>();
-        }
-        return this.recension;
-	}
-
-	public void setRecension(List<Recension> recension) {
-		this.recension = recension;
-	}
-
-	public List<Reservation> getReservation() {
-		if (reservation == null) {
-            reservation = new ArrayList<Reservation>();
-        }
-        return this.reservation;
-	}
-
-	public void setReservation(List<Reservation> reservation) {
-		this.reservation = reservation;
-	}
-
-	public List<Accommodation> getAgentAccommodation() {
-		if (agentAccommodation == null) {
-            agentAccommodation = new ArrayList<Accommodation>();
-        }
-        return this.agentAccommodation;
-	}
-
-	public void setAgentAccommodation(List<Accommodation> agentAccommodation) {
-		this.agentAccommodation = agentAccommodation;
-	}	
 	
 }

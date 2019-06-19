@@ -2,10 +2,21 @@ package com.eureka.model.eurekamodel.model;
 
 import java.util.List;
 
-public class GetRatingResponse {
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
 
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlType(name = "", propOrder = {
+	"ratings"
+})
+@XmlRootElement(name = "get_rating_response")
+public class GetRatingResponse {
+	
+	@XmlElement(required = true)
 	private List<Rating> ratings;
-	private SoapStatus status;
 	
 	public GetRatingResponse() {
 		
@@ -17,14 +28,6 @@ public class GetRatingResponse {
 
 	public void setRatings(List<Rating> ratings) {
 		this.ratings = ratings;
-	}
-
-	public SoapStatus getStatus() {
-		return status;
-	}
-
-	public void setStatus(SoapStatus status) {
-		this.status = status;
 	}
 	
 	

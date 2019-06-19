@@ -4,49 +4,60 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.*;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlType;
 
 @Entity
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlType(name = "accommodation", propOrder = {
+	"agent",
+	"accommodationType",
+	"description",
+	"accommodationService",
+	"category",
+	"location",
+	"accommodationId",
+	"capacity"
+})
 public class Accommodation {
 	
 	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="idAgent", referencedColumnName="userId")
+	@XmlElement(required = true)
 	private User agent;
-	
-	@OneToMany(mappedBy = "accommodation", orphanRemoval = true, cascade = CascadeType.ALL)
-	private List<Reservation> reservation;
 
 	@OneToOne
 	@JoinColumn(name = "accomodation_type_id")
+	@XmlElement(required = true)
 	private AccommodationType accommodationType;
 	
+	@XmlElement(required = true)
 	private String description;
-
-	@OneToMany(mappedBy = "accommodation", orphanRemoval = true, cascade = CascadeType.ALL )
-	private List<Rating> rating;
 	
 	@ManyToMany(cascade = CascadeType.PERSIST)
 	@JoinTable(name = "ACCOMMODATION_SERVICE_UNIT", 
 			joinColumns= {@JoinColumn(name="accommodationId")},
 			inverseJoinColumns= {@JoinColumn(name="accommodationServiceId")})
+	@XmlElement(required = true)
 	private List<AccommodationService> accommodationService;
 	
+	@XmlElement(required = true)
 	private int category;
-	
-	@OneToMany(mappedBy = "accommodation", orphanRemoval = true, cascade = CascadeType.ALL)
-	private List<Recension> recension;
 	
 
     @OneToOne
 	@JoinColumn(name = "location_id")
-	private Location location;
-	
-	@OneToMany(mappedBy = "accommodation", orphanRemoval = true, cascade = CascadeType.ALL )
-	private List<Price> price;
+    @XmlElement(required = true)
+    private Location location;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long accommodationId;
+    @XmlElement(required = true)
+    private long accommodationId;
 	
+    @XmlElement(required = true)
 	private int capacity;
 	
 	public Accommodation() {
@@ -69,17 +80,6 @@ public class Accommodation {
 		this.description = description;
 	}
 
-	public List<Rating> getRating() {
-		if (rating == null) {
-            rating = new ArrayList<Rating>();
-        }
-        return this.rating;
-	}
-
-	public void setRating(List<Rating> rating) {
-		this.rating = rating;
-	}
-
 	public List<AccommodationService> getAccommodationService() {
 		if (accommodationService == null) {
             accommodationService = new ArrayList<AccommodationService>();
@@ -99,34 +99,12 @@ public class Accommodation {
 		this.category = category;
 	}
 
-	public List<Recension> getRecension() {
-		if (recension == null) {
-            recension = new ArrayList<Recension>();
-        }
-        return this.recension;
-	}
-
-	public void setRecension(List<Recension> recension) {
-		this.recension = recension;
-	}
-
 	public Location getLocation() {
 		return location;
 	}
 
 	public void setLocation(Location location) {
 		this.location = location;
-	}
-
-	public List<Price> getPrice() {
-		if (price == null) {
-            price = new ArrayList<Price>();
-        }
-        return this.price;
-	}
-
-	public void setPrice(List<Price> price) {
-		this.price = price;
 	}
 
 	public long getAccommodationId() {
@@ -143,17 +121,6 @@ public class Accommodation {
 
 	public void setCapacity(int capacity) {
 		this.capacity = capacity;
-	}
-
-	public List<Reservation> getReservation() {
-		if (reservation == null) {
-            reservation = new ArrayList<Reservation>();
-        }
-        return this.reservation;
-	}
-
-	public void setReservation(List<Reservation> reservation) {
-		this.reservation = reservation;
 	}
 
 	public User getAgent() {

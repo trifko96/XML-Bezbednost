@@ -1,23 +1,39 @@
 package com.eureka.model.eurekamodel.model;
 
 import javax.persistence.*;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlType;
 
 @Entity
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlType(name = "recension", propOrder = {
+	"id",
+	"value",
+	"recensionStatus",
+	"user",
+	"accommodation"
+})
 public class Recension {
 	
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@XmlElement(required = true)
 	private long id;
-	
+	@XmlElement(required = true)
 	private String value;
+	@XmlElement(required = true)
 	private RecensionStatus recensionStatus;
 	
 	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="idUser", referencedColumnName="userId")
+	@XmlElement(required = true)
 	private User user;
 	
 	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="idAccommodation", referencedColumnName="accommodationId")
+	@XmlElement(required = true)
 	private Accommodation accommodation;
 	
 	public Recension() {

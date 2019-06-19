@@ -4,8 +4,8 @@ import javax.xml.bind.annotation.XmlEnum;
 import javax.xml.bind.annotation.XmlType;
 
 @XmlEnum
-@XmlType(name = "soap_status")
-public enum SoapStatus {
+@XmlType(name = "reservation_status")
+public enum ReservationStatus {
 
-	SUCCESS, ERROR;
+	APPROVED, PENDING;
 }

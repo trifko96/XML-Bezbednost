@@ -1,0 +1,313 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<xs:schema version="1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	elementFormDefault="qualified" targetNamespace = "http://www.ftn.uns.ac.rs/megatravel"
+	xmlns="http://www.ftn.uns.ac.rs/megatravel">
+
+  <xs:element name="add_accommodation_request">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="agentId" type="xs:long"/>
+        <xs:element name="accommodation" type="accommodation"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="add_accommodation_response">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="status" type="soap_status"/>
+        <xs:element name="accommodationId" type="xs:long"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="approve_reservation_request">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="reservationId" type="xs:long"/>
+        <xs:element name="isApproved" type="xs:boolean"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="approve_reservation_response">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="status" type="soap_status"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="get_accommodation_service_request">
+    <xs:complexType>
+      <xs:sequence/>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="get_accommodation_service_response">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="accommodationService" type="accommodation_service" maxOccurs="unbounded"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="get_accommodation_type_request">
+    <xs:complexType>
+      <xs:sequence/>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="get_accommodation_type_response">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="accommodationType" type="accommodation_type" maxOccurs="unbounded"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="get_agent_request">
+    <xs:complexType>
+      <xs:sequence/>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="get_agent_response">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="users" type="user" maxOccurs="unbounded"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="get_message_request">
+    <xs:complexType>
+      <xs:sequence/>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="get_message_response">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="messagge" type="messagge" maxOccurs="unbounded"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="get_rating_request">
+    <xs:complexType>
+      <xs:sequence/>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="get_rating_response">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="ratings" type="rating" maxOccurs="unbounded"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="get_recension_request">
+    <xs:complexType>
+      <xs:sequence/>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="get_recension_response">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="recension" type="recension" maxOccurs="unbounded"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="get_reservation_request">
+    <xs:complexType>
+      <xs:sequence/>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="get_reservation_response">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="reservation" type="reservation" maxOccurs="unbounded"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="message_request">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="message" type="messagge"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="message_response">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="status" type="soap_status"/>
+        <xs:element name="messaggeId" type="xs:long"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="reservation_request">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="agentId" type="xs:long"/>
+        <xs:element name="reservation" type="reservation"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="reservation_response">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="reservationId" type="xs:long"/>
+        <xs:element name="status" type="soap_status"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:complexType name="messagge">
+    <xs:sequence>
+      <xs:element name="id" type="xs:long"/>
+      <xs:element name="send" type="user"/>
+      <xs:element name="receive" type="user"/>
+      <xs:element name="content" type="xs:string"/>
+      <xs:element name="date" type="xs:dateTime"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="user">
+    <xs:sequence>
+      <xs:element name="userId" type="xs:long"/>
+      <xs:element name="name" type="xs:string"/>
+      <xs:element name="surname" type="xs:string"/>
+      <xs:element name="email" type="xs:string"/>
+      <xs:element name="password" type="xs:string"/>
+      <xs:element name="username" type="xs:string"/>
+      <xs:element name="role" type="user_role"/>
+      <xs:element name="status" type="user_status"/>
+      <xs:element name="businessId" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="accommodation_service">
+    <xs:sequence>
+      <xs:element name="name" type="xs:string"/>
+      <xs:element name="accommodationServiceId" type="xs:long"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="location">
+    <xs:sequence>
+      <xs:element name="id" type="xs:long"/>
+      <xs:element name="longitude" type="xs:float"/>
+      <xs:element name="lattitude" type="xs:float"/>
+      <xs:element name="country" type="xs:string"/>
+      <xs:element name="city" type="xs:string"/>
+      <xs:element name="street" type="xs:string"/>
+      <xs:element name="number" type="xs:int"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="accommodation">
+    <xs:sequence>
+      <xs:element name="agent" type="user"/>
+      <xs:element name="accommodationType" type="accommodation_type"/>
+      <xs:element name="description" type="xs:string"/>
+      <xs:element name="accommodationService" type="accommodation_service" maxOccurs="unbounded"/>
+      <xs:element name="category" type="xs:int"/>
+      <xs:element name="location" type="location"/>
+      <xs:element name="accommodationId" type="xs:long"/>
+      <xs:element name="capacity" type="xs:int"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="accommodation_type">
+    <xs:sequence>
+      <xs:element name="name" type="xs:string"/>
+      <xs:element name="id" type="xs:long"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="recension">
+    <xs:sequence>
+      <xs:element name="id" type="xs:long"/>
+      <xs:element name="value" type="xs:string"/>
+      <xs:element name="recensionStatus" type="recension_status"/>
+      <xs:element name="user" type="user"/>
+      <xs:element name="accommodation" type="accommodation"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="reservation">
+    <xs:sequence>
+      <xs:element name="id" type="xs:long"/>
+      <xs:element name="accommodation" type="accommodation"/>
+      <xs:element name="user" type="user"/>
+      <xs:element name="fromDate" type="xs:dateTime"/>
+      <xs:element name="toDate" type="xs:dateTime"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="rating">
+    <xs:sequence>
+      <xs:element name="id" type="xs:long"/>
+      <xs:element name="accommodation" type="accommodation"/>
+      <xs:element name="user" type="user"/>
+      <xs:element name="value" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="price">
+    <xs:sequence>
+      <xs:element name="id" type="xs:long"/>
+      <xs:element name="oneNightPrice" type="xs:int"/>
+      <xs:element name="fromDate" type="xs:dateTime"/>
+      <xs:element name="toDate" type="xs:dateTime"/>
+      <xs:element name="accommodation" type="accommodation"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:simpleType name="user_role">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="ADMIN"/>
+      <xs:enumeration value="USER"/>
+      <xs:enumeration value="AGENT"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="user_status">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="BLOCKED"/>
+      <xs:enumeration value="ACTIVATED"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="reservation_status">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="APPROVED"/>
+      <xs:enumeration value="PENDING"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="soap_status">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="SUCCESS"/>
+      <xs:enumeration value="ERROR"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="recension_status">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="REJECTED"/>
+      <xs:enumeration value="ACCEPTED"/>
+      <xs:enumeration value="NOT_ACCEPTED"/>
+    </xs:restriction>
+  </xs:simpleType>
+</xs:schema>
+

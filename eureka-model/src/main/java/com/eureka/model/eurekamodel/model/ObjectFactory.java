@@ -1,5 +1,8 @@
 package com.eureka.model.eurekamodel.model;
 
+import javax.xml.bind.annotation.XmlRegistry;
+
+@XmlRegistry
 public class ObjectFactory {
 
 	public ObjectFactory () {
@@ -124,5 +127,13 @@ public class ObjectFactory {
 	
 	public ReservationResponse createReservationResponse() {
 		return new ReservationResponse();
+	}
+	
+	public GetRatingRequest createGetRatingRequest() {
+		return new GetRatingRequest();
+	}
+	
+	public GetRatingResponse createGetRatingResponse() {
+		return new GetRatingResponse();
 	}
 }

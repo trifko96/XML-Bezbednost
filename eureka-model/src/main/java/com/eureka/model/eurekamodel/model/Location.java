@@ -1,20 +1,45 @@
 package com.eureka.model.eurekamodel.model;
 
 import javax.persistence.*;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlType;
 
 @Entity
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlType(name = "location", propOrder= {
+	"id",
+	"longitude",
+	"lattitude",
+	"country",
+	"city",
+	"street",
+	"number"
+})
 public class Location {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@XmlElement(required = true)
 	private long id;
 	
+	@XmlElement(required = true)
 	private float longitude;
+	
+	@XmlElement(required = true)
 	private float lattitude;
 	
+	@XmlElement(required = true)
 	private String country;
+	
+	@XmlElement(required = true)
 	private String city;
+	
+	@XmlElement(required = true)
 	private String street;
+	
+	@XmlElement(required = true)
 	private int number;
 	
 	

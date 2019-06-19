@@ -1,8 +1,21 @@
 package com.eureka.model.eurekamodel.model;
 
-public class ReservationRequest {
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
 
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlType(name = "", propOrder = {
+	"agentId",
+	"reservation"
+})
+@XmlRootElement(name = "reservation_request")
+public class ReservationRequest {
+	@XmlElement(required = true)
 	private long agentId;
+	@XmlElement(required = true)
 	private Reservation reservation;
 	
 	

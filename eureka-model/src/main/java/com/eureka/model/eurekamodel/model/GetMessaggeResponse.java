@@ -2,10 +2,21 @@ package com.eureka.model.eurekamodel.model;
 
 import java.util.List;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
+
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlType(name = "", propOrder = {
+	"messagge"
+})
+@XmlRootElement(name = "get_message_response")
 public class GetMessaggeResponse {
 
+	@XmlElement(required = true)
 	private List<Messagge> messagge;
-	private SoapStatus status; 
 	
 	public GetMessaggeResponse () {
 		
@@ -17,14 +28,6 @@ public class GetMessaggeResponse {
 
 	public void setMessagge(List<Messagge> messagge) {
 		this.messagge = messagge;
-	}
-
-	public SoapStatus getStatus() {
-		return status;
-	}
-
-	public void setStatus(SoapStatus status) {
-		this.status = status;
 	}
 	
 	

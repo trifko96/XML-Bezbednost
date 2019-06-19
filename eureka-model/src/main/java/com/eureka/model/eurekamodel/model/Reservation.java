@@ -3,23 +3,39 @@ package com.eureka.model.eurekamodel.model;
 import java.util.Date;
 
 import javax.persistence.*;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlType;
 
 @Entity
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlType(name = "reservation", propOrder = {
+	"id",
+	"accommodation",
+	"user",
+	"fromDate",
+	"toDate"
+})
 public class Reservation {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@XmlElement(required = true)
 	private long id;
 	
 	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="idAccommodation", referencedColumnName="accommodationId")
+	@XmlElement(required = true)
 	private Accommodation accommodation;
 	
 	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="idUser", referencedColumnName="userId")
+	@XmlElement(required = true)
 	private User user;
-	
+	@XmlElement(required = true)
 	private Date fromDate;
+	@XmlElement(required = true)
 	private Date toDate;
 	
 	public Reservation() {
