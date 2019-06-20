@@ -1,4 +1,4 @@
-package com.eureka.model.eurekamodel.model;
+package agent.agent.model;
 
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlAccessType;

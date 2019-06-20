@@ -1,4 +1,4 @@
-package com.eureka.model.eurekamodel.model;
+package agent.agent.model;
 
 import java.util.ArrayList;
 import java.util.List;
