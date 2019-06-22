@@ -1,5 +1,4 @@
-import { AccommodationUnit } from './AccommodationUnit';
-import { User } from './User';
+
 
 export class Reservation{
     id : number;

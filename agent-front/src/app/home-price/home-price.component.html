@@ -10,11 +10,15 @@
               <th>&nbsp;</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody *ngFor="let a of accUnits">
+            <tr>
+              <td>{{a.name}}</td>
+              <td><button class="btn btn-link" (click)="showPlans(a)">Show price plans</button></td>
+            </tr>
           </tbody>
         </table>
       </div>
-      <div class="col-md-8" style="max-height: 320px; overflow-y:  scroll;">
+      <div class="col-md-8" style="max-height: 320px; overflow-y:  scroll;" *ngIf="isShowed">
           <br>
           <h4>Price plans:</h4>            
           <table class="table">
@@ -26,7 +30,13 @@
                 <th><button class="btn btn-dark" (click)="onClick()">Add new price plan</button></th>
               </tr>
             </thead>
-            <tbody>
+            <tbody *ngFor="let p of pricePlans">
+              <tr>
+                <td>{{p.fromDate.slice(0,10)}}</td>
+                <td>{{p.toDate.slice(0,10)}}</td>
+                <td>{{p.oneNightPrice}}$</td>
+                <td>&nbsp;</td>
+              </tr>
             </tbody>
           </table>
         </div>
@@ -39,16 +49,17 @@
           <div class="form-group row">
             <div class="col-sm-12">
             <input type="text" readonly=true placeholder="Choose dates"class="form-control" 
-              bsDaterangepicker [bsConfig]="{ isAnimated: true, adaptivePosition: true, dateInputFormat: 'yyyy-MM-dd' }">
+              bsDaterangepicker [(ngModel)]="dates" [ngModelOptions]="{standalone: true}" [bsConfig]="{ isAnimated: true, adaptivePosition: true, dateInputFormat: 'yyyy-MM-dd' }">
             </div>
           </div>
           <div class="form-group row">
             <div class="col-sm-12">
-              <input type="number" class="form-control" placeholder="Price per night">
+              <input type="number" class="form-control" placeholder="Price per night" [(ngModel)]="pricePlan.oneNightPrice" [ngModelOptions]="{standalone: true}">
             </div>
           </div>
           <div class="form-group row">
             <div class="col-sm-12 text-center">
+              <p class="text-danger">{{messagge}}</p>
               <button class="btn btn-dark" (click) = "onSubmit()">Add</button>
             </div>
           </div>
