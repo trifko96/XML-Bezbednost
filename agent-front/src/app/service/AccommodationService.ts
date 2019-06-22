@@ -27,4 +27,12 @@ export class AccommodationService {
         return this.http.get<AccommodationType[]>("api/acc/getAllTypes");
     }
 
+    getServicesByUnit(acc : AccommodationUnit){
+        return this.http.post<AccommodationServices[]>("api/acc/getServicesByUnit", acc);
+    }
+
+    reserveAccUnit(acc : AccommodationUnit){
+        return this.http.post<AccommodationUnit[]>("api/acc/reserveAccUnit", acc);
+    }
+
 }

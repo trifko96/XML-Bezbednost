@@ -1,16 +1,18 @@
 import { AccommodationType } from './AccommodationType';
 import { AccommodationServices } from './AccommodationServices';
 import { Image } from './Image';
+import { Location } from './Location';
 
 export class AccommodationUnit {
-    type : AccommodationType;
-    description : string;
-    services : AccommodationServices[] = [];
+    accommodationType : AccommodationType;
+    description : string = "";
+    accommodationService : AccommodationServices[] = [];
     category : string;
     location : Location = new Location();
-    id : number;
+    accommodationId : number;
     capacity : number;
-    name : string;
+    name : string = "";
     cancelingPeriod : number;
     image : Image[];
+    status : string;
 }

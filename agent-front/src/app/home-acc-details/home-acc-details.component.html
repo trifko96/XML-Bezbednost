@@ -13,27 +13,49 @@
               <th>Canceling period in days</th>
               <th>Type</th>
               <th>Category</th>
+              <th>Status</th>
+              <th>&nbsp;</th>
               <th>&nbsp;</th>
               <th>&nbsp;</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody *ngFor="let unit of accUnits">
+            <tr>
+              <td>{{unit.name}}</td>
+              <td>{{unit.location.name}}</td>
+              <td>{{unit.description}}</td>
+              <td>{{unit.capacity}}</td>
+              <td>{{unit.cancelingPeriod}}</td>
+              <td>{{unit.accommodationType.name}}</td>
+              <td>{{unit.category}}*</td>
+              <td>{{unit.status}}</td>
+              <td><button class="btn btn-link" (click)="onClick(unit)">Show services</button></td>
+              <td><button class="btn btn-link" (click)="onClick1(unit)">Show images</button></td>
+              <td *ngIf="unit.status == 'FREE'"><button class="btn btn-link" (click)="onClick2(unit)">Reserve</button></td>
+            </tr>
           </tbody>
         </table>
       </div>
-      <div class="col-3">
+      <div class="col-3" *ngIf="showService">
               <label class="col-sm-2 col-form-label">Services:</label>
               <div class="col-8 form-group">
                   <div class="list-group w-100" style="max-height: 191px; overflow-y:  scroll;">
-                    <div class="list-group-item" style="display: block">
-                        
+                    <div class="list-group-item" style="display: block" *ngFor="let acc of accServices">
+                        <label class="form-check-label">{{acc.name}}</label>
                     </div>
                   </div>
               </div>
+              <button class="btn btn-dark" (click)="onHide()">Hide</button>
               
       </div>
     </div>
     <div class="row">
-      
+        <div class="col-6 " style="max-height: 230px; max-width: 500px"> 
+            <carousel>
+                <slide *ngFor="let image of images">
+                  <img [src]="image" style="display: block; width: 100%;max-height: 230px;">
+                </slide>
+            </carousel>
+        </div>
     </div>
   </div>

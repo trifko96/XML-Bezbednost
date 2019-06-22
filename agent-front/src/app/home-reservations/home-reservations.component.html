@@ -1,6 +1,6 @@
 <div class="container-fluid">
   <div class="row">
-    <div class="col-6" style="max-height: 320px; overflow-y:  scroll;">
+    <div class="col-8" style="max-height: 320px; overflow-y:  scroll;">
       <br>
       <h4>Reservations:</h4>            
       <table class="table">
@@ -10,11 +10,21 @@
             <th>Accommodation</th>
             <th>From</th>
             <th>To</th>
+            <th>Status</th>
             <th>&nbsp;</th>
             <th>&nbsp;</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody *ngFor="let r of reservations">
+          <tr>
+            <td>{{r.username}}</td>
+            <td>{{r.accName}}</td>
+            <td>{{r.fromDate}}</td>
+            <td>{{r.toDate}}</td>
+            <td>{{r.status}}</td>
+            <td *ngIf="r.status == 'PENDING'"><button class="btn btn-link" (click)="approve(r)">Approve</button></td>
+            <td *ngIf="r.status == 'PENDING'"><button class="btn btn-link" (click)="reject(r)">Reject</button></td>
+          </tr>
         </tbody>
       </table>
     </div>
