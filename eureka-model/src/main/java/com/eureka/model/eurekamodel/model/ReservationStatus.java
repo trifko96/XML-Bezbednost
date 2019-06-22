@@ -7,5 +7,5 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "reservation_status")
 public enum ReservationStatus {
 
-	APPROVED, PENDING;
+	APPROVED, PENDING, REJECTED;
 }

@@ -52,4 +52,12 @@ public class AccommodationService {
 	public List<agent.agent.model.AccommodationService> getAllServices(){
 		return serviceRepository.findAll();
 	}
+	
+	public List<agent.agent.model.AccommodationService> getServicesByUnit(long id){
+		return serviceRepository.getServicesByUnit(id);
+	}
+	
+	public void reserveAcc(long id) {
+		repository.reserveAcc(id);
+	}
 }

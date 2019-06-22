@@ -3,6 +3,7 @@ package agent.agent.dto;
 import java.util.ArrayList;
 
 import agent.agent.model.Accommodation;
+import agent.agent.model.AccommodationStatus;
 import agent.agent.model.AccommodationType;
 import agent.agent.model.Location;
 
@@ -17,6 +18,7 @@ public class AccommodationDTO {
 	private String name;
 	private int cancelingPeriod;
 	private ArrayList<String> images;
+	private AccommodationStatus status;
 	
 	public AccommodationDTO() {}
 	
@@ -30,6 +32,7 @@ public class AccommodationDTO {
 		this.name = acc.getName();
 		this.cancelingPeriod = acc.getCancelingPeriod();
 		this.images = new ArrayList<>();
+		this.status = acc.getStatus();
 	}
 
 	public AccommodationType getAccommodationType() {
@@ -102,6 +105,14 @@ public class AccommodationDTO {
 
 	public void setImages(ArrayList<String> images) {
 		this.images = images;
+	}
+
+	public AccommodationStatus getStatus() {
+		return status;
+	}
+
+	public void setStatus(AccommodationStatus status) {
+		this.status = status;
 	}
 	
 	

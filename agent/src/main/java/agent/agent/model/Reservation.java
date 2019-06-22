@@ -15,7 +15,8 @@ import javax.xml.bind.annotation.XmlType;
 	"accommodation",
 	"user",
 	"fromDate",
-	"toDate"
+	"toDate",
+	"status"
 })
 public class Reservation {
 	
@@ -37,6 +38,8 @@ public class Reservation {
 	private Date fromDate;
 	@XmlElement(required = true)
 	private Date toDate;
+	@XmlElement(required = true)
+	private ReservationStatus status;
 	
 	public Reservation() {
 		
@@ -80,6 +83,14 @@ public class Reservation {
 
 	public void setUser(User user) {
 		this.user = user;
+	}
+
+	public ReservationStatus getStatus() {
+		return status;
+	}
+
+	public void setStatus(ReservationStatus status) {
+		this.status = status;
 	}
 	
 	

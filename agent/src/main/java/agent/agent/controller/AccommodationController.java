@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import agent.agent.dto.AccommodationDTO;
 import agent.agent.model.Accommodation;
+import agent.agent.model.AccommodationStatus;
 import agent.agent.model.AccommodationType;
 import agent.agent.model.User;
 import agent.agent.service.AccommodationService;
@@ -32,6 +33,7 @@ public class AccommodationController {
 	public ResponseEntity<AccommodationDTO> addNewAcc(@RequestBody Accommodation acc){
 		User agent = agentService.getUser();
 		acc.setAgent(agent);
+		acc.setStatus(AccommodationStatus.FREE);
 		AccommodationDTO a = service.addNewAcc(acc);
 		if(a != null) {
 			return new ResponseEntity<>(a, HttpStatus.OK);
@@ -55,5 +57,19 @@ public class AccommodationController {
 	@GetMapping(value = "/getAllServices")
 	public ResponseEntity<List<agent.agent.model.AccommodationService>> getAllServices(){
 		return new ResponseEntity<>(service.getAllServices(),HttpStatus.OK);
+	}
+	
+	@PostMapping(value = "/getServicesByUnit", consumes = "application/json")
+	public ResponseEntity<List<agent.agent.model.AccommodationService>> getServicesByUnit(@RequestBody Accommodation acc){
+		return new ResponseEntity<>(service.getServicesByUnit(acc.getAccommodationId()),HttpStatus.OK);
+	}
+	
+	@PostMapping(value="/reserveAccUnit", consumes="application/json")
+	public ResponseEntity<List<AccommodationDTO>> reserveAccUnit(@RequestBody Accommodation acc){
+		service.reserveAcc(acc.getAccommodationId());
+		User agent = agentService.getUser();
+		List<AccommodationDTO> accDTO = service.getAllUnits(agent.getUserId());
+		return new ResponseEntity<>(accDTO, HttpStatus.OK);
+		
 	}
 }

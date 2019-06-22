@@ -202,15 +202,6 @@
     </xs:sequence>
   </xs:complexType>
 
-  <xs:complexType name="location">
-    <xs:sequence>
-      <xs:element name="id" type="xs:long"/>
-      <xs:element name="longitude" type="xs:float"/>
-      <xs:element name="lattitude" type="xs:float"/>
-      <xs:element name="name" type="xs:string"/>
-    </xs:sequence>
-  </xs:complexType>
-
   <xs:complexType name="accommodation">
     <xs:sequence>
       <xs:element name="agent" type="user"/>
@@ -223,6 +214,7 @@
       <xs:element name="capacity" type="xs:int"/>
       <xs:element name="name" type="xs:string"/>
       <xs:element name="cancelingPeriod" type="xs:int"/>
+      <xs:element name="status" type="accommodationStatus"/>
     </xs:sequence>
   </xs:complexType>
 
@@ -230,6 +222,15 @@
     <xs:sequence>
       <xs:element name="name" type="xs:string"/>
       <xs:element name="id" type="xs:long"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="location">
+    <xs:sequence>
+      <xs:element name="id" type="xs:long"/>
+      <xs:element name="longitude" type="xs:float"/>
+      <xs:element name="lattitude" type="xs:float"/>
+      <xs:element name="name" type="xs:string"/>
     </xs:sequence>
   </xs:complexType>
 
@@ -250,6 +251,16 @@
       <xs:element name="user" type="user"/>
       <xs:element name="fromDate" type="xs:dateTime"/>
       <xs:element name="toDate" type="xs:dateTime"/>
+      <xs:element name="status" type="reservation_status"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="rating">
+    <xs:sequence>
+      <xs:element name="id" type="xs:long"/>
+      <xs:element name="accommodation" type="accommodation"/>
+      <xs:element name="user" type="user"/>
+      <xs:element name="value" type="xs:string"/>
     </xs:sequence>
   </xs:complexType>
 
@@ -260,15 +271,6 @@
       <xs:element name="fromDate" type="xs:dateTime"/>
       <xs:element name="toDate" type="xs:dateTime"/>
       <xs:element name="accommodation" type="accommodation"/>
-    </xs:sequence>
-  </xs:complexType>
-
-  <xs:complexType name="rating">
-    <xs:sequence>
-      <xs:element name="id" type="xs:long"/>
-      <xs:element name="accommodation" type="accommodation"/>
-      <xs:element name="user" type="user"/>
-      <xs:element name="value" type="xs:string"/>
     </xs:sequence>
   </xs:complexType>
 
@@ -301,6 +303,7 @@
     <xs:restriction base="xs:string">
       <xs:enumeration value="APPROVED"/>
       <xs:enumeration value="PENDING"/>
+      <xs:enumeration value="REJECTED"/>
     </xs:restriction>
   </xs:simpleType>
 
@@ -308,6 +311,13 @@
     <xs:restriction base="xs:string">
       <xs:enumeration value="SUCCESS"/>
       <xs:enumeration value="ERROR"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="accommodationStatus">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="FREE"/>
+      <xs:enumeration value="RESERVED"/>
     </xs:restriction>
   </xs:simpleType>
 

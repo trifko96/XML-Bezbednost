@@ -21,10 +21,13 @@ import javax.xml.bind.annotation.XmlType;
 	"accommodationId",
 	"capacity",
 	"name",
-	"cancelingPeriod"
+	"cancelingPeriod",
+	"status"
 })
 public class Accommodation {
 	
+	
+
 	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="idAgent", referencedColumnName="userId")
 	@XmlElement(required = true)
@@ -38,10 +41,10 @@ public class Accommodation {
 	@XmlElement(required = true)
 	private String description;
 	
-	@ManyToMany(cascade = CascadeType.PERSIST)
+	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "ACCOMMODATION_SERVICE_UNIT", 
-			joinColumns= {@JoinColumn(name="accommodationId")},
-			inverseJoinColumns= {@JoinColumn(name="accommodationServiceId")})
+		joinColumns= {@JoinColumn(name="accommodationId")},
+		inverseJoinColumns= {@JoinColumn(name="accommodationServiceId")})
 	@XmlElement(required = true)
 	private List<AccommodationService> accommodationService;
 	
@@ -49,7 +52,7 @@ public class Accommodation {
 	private int category;
 	
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "location_id")
     @XmlElement(required = true)
     private Location location;
@@ -67,6 +70,9 @@ public class Accommodation {
     
     @XmlElement(required = true)
     private int cancelingPeriod;
+    
+    @XmlElement(required = true)
+    private AccommodationStatus status;
 	
 	public Accommodation() {
 		
@@ -154,7 +160,14 @@ public class Accommodation {
 	public void setCancelingPeriod(int cancelingPeriod) {
 		this.cancelingPeriod = cancelingPeriod;
 	}
-	
+
+	public AccommodationStatus getStatus() {
+		return status;
+	}
+
+	public void setStatus(AccommodationStatus status) {
+		this.status = status;
+	}
 	
 	
 
