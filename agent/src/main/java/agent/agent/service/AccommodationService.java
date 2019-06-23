@@ -12,6 +12,7 @@ import agent.agent.model.AccommodationType;
 import agent.agent.repository.AccommodationRepository;
 import agent.agent.repository.AccommodationServiceRepository;
 import agent.agent.repository.AccommodationTypeRepository;
+import agent.agent.soap_clients.AccommodationServiceSoapClient;
 
 @Service
 public class AccommodationService {
@@ -24,6 +25,9 @@ public class AccommodationService {
 	
 	@Autowired
 	AccommodationServiceRepository serviceRepository;
+	
+	@Autowired
+	AccommodationServiceSoapClient soapClient;
 	
 	public AccommodationDTO addNewAcc(Accommodation acc) {
 		Accommodation a = repository.findAccommodationByName(acc.getName());
@@ -59,5 +63,13 @@ public class AccommodationService {
 	
 	public void reserveAcc(long id) {
 		repository.reserveAcc(id);
+	}
+	
+	public void saveAllServices() {
+		serviceRepository.saveAll(soapClient.getAccServices().getAccommodationService());
+	}
+	
+	public void saveAllTypes() {
+		typeRepository.saveAll(soapClient.getAccTypes().getAccommodationType());
 	}
 }

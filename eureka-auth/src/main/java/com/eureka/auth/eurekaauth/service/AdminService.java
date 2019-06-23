@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.eureka.auth.eurekaauth.dto.UserDTO;
 import com.eureka.auth.eurekaauth.repository.AdminRepository;
+import com.eureka.model.eurekamodel.model.GetAgentResponse;
 import com.eureka.model.eurekamodel.model.User;
 import com.eureka.model.eurekamodel.model.UserRole;
 
@@ -66,4 +67,9 @@ public class AdminService {
 	public void removeUser(User user) {
 		repository.delete(user.getUserId());
 	}
+	
+	public List<User> getAllUsers() {
+		return repository.findAll();
+	}
+	
 }

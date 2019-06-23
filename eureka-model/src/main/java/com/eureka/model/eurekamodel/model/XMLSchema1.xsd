@@ -21,6 +21,34 @@
     </xs:complexType>
   </xs:element>
 
+  <xs:element name="add_images_request">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="images" type="image" maxOccurs="unbounded"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="add_images_response">
+    <xs:complexType>
+      <xs:sequence/>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="add_price_request">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="price" type="price"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="add_price_response">
+    <xs:complexType>
+      <xs:sequence/>
+    </xs:complexType>
+  </xs:element>
+
   <xs:element name="approve_reservation_request">
     <xs:complexType>
       <xs:sequence>
@@ -195,10 +223,13 @@
     </xs:sequence>
   </xs:complexType>
 
-  <xs:complexType name="accommodation_service">
+  <xs:complexType name="image">
     <xs:sequence>
+      <xs:element name="id" type="xs:long"/>
       <xs:element name="name" type="xs:string"/>
-      <xs:element name="accommodationServiceId" type="xs:long"/>
+      <xs:element name="type" type="xs:string"/>
+      <xs:element name="code" type="xs:base64Binary"/>
+      <xs:element name="accommodation" type="accommodation"/>
     </xs:sequence>
   </xs:complexType>
 
@@ -222,6 +253,13 @@
     <xs:sequence>
       <xs:element name="name" type="xs:string"/>
       <xs:element name="id" type="xs:long"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="accommodation_service">
+    <xs:sequence>
+      <xs:element name="name" type="xs:string"/>
+      <xs:element name="accommodationServiceId" type="xs:long"/>
     </xs:sequence>
   </xs:complexType>
 
@@ -255,15 +293,6 @@
     </xs:sequence>
   </xs:complexType>
 
-  <xs:complexType name="rating">
-    <xs:sequence>
-      <xs:element name="id" type="xs:long"/>
-      <xs:element name="accommodation" type="accommodation"/>
-      <xs:element name="user" type="user"/>
-      <xs:element name="value" type="xs:string"/>
-    </xs:sequence>
-  </xs:complexType>
-
   <xs:complexType name="price">
     <xs:sequence>
       <xs:element name="id" type="xs:long"/>
@@ -274,13 +303,12 @@
     </xs:sequence>
   </xs:complexType>
 
-  <xs:complexType name="image">
+  <xs:complexType name="rating">
     <xs:sequence>
       <xs:element name="id" type="xs:long"/>
-      <xs:element name="name" type="xs:string"/>
-      <xs:element name="type" type="xs:string"/>
-      <xs:element name="code" type="xs:base64Binary"/>
       <xs:element name="accommodation" type="accommodation"/>
+      <xs:element name="user" type="user"/>
+      <xs:element name="value" type="xs:string"/>
     </xs:sequence>
   </xs:complexType>
 

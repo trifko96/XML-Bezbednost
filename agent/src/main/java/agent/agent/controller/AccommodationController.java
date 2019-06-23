@@ -72,4 +72,20 @@ public class AccommodationController {
 		return new ResponseEntity<>(accDTO, HttpStatus.OK);
 		
 	}
+	
+	@SuppressWarnings("rawtypes")
+	@GetMapping(value="/getUsers")
+	public ResponseEntity getUsers() {
+		agentService.getUsers();
+		return new ResponseEntity(HttpStatus.OK);
+	}
+	
+	//dodati na frontu zahtev za sinhronizaciju
+	@SuppressWarnings("rawtypes")
+	@GetMapping(value="/syncAll")
+	public ResponseEntity syncAll() {
+		service.saveAllServices();
+		service.saveAllTypes();
+		return new ResponseEntity(HttpStatus.OK);
+	}
 }
