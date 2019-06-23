@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -34,13 +35,18 @@ public class CommunicationController {
 	}
 	
 	@PreAuthorize("hasRole('USER')")
-	@PostMapping(value="enableCommunication/{id1}/{id2}")
+	@PostMapping(value="enable/{id1}/{id2}")
 	public ResponseEntity<String> enableCommunication(@PathVariable long id1, @PathVariable long id2){
+		
+		if(id1 == id2) {
+			return new ResponseEntity<>("ID's are identical", HttpStatus.BAD_REQUEST);
+		}
+		
 		CertificateDB cDB1 = serviceDB.findOne(id1);
 		CertificateDB cDB2 = serviceDB.findOne(id2);
 		
-		if(cDB1 == null || cDB2 == null || id1 == id2) {
-			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		if(cDB1 == null || cDB2 == null) {
+			return new ResponseEntity<>("Certirficate was not found", HttpStatus.BAD_REQUEST);
 		}
 		
 		KeyStoreWriter keyStoreWriter = new KeyStoreWriter();
@@ -63,8 +69,6 @@ public class CommunicationController {
 			keyStoreWriter.write(cDB2.getId().toString(), privatniKljuc2, "111".toCharArray(), c2);
 			// Cuvamo u novi keyStore
 			keyStoreWriter.saveKeyStore(nazivKeyStora1.concat(".jks"), "111".toCharArray());
-
-	
 			
 		}catch (Exception e) {
 			e.printStackTrace();
@@ -73,5 +77,33 @@ public class CommunicationController {
 	    return new ResponseEntity<>(HttpStatus.OK);
 	}
 	
+	
+	@PreAuthorize("hasRole('USER')")
+	@GetMapping(value="check/{id1}/{id2}")
+	public ResponseEntity<String> checkCommunication(@PathVariable long id1, @PathVariable long id2){
+		
+		if(id1 == id2) {
+			return new ResponseEntity<>("ID's are identical", HttpStatus.BAD_REQUEST);
+		}
+		
+		CertificateDB cDB1 = serviceDB.findOne(id1);
+		CertificateDB cDB2 = serviceDB.findOne(id2);
+		
+		if(cDB1 == null || cDB2 == null) {
+			return new ResponseEntity<>("Certirficate was not found", HttpStatus.BAD_REQUEST);
+		}
+		
+		KeyStoreReader keyStoreReader = new KeyStoreReader();
+		
+		String nazivKeyStora1 = cDB1.getNazivOrganizacije().concat(Long.toString(cDB1.getId())).concat("Communication");
+
+		Certificate c = keyStoreReader.readCertificate(nazivKeyStora1.concat(".jks"), "111", cDB2.getId().toString());
+		
+		if(c == null) {
+			return new ResponseEntity<>("Communication does not exist", HttpStatus.NOT_FOUND);
+		}
+		
+		return new ResponseEntity<>("Communication do exist", HttpStatus.OK);
+	}
 
 }
