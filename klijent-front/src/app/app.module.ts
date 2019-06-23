@@ -10,6 +10,9 @@ import { RegistrationComponent } from './registration/registration.component';
 import { HomeComponent } from './home/home.component';
 import {authService} from './service/authService';
 import { HomeAccommodationComponent } from './home-accommodation/home-accommodation.component';
+import { HomeLoggedInComponent } from './home-logged-in/home-logged-in.component';
+import { HomeLoggedInAccComponent } from './home-logged-in-acc/home-logged-in-acc.component';
+import { HomeLoggedInReservComponent } from './home-logged-in-reserv/home-logged-in-reserv.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +20,10 @@ import { HomeAccommodationComponent } from './home-accommodation/home-accommodat
     LoginComponent,
     RegistrationComponent,
     HomeComponent,
-    HomeAccommodationComponent
+    HomeAccommodationComponent,
+    HomeLoggedInComponent,
+    HomeLoggedInAccComponent,
+    HomeLoggedInReservComponent
   ],
   imports: [
     BrowserModule,

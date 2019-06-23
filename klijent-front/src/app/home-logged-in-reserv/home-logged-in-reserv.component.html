@@ -1,0 +1,47 @@
+<div class="container-fluid">
+    <div class="row">
+      <div class="col-7" style="max-height: 320px; overflow-y:  scroll;">
+        <br>
+        <h4>Reservations:</h4>            
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>From date</th>
+              <th>To date</th>
+              <th>&nbsp;</th>
+              <th>&nbsp;</th>
+              <th>&nbsp;</th>
+            </tr>
+          </thead>
+          <tbody *ngFor="let unit of accUnits">
+              <tr>
+                <td>{{unit.name}}</td>
+                <td>{{unit.fromDate}}</td>
+                <td>{{unit.toDate}}</td>
+                <td><button class="btn btn-link" (click)="onClick(unit)">Send messagge</button></td>
+                <td><button class="btn btn-link" (click)="onClick1(unit)">Cancel reservation</button></td>
+                <td><button class="btn btn-link" (click)="onClick2(unit)">Finish</button></td>
+              </tr>
+            </tbody>
+        </table>
+      </div>
+      <div class="col-5">
+          <form>
+              <div class="form-group row">
+                    <h4>&nbsp;Send messagge:</h4>
+                </div>
+            <div class="form-group row">
+              <div class="col-sm-10">
+                <textarea class="form-control" rows="5"></textarea>
+              </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-sm-10 text-center">
+                  <button class="btn btn-dark">Send</button>
+                </div>
+              </div>
+          </form>
+      </div>
+    </div>
+</div>
