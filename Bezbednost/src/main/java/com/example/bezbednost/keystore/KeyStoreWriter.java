@@ -50,7 +50,7 @@ public class KeyStoreWriter {
 		} catch (CertificateException e) {
 			e.printStackTrace();
 		} catch (FileNotFoundException e) {
-			e.printStackTrace();
+			//e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

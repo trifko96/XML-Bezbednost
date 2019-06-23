@@ -1,11 +1,19 @@
 package com.example.bezbednost.controller;
 
+import java.security.PrivateKey;
+import java.security.cert.Certificate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
+import com.example.bezbednost.dbModel.CertificateDB;
+import com.example.bezbednost.keystore.KeyStoreReader;
+import com.example.bezbednost.keystore.KeyStoreWriter;
+import com.example.bezbednost.service.CertificateDBService;
 import com.example.bezbednost.service.CommunicationService;
 
 
@@ -16,9 +24,54 @@ public class CommunicationController {
 	@Autowired
 	CommunicationService service;
 	
+	@Autowired
+	CertificateDBService serviceDB;
+	
 	@PostMapping(value="/create/{id1}/{id2}")
 	public void create(@PathVariable long id1, @PathVariable long id2) {
 		
 		service.create(id1, id2);
 	}
+	
+	@PreAuthorize("hasRole('USER')")
+	@PostMapping(value="enableCommunication/{id1}/{id2}")
+	public ResponseEntity<String> enableCommunication(@PathVariable long id1, @PathVariable long id2){
+		CertificateDB cDB1 = serviceDB.findOne(id1);
+		CertificateDB cDB2 = serviceDB.findOne(id2);
+		
+		if(cDB1 == null || cDB2 == null || id1 == id2) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+		
+		KeyStoreWriter keyStoreWriter = new KeyStoreWriter();
+		KeyStoreReader keyStoreReader = new KeyStoreReader();
+		
+		String nazivKeyStora1 = cDB1.getNazivOrganizacije().concat(Long.toString(cDB1.getId())).concat("Communication");
+		String nazivKeyStora2 = cDB2.getNazivOrganizacije().concat(Long.toString(cDB2.getId()));
+					
+		
+		try {
+			// Ucitavamo sertifikat iz keyStora koji zelimo da smestimo u novi keyStore
+			Certificate c2 = keyStoreReader.readCertificate(nazivKeyStora2.concat(".jks"), "111", cDB2.getId().toString());
+			
+			// Ucitavamo privatni kljuc sertifikata koji zelimo da smestimo u novi keyStore
+			PrivateKey privatniKljuc2 = keyStoreReader.readPrivateKey(nazivKeyStora2.concat(".jks"), "111", cDB2.getId().toString(), "111");
+			
+			// Pretrazujemo da li keyStore vec postoji
+			keyStoreWriter.loadKeyStore(nazivKeyStora1.concat(".jks"), "111".toCharArray());
+			// Postavljamo alias
+			keyStoreWriter.write(cDB2.getId().toString(), privatniKljuc2, "111".toCharArray(), c2);
+			// Cuvamo u novi keyStore
+			keyStoreWriter.saveKeyStore(nazivKeyStora1.concat(".jks"), "111".toCharArray());
+
+	
+			
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+	    
+	    return new ResponseEntity<>(HttpStatus.OK);
+	}
+	
+
 }
