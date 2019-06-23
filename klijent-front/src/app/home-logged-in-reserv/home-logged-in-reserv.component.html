@@ -14,14 +14,14 @@
               <th>&nbsp;</th>
             </tr>
           </thead>
-          <tbody *ngFor="let unit of accUnits">
+          <tbody *ngFor="let r of reservations">
               <tr>
-                <td>{{unit.name}}</td>
-                <td>{{unit.fromDate}}</td>
-                <td>{{unit.toDate}}</td>
-                <td><button class="btn btn-link" (click)="onClick(unit)">Send messagge</button></td>
-                <td><button class="btn btn-link" (click)="onClick1(unit)">Cancel reservation</button></td>
-                <td><button class="btn btn-link" (click)="onClick2(unit)">Finish</button></td>
+                <td>{{r.name}}</td>
+                <td>{{r.fromDate}}</td>
+                <td>{{r.toDate}}</td>
+                <td><button class="btn btn-link" (click)="onClick(r)">Send messagge</button></td>
+                <td><button class="btn btn-link" (click)="onClick1(r)">Cancel reservation</button></td>
+                <td><button class="btn btn-link" (click)="onClick2(r)">Finish</button></td>
               </tr>
             </tbody>
         </table>

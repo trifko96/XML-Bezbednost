@@ -12,25 +12,25 @@
               <th>Capacity</th>
               <th>Type</th>
               <th>Category</th>
-              <th>Price</th>
               <th>Average rating</th>
+              <th>&nbsp;</th>
               <th>&nbsp;</th>
               <th>&nbsp;</th>
               <th><button class="btn btn-dark">Search</button></th>
             </tr>
           </thead>
-          <tbody *ngFor="let unit of accUnits">
+          <tbody *ngFor="let a of accommodations">
               <tr>
-                <td>{{unit.name}}</td>
-                <td>{{unit.location.name}}</td>
-                <td>{{unit.description}}</td>
-                <td>{{unit.capacity}}</td>
-                <td>{{unit.accommodationType.name}}</td>
-                <td>{{unit.category}}*</td>
-                <td>{{unit.price}}</td>
-                <td>{{unit.averageRating}}</td>
-                <td><button class="btn btn-link" (click)="onClick1(unit)">Show images</button></td>
-                <td *ngIf="unit.status == 'FREE'"><button class="btn btn-link" (click)="onClick2(unit)">Reserve</button></td>
+                <td>{{a.name}}</td>
+                <td>{{a.location.name}}</td>
+                <td>{{a.description}}</td>
+                <td>{{a.capacity}}</td>
+                <td>{{a.accommodationType.name}}</td>
+                <td>{{a.category}}</td>
+                <td>{{a.averageRating}}</td>
+                <td><button class="btn btn-link" (click)="onClick(a)">Show price plan</button></td>
+                <td><button class="btn btn-link" (click)="onClick1(a)">Show images</button></td>
+                <td *ngIf="unit.status == 'FREE'"><button class="btn btn-link" (click)="onClick2(a)">Reserve</button></td>
                 <td>&nbsp;</td>
               </tr>
             </tbody>
@@ -46,18 +46,19 @@
                   <div class="form-group row">
                       <label class="col-sm-2 col-form-label">Location:</label>
                       <div class="col-sm-10">
-                        <input type="text" class="form-control" placeholder="Location" [(ngModel)]="agent.name" [ngModelOptions] = "{standalone:true}">
+                        <input type="text" class="form-control" placeholder="Location" [(ngModel)]="nameLocation" [ngModelOptions] = "{standalone:true}">
                       </div>
                   </div>
                   <div class="form-group row">
                       <label class="col-sm-2 col-form-label">Time interval:</label>
                       <div class="col-sm-10">
+                        
                       </div>
                   </div>
                   <div class="form-group row">
                       <label class="col-sm-2 col-form-label">Capacity:</label>
                       <div class="col-sm-10">
-                        <input type="number" class="form-control" placeholder="Capacity" [(ngModel)]="agent.email" [ngModelOptions] = "{standalone:true}">
+                        <input type="number" class="form-control" placeholder="Capacity" [(ngModel)]="searchAccommodation.capacity" [ngModelOptions] = "{standalone:true}">
                       </div>
                   </div>
                   <div class="form-group row">
@@ -71,13 +72,13 @@
                     <div class="form-group row">
                           <label class="col-sm-2 col-form-label">Category:</label>
                           <div class="col-sm-10">
-                            <input type="number" class="form-control" placeholder="Category" [(ngModel)]="agent.email" [ngModelOptions] = "{standalone:true}">
+                            <input type="number" class="form-control" placeholder="Category" [(ngModel)]="searchAccommodation.category" [ngModelOptions] = "{standalone:true}">
                           </div>
                     </div>
                     <div class="form-group row">
                         <label class="col-sm-2 col-form-label">Distance:</label>
                         <div class="col-sm-10">
-                          <input type="number" class="form-control" placeholder="Distance of location" [(ngModel)]="agent.email" [ngModelOptions] = "{standalone:true}">
+                          <input type="number" class="form-control" placeholder="Distance of location" [(ngModel)]="distance" [ngModelOptions] = "{standalone:true}">
                         </div>
                     </div>
                     <div class="form-group row">
@@ -103,4 +104,3 @@
     </div>
 
   </div>
-

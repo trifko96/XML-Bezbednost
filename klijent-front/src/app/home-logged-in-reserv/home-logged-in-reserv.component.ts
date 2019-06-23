@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Reservation } from '../model/Reservation';
+import { ReservationService } from '../service/reservationService';
 
 @Component({
   selector: 'app-home-logged-in-reserv',
@@ -7,7 +9,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomeLoggedInReservComponent implements OnInit {
 
-  constructor() { }
+  reservations : Reservation[] = [];
+
+  constructor(private service : ReservationService) {
+    this.service.getReservations().subscribe(
+      data => {
+        this.reservations = data;
+      }
+    )
+   }
 
   ngOnInit() {
   }
