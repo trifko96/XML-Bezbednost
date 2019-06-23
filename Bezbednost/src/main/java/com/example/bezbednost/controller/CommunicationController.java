@@ -2,6 +2,8 @@ package com.example.bezbednost.controller;
 
 import java.security.PrivateKey;
 import java.security.cert.Certificate;
+import java.util.Date;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -47,6 +49,14 @@ public class CommunicationController {
 		
 		if(cDB1 == null || cDB2 == null) {
 			return new ResponseEntity<>("Certirficate was not found", HttpStatus.BAD_REQUEST);
+		}
+		
+		if(cDB1.isRevoked() || cDB2.isRevoked()) {
+			return new ResponseEntity<>("Some certificates are revoked", HttpStatus.BAD_REQUEST);
+		}
+		
+		if(cDB1.getDatumIsteka().before(new Date()) || cDB2.getDatumIsteka().before(new Date())) {
+			return new ResponseEntity<>("Some certificates are out of date", HttpStatus.BAD_REQUEST);
 		}
 		
 		KeyStoreWriter keyStoreWriter = new KeyStoreWriter();
