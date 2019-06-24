@@ -12,4 +12,5 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
 
 	@Query("select reservation from Reservation reservation where reservation.user.username = :username")
 	public List<Reservation> getReservationsByUser(@Param("username") String username);
+
 }
