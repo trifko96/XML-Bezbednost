@@ -12,3 +12,5 @@ export class Accommodation{
     capacity: number;
     name: string = "";
 }
+
+
