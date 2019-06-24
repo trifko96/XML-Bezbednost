@@ -23,4 +23,8 @@ export class AccommodationUnitService {
         return this.http.get<AccommodationType[]>("api/accType/getTypes");
     }
 
+
+
+
+    
 }
