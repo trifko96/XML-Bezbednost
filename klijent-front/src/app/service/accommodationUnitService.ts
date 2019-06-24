@@ -16,11 +16,11 @@ export class AccommodationUnitService {
     }
 
     getAccommodationServices(){
-        return this.http.get<AccommodationService[]>("api/acc/getAccommodationServices");
+        return this.http.get<AccommodationService[]>("api/accService/getServices");
     }
 
     getAccommodationTypes(){
-        return this.http.get<AccommodationType[]>("api/acc/getAccommodationTypes");
+        return this.http.get<AccommodationType[]>("api/accType/getTypes");
     }
 
 }
