@@ -16,4 +16,8 @@ export class ReservationService{
     cancelReservation(r : Reservation){
         return this.http.post<Reservation[]>("api/res/cancelReservation", r);
     }
+
+    newReservation(r : Reservation){
+        return this.http.post<Reservation[]>("api/res/newReservation", r);
+    }
 }

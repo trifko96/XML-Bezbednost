@@ -16,7 +16,7 @@
                   <th>&nbsp;</th>
                   <th>&nbsp;</th>
                   <th>&nbsp;</th>
-                  <th><button class="btn btn-dark">Search</button></th>
+                  <th><button class="btn btn-dark" (click)="onSearch()">Search</button></th>
                 </tr>
               </thead>
               <tbody *ngFor="let a of accommodations">
@@ -30,7 +30,7 @@
                     <td>{{a.averageRating}}</td>
                     <td><button class="btn btn-link" (click)="onClick(a)">Show price plan</button></td>
                     <td><button class="btn btn-link" (click)="onClick1(a)">Show images</button></td>
-                    <td *ngIf="unit.status == 'FREE'"><button class="btn btn-link" (click)="onClick2(a)">Reserve</button></td>
+                    <td><button class="btn btn-link" (click)="onClick2(a)">Reserve</button></td>
                     <td>&nbsp;</td>
                   </tr>
                 </tbody>
@@ -39,7 +39,7 @@
         </div>
     
         <div class="row pt-3 mt-2">
-            <div class="col-6">
+            <div class="col-6" *ngIf="showSearch">
                 <br>
                 <h4>Search:</h4>
                   <form>
@@ -104,12 +104,13 @@
                         
                         <div class="form-group row">
                               <div class="col-sm-10 text-center">
-                                  <button class="btn btn-dark">Search</button>
+                                  <button class="btn btn-dark" (click)="onSearch1()">Search</button>
                               </div>
                         </div>
                     
                       </form>
-              </div>  
+              </div> 
+               
         </div>
     
       </div>

@@ -9,6 +9,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { RegistrationComponent } from './registration/registration.component';
 import { HomeComponent } from './home/home.component';
 import {authService} from './service/authService';
+import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { HomeAccommodationComponent } from './home-accommodation/home-accommodation.component';
 import { HomeLoggedInComponent } from './home-logged-in/home-logged-in.component';
 import { HomeLoggedInAccComponent } from './home-logged-in-acc/home-logged-in-acc.component';
@@ -29,6 +30,7 @@ import { HomeLoggedInReservComponent } from './home-logged-in-reserv/home-logged
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
+    BsDatepickerModule.forRoot(),
     FormsModule
   ],
   providers: [authService,],
