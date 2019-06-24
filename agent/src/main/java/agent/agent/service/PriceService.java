@@ -11,6 +11,7 @@ import agent.agent.model.Accommodation;
 import agent.agent.model.Price;
 import agent.agent.repository.AccommodationRepository;
 import agent.agent.repository.PriceRepository;
+import agent.agent.soap_clients.AccommodationServiceSoapClient;
 
 @Service
 public class PriceService {
@@ -20,6 +21,9 @@ public class PriceService {
 	
 	@Autowired
 	AccommodationRepository accRepository;
+	
+	@Autowired
+	AccommodationServiceSoapClient soapClient;
 	
 	public List<PriceDTO> getPrice(long id) {
 		List<Price> price = repository.getPrice(id);
@@ -40,5 +44,6 @@ public class PriceService {
 		price.setAccommodation(acc);
 		
 		repository.save(price);
+		soapClient.addPrice(price);
 	}
 }

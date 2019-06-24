@@ -12,6 +12,7 @@ import agent.agent.model.Accommodation;
 import agent.agent.model.Image;
 import agent.agent.repository.AccommodationRepository;
 import agent.agent.repository.ImageRepository;
+import agent.agent.soap_clients.AccommodationServiceSoapClient;
 
 @Service
 public class ImageService {
@@ -21,6 +22,9 @@ public class ImageService {
 	
 	@Autowired
 	AccommodationRepository accRepository;
+	
+	@Autowired
+	AccommodationServiceSoapClient soapClient;
 
 	public void uploadImages(MultipartFile[] images, long accId) throws IOException {
 		
@@ -34,6 +38,8 @@ public class ImageService {
 			imagesModel.add(imageModel);
 		}
 		repository.saveAll(imagesModel);	
+		soapClient.addImages(imagesModel);
+		
 	}
 	
 	public byte[] getImageById(long id){

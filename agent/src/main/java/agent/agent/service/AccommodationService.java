@@ -35,6 +35,7 @@ public class AccommodationService {
 			return null;
 		} else {
 			repository.save(acc);
+			soapClient.addAccUnit(acc);
 			AccommodationDTO accDTO = new AccommodationDTO(acc);
 			return accDTO;
 		}

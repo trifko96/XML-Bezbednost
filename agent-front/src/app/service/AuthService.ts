@@ -18,11 +18,23 @@ export class AuthService{
     login(user : User) : Observable<boolean>{
         return this.http.post<any>("api/login", {username: user.username, password: user.password})
         .pipe(
-          tap(response => localStorage.setItem("JWT_TOKEN", response.jwt)),
+          tap(response => this.loginRequest(response)),
           mapTo(true),
           catchError(error => {
             return of(false);
           }));
+    }
+
+    loginRequest(response){
+        localStorage.setItem("JWT_TOKEN", response.jwt);
+        this.http.get('api/syncAll').subscribe(
+            data =>{
+              console.log(data);
+            },
+            error =>{
+              console.log(error);
+            }
+          )
     }
 
     logout(){

@@ -44,6 +44,7 @@ public class SecurityLoginConfig extends WebSecurityConfigurerAdapter {
 		.authorizeRequests()
 		    // allow all POST requests 
 		    .antMatchers(HttpMethod.POST, "/login").permitAll()
+		    .antMatchers("/acc/getUsers").permitAll()
 		    //.anyRequest().permitAll()
 		    // any other requests must be authenticated
 		    .anyRequest().authenticated();
