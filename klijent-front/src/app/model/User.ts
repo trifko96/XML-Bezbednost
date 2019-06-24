@@ -1,8 +1,8 @@
 export class User {
     id : number;
-    name : String = "";
-    surname : String = "";
-    email : String = "";
-    password : String = "";
-    username : String = "";
+    name : string = "";
+    surname : string = "";
+    email : string = "";
+    password : string = "";
+    username : string = "";
 }

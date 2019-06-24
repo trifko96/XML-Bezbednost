@@ -1,4 +1,4 @@
 export class AccommodationType{
-    name: String = "";
+    name: string = "";
     id: number;
 }

@@ -1,4 +1,4 @@
 export class AccommodationService{
-    name: String = "";
+    name: string = "";
     accommodationServiceId: number;
 }

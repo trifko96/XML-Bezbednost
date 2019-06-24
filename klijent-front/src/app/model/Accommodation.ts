@@ -4,11 +4,11 @@ import { AccommodationService } from './AccommodationService';
 
 export class Accommodation{
     accommodationType: AccommodationType;
-    description: String = "";
+    description: string = "";
     accommodationService: AccommodationService;
     category: number;
     location: Location;
     accommodationId: number;
     capacity: number;
-    name: String = "";
+    name: string = "";
 }

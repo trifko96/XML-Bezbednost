@@ -22,4 +22,12 @@ export class HomeLoggedInReservComponent implements OnInit {
   ngOnInit() {
   }
 
+  onClick1(r : Reservation){
+    this.service.cancelReservation(r).subscribe(
+      data =>{
+        this.reservations = data;
+      }
+    )
+  }
+
 }

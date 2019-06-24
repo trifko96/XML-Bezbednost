@@ -12,4 +12,8 @@ export class ReservationService{
     getReservations(){
         return this.http.get<Reservation[]>("api/res/getReservations");
     }
+
+    cancelReservation(r : Reservation){
+        return this.http.post<Reservation[]>("api/res/cancelReservation", r);
+    }
 }

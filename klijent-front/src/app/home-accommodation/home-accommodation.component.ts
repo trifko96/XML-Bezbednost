@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Accommodation } from '../model/Accommodation';
 import { AccommodationUnitService } from '../service/accommodationUnitService';
+import { AccommodationService } from '../model/AccommodationService';
+import { AccommodationType } from '../model/AccommodationType';
 
 @Component({
   selector: 'app-home-accommodation',
@@ -11,8 +13,10 @@ export class HomeAccommodationComponent implements OnInit {
 
   accommodations : Accommodation[] = [];
   searchAccommodation : Accommodation;
-  nameLoation : String;
+  nameLoation : string;
   distance : number;
+  accommodationServices : AccommodationService[] = [];
+  accommodationTypes : AccommodationType[] = [];
 
   constructor(private service : AccommodationUnitService) { 
     this.service.getAccommodations().subscribe(
@@ -20,9 +24,23 @@ export class HomeAccommodationComponent implements OnInit {
         this.accommodations = data;
       }
     )
+
+    this.service.getAccommodationTypes().subscribe(
+      data => {
+        this.accommodationTypes = data;
+      }
+    )
+
+    this.service.getAccommodationServices().subscribe(
+      data => {
+        this.accommodationServices = data;
+      }
+    )
   }
 
   ngOnInit() {
   }
+
+
 
 }
