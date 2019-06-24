@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<xs:schema version="1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema"
-	elementFormDefault="qualified" targetNamespace = "http://www.ftn.uns.ac.rs/megatravel"
-	xmlns="http://www.ftn.uns.ac.rs/megatravel">
+<xs:schema elementFormDefault="qualified" version="1.0" targetNamespace="http://www.ftn.uns.ac.rs/megatravel"
+    xmlns="http://www.ftn.uns.ac.rs/megatravel" xmlns:xs="http://www.w3.org/2001/XMLSchema">
 
   <xs:element name="add_accommodation_request">
     <xs:complexType>
