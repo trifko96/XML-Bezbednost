@@ -21,7 +21,7 @@ public class AccomodationServiceController {
 	@Autowired
 	AccomodationServiceService service;
 	
-	@PostMapping(value = "/addNewAccService", consumes = "application/json")
+	@PostMapping(value = "/admin/addNewAccService", consumes = "application/json")
 	public ResponseEntity<List<AccommodationService>> addNewAccService(@RequestBody AccommodationService acc){
 		AccommodationService accService = service.findByName(acc);
 		if(accService != null)
@@ -33,14 +33,14 @@ public class AccomodationServiceController {
 			
 	}
 	
-	@PostMapping(value = "/removeAccService", consumes = "application/json")
+	@PostMapping(value = "/admin/removeAccService", consumes = "application/json")
 	public ResponseEntity<List<AccommodationService>> removeAccService(@RequestBody AccommodationService accService){
 		//provera
 		List<AccommodationService> accServices = service.delete(accService);
 		return new ResponseEntity<>(accServices, HttpStatus.OK);
 	}
 	
-	@GetMapping(value = "/getServices")
+	@GetMapping(value = "/all/getServices")
 	public ResponseEntity<List<AccommodationService>> getServices(){
 		return new ResponseEntity<>(service.getAll(),HttpStatus.OK);
 	}

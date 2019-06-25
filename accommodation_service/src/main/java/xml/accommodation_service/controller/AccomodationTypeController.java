@@ -23,7 +23,7 @@ public class AccomodationTypeController {
 	@Autowired
 	AccomodationTypeService service;
 
-	@PostMapping(value = "/addNewAccType", consumes = "application/json")
+	@PostMapping(value = "/admin/addNewAccType", consumes = "application/json")
 	public ResponseEntity<List<AccommodationType>> addNewAccType(@RequestBody AccommodationType acc){
 		AccommodationType accType = service.findByName(acc);
 		if(accType != null)
@@ -35,14 +35,14 @@ public class AccomodationTypeController {
 			
 	}
 	
-	@PostMapping(value = "/removeAccType", consumes = "application/json")
+	@PostMapping(value = "/admin/removeAccType", consumes = "application/json")
 	public ResponseEntity<List<AccommodationType>> removeAccType(@RequestBody AccommodationType accType){
 		//provera
 		List<AccommodationType> accTypes = service.delete(accType);
 		return new ResponseEntity<>(accTypes, HttpStatus.OK);
 	}
 	
-	@GetMapping(value = "/getTypes")
+	@GetMapping(value = "/all/getTypes")
 	public ResponseEntity<List<AccommodationType>> getServices(){
 		return new ResponseEntity<>(service.getAll(),HttpStatus.OK);
 	}

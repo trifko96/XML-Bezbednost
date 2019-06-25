@@ -21,7 +21,7 @@ public class AccomodationController {
 	@Autowired
 	AccomodationUnitService service;
 	
-	@GetMapping(value="/getAccommodations")
+	@GetMapping(value="/all/getAccommodations")
 	public ResponseEntity<List<AccomodationDTO>> getAccommodations(){
 		List<AccomodationDTO> accs = service.getAll();
 		return new ResponseEntity<>(accs, HttpStatus.OK);
