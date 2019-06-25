@@ -21,7 +21,7 @@ const routes: Route[] = [
       {path: '**', redirectTo: 'accommodation', pathMatch: 'full'}
     ]
   },
-  {path: 'homeLogged', component:HomeLoggedInComponent, canActivate: [AuthGuard],
+  {path: 'homeLogged', component:HomeLoggedInComponent, canActivate: [RandomGuard],
     children : [
       {path: '', redirectTo : 'homeLoggedAcc', pathMatch: 'full'},
       {path: 'homeLoggedAcc', component: HomeLoggedInAccComponent},
