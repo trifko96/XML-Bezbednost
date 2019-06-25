@@ -1,4 +1,4 @@
-import { Accommodation } from './Accommodation';
+import { Accommodation } from './AccommodationDTO';
 
 export class Reservation{
     id: number;

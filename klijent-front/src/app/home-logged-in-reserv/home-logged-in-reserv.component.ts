@@ -10,6 +10,7 @@ import { ReservationService } from '../service/reservationService';
 export class HomeLoggedInReservComponent implements OnInit {
 
   reservations : Reservation[] = [];
+  showMessagge : boolean = false;
 
   constructor(private service : ReservationService) {
     this.service.getReservations().subscribe(
@@ -28,6 +29,14 @@ export class HomeLoggedInReservComponent implements OnInit {
         this.reservations = data;
       }
     )
+  }
+
+  onClick(r : Reservation){
+    this.showMessagge = true;
+  }
+
+  onSend(){
+    this.showMessagge = false;
   }
 
 }

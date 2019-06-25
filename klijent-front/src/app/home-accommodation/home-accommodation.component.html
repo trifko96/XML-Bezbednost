@@ -26,15 +26,22 @@
                     <td>{{a.description}}</td>
                     <td>{{a.capacity}}</td>
                     <td>{{a.accommodationType.name}}</td>
-                    <td>{{a.category}}</td>
+                    <td>{{a.category}}*</td>
                     <td>{{a.averageRating}}</td>
                     <td><button class="btn btn-link" (click)="onClick(a)">Show price plan</button></td>
                     <td><button class="btn btn-link" (click)="onClick1(a)">Show images</button></td>
                     <td><button class="btn btn-link" (click)="onClick2(a)">Reserve</button></td>
-                    <td>&nbsp;</td>
+                    <td>{{reserveMessagge}}</td>
                   </tr>
                 </tbody>
             </table>
+          </div>
+          <div class="col-5" style="max-height: 230px; max-width: 400px" *ngIf="showImages">
+              <carousel>
+                  <slide *ngFor="let image of images">
+                    <img [src]="image" style="display: block; width: 100%;max-height: 230px;">
+                  </slide>
+              </carousel>
           </div>
         </div>
     
@@ -110,6 +117,28 @@
                     
                       </form>
               </div> 
+
+              <div class="col-6" *ngIf="showPrice">
+                  <br>
+                  <h4>Price plans:</h4>            
+                  <table class="table">
+                    <thead>
+                      <tr>
+                        <th>From</th>
+                        <th>To</th>
+                        <th>Price per night</th>
+                      </tr>
+                    </thead>
+                    <tbody *ngFor="let p of pricePlans">
+                      <tr>
+                        <td>{{p.fromDate.slice(0,10)}}</td>
+                        <td>{{p.toDate.slice(0,10)}}</td>
+                        <td>{{p.oneNightPrice}}$</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <button class="btn btn-dark" (click)="hide()">Hide</button>
+              </div>
                
         </div>
     

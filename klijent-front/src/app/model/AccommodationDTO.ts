@@ -7,7 +7,7 @@ export class Accommodation{
     description: string = "";
     accommodationService: AccommodationService;
     category: number;
-    location: Location;
+    location: Location = new Location();
     accommodationId: number;
     capacity: number;
     name: string = "";

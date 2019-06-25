@@ -10,14 +10,14 @@ export class ReservationService{
     constructor(private http : HttpClient) {}
 
     getReservations(){
-        return this.http.get<Reservation[]>("api/res/getReservations");
+        return this.http.get<Reservation[]>("api/reservation/res/getReservations");
     }
 
     cancelReservation(r : Reservation){
-        return this.http.post<Reservation[]>("api/res/cancelReservation", r);
+        return this.http.post<Reservation[]>("api/reservation/res/cancelReservation", r);
     }
 
     newReservation(r : Reservation){
-        return this.http.post<Reservation[]>("api/res/newReservation", r);
+        return this.http.post<Reservation[]>("api/reservation/res/newReservation", r);
     }
 }
