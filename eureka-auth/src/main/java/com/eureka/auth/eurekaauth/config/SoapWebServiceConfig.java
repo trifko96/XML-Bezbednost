@@ -41,3 +41,4 @@ public class SoapWebServiceConfig extends WsConfigurerAdapter {
 		return definition;
 	}
 }
+
