@@ -14,14 +14,14 @@ const routes: Route[] = [
   {path: '', redirectTo:'/home/accommodation', pathMatch: 'full'},
   {path: 'login', component: LoginComponent, canActivate: [AuthGuard]},
   {path: 'registration', component: RegistrationComponent, canActivate: [AuthGuard]},
-  {path: 'home', component: HomeComponent, canActivate: [RandomGuard],
+  {path: 'home', component: HomeComponent, canActivate: [AuthGuard],
     children : [
       {path: '', redirectTo: 'accommodation', pathMatch: 'full'},
       {path: 'accommodation', component: HomeAccommodationComponent},
       {path: '**', redirectTo: 'accommodation', pathMatch: 'full'}
     ]
   },
-  {path: 'homeLogged', component:HomeLoggedInComponent, canActivate: [RandomGuard],
+  {path: 'homeLogged', component:HomeLoggedInComponent, canActivate: [AuthGuard],
     children : [
       {path: '', redirectTo : 'homeLoggedAcc', pathMatch: 'full'},
       {path: 'homeLoggedAcc', component: HomeLoggedInAccComponent},
