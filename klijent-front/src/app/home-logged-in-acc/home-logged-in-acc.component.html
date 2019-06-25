@@ -45,8 +45,8 @@
     </div>
   </div>
 
-  <div class="row pt-3 mt-2" *ngIf="showSearch">
-      <div class="col-6">
+  <div class="row pt-3 mt-2" >
+      <div class="col-6" *ngIf="showSearch">
           <br>
           <h4>Search:</h4>
             <form>
@@ -77,7 +77,7 @@
                   <label class="col-sm-2 col-form-label">Type:</label>
                   <div class="col-sm-10">
                     <select class="form-control" id="typeAcc">
-                      <option *ngFor="let type of types" [ngValue]="type">{{type.name}}</option>
+                      <option *ngFor="let type of accommodationTypes" [ngValue]="type">{{type.name}}</option>
                     </select>
                   </div>
                 </div>
@@ -133,27 +133,30 @@
             </div>
       </div>
         </div>
-        <div class="col-6" *ngIf="showPrice">
-            <br>
-            <h4>Price plans:</h4>            
-            <table class="table">
-              <thead>
-                <tr>
-                  <th>From</th>
-                  <th>To</th>
-                  <th>Price per night</th>
-                </tr>
-              </thead>
-              <tbody *ngFor="let p of pricePlans">
-                <tr>
-                  <td>{{p.fromDate.slice(0,10)}}</td>
-                  <td>{{p.toDate.slice(0,10)}}</td>
-                  <td>{{p.oneNightPrice}}$</td>
-                </tr>
-              </tbody>
-            </table>
-            <button class="btn btn-dark" (click)="hide()">Hide</button>
-        </div>
+        
+  </div>
+  <div class="row">
+    <div class="col-6" *ngIf="showPrice">
+      <br>
+      <h4>Price plans:</h4>            
+      <table class="table">
+        <thead>
+          <tr>
+            <th>From</th>
+            <th>To</th>
+            <th>Price per night</th>
+          </tr>
+        </thead>
+        <tbody *ngFor="let p of price">
+          <tr>
+            <td>{{p.fromDate.slice(0,10)}}</td>
+            <td>{{p.toDate.slice(0,10)}}</td>
+            <td>{{p.oneNightPrice}}$</td>
+          </tr>
+        </tbody>
+      </table>
+      <button class="btn btn-dark" (click)="hide()">Hide</button>
+  </div>
   </div>
 
 </div>

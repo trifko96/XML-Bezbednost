@@ -20,7 +20,7 @@ export class LoginComponent implements OnInit {
    this.auth.login(this.user).subscribe(
      data => {
        if(data) {  
-         this.router.navigate(["/home"]);
+         this.router.navigate(["/homeLogged"]);
        } else {
          this.messagge = "error";
        } 

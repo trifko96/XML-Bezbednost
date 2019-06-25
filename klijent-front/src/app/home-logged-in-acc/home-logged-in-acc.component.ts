@@ -17,12 +17,12 @@ import { PriceDTO } from '../model/PriceDTO';
 export class HomeLoggedInAccComponent implements OnInit {
 
   accommodations : Accommodation[] = [];
-  searchAccommodation : Accommodation;
+  searchAccommodation : Accommodation = new Accommodation();
   nameLocation : string;
   distance : number;
   accommodationServices : AccommodationService[] = [];
   accommodationTypes : AccommodationType[] = [];
-  reservation : Reservation;
+  reservation : Reservation = new Reservation();
   dates : Date[] = [];
   showForm : boolean = false;
   showSearch : boolean = false;

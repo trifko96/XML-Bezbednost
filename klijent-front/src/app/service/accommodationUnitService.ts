@@ -12,15 +12,15 @@ export class AccommodationUnitService {
     constructor(private http : HttpClient) {}
 
     getAccommodations(){
-        return this.http.get<Accommodation[]>("api/accomodation/acc/getAccommodations");
+        return this.http.get<Accommodation[]>("api/accomodation/acc/all/getAccommodations");
     }
 
     getAccommodationServices(){
-        return this.http.get<AccommodationService[]>("api/accomodation/accService/getServices");
+        return this.http.get<AccommodationService[]>("api/accomodation/accService/all/getServices");
     }
 
     getAccommodationTypes(){
-        return this.http.get<AccommodationType[]>("api/accomodation/accType/getTypes");
+        return this.http.get<AccommodationType[]>("api/accomodation/accType/all/getTypes");
     }
 
 
