@@ -18,4 +18,13 @@ public class ImageService {
 	public void save(List<Image> images) {
 		repository.saveAll(images);
 	}
+	
+	public byte[] getImageById(long id){
+		Image image = repository.getOne(id);
+		return image.getCode();
+	}
+	
+	public List<Long> getImagesIdByAccomodationUnit(long accId){
+		return repository.getImagesId(accId);
+	}
 }
