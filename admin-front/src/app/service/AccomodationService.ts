@@ -13,26 +13,26 @@ export class AccomodationService {
     }
 
     addNewService(service : AccomodationServiceModel) {
-        return this.http.post<AccomodationServiceModel[]>("api/accomodation/accService/addNewAccService",service);
+        return this.http.post<AccomodationServiceModel[]>("api/accomodation/accService/admin/addNewAccService",service);
     }
 
     removeService(service : AccomodationServiceModel) {
-        return this.http.post<AccomodationServiceModel[]>("api/accomodation/accService/removeAccService",service);
+        return this.http.post<AccomodationServiceModel[]>("api/accomodation/accService/admin/removeAccService",service);
     }
 
     addNewType(type : AccomodationType) {
-        return this.http.post<AccomodationType[]>("api/accomodation/accType/addNewAccType",type);
+        return this.http.post<AccomodationType[]>("api/accomodation/accType/admin/addNewAccType",type);
     }
 
     removeType(type : AccomodationType) {
-        return this.http.post<AccomodationType[]>("api/accomodation/accType/removeAccType",type);
+        return this.http.post<AccomodationType[]>("api/accomodation/accType/admin/removeAccType",type);
     }
 
     getServices() {
-        return this.http.get<AccomodationServiceModel[]>("api/accomodation/accService/getServices");
+        return this.http.get<AccomodationServiceModel[]>("api/accomodation/accService/all/getServices");
     }
 
     getTypes() {
-        return this.http.get<AccomodationType[]>("api/accomodation/accType/getTypes");
+        return this.http.get<AccomodationType[]>("api/accomodation/accType/all/getTypes");
     }
 }
