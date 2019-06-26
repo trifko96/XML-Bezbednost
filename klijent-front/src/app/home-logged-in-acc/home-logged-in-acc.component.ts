@@ -19,11 +19,13 @@ export class HomeLoggedInAccComponent implements OnInit {
   accommodations : Accommodation[] = [];
   searchAccommodation : Accommodation = new Accommodation();
   nameLocation : string;
-  distance : number;
+  selectedType : AccommodationType;
+  selectedCategory : number = 0;
   accommodationServices : AccommodationService[] = [];
   accommodationTypes : AccommodationType[] = [];
   reservation : Reservation = new Reservation();
   dates : Date[] = [];
+  dates1 : Date[] = [];
   showForm : boolean = false;
   showSearch : boolean = false;
   showImages : boolean = false;
@@ -76,7 +78,24 @@ export class HomeLoggedInAccComponent implements OnInit {
   }
 
   onSearch1(){
-    this.showSearch = false;
+    
+    this.searchAccommodation.accommodationType = this.selectedType;
+    this.searchAccommodation.category = this.selectedCategory;
+    this.searchAccommodation.fromDate = this.dates1[0];
+    this.searchAccommodation.toDate = this.dates1[1];
+    this.searchAccommodation.location.name = this.nameLocation;
+    for(let s of this.accommodationServices){
+      if(s.isChecked){
+        this.searchAccommodation.accommodationService.push(s);
+      }
+    }
+
+    this.service.searchAccommodations(this.searchAccommodation).subscribe(
+      data => {
+        this.accommodations = data;
+        this.showSearch = false;
+      }
+    )
   }
 
   onClick1(a : Accommodation){
@@ -109,6 +128,14 @@ export class HomeLoggedInAccComponent implements OnInit {
 
   hide(){
     this.showPrice = false;
+  }
+
+  onBack(){
+    this.service.getAccommodations().subscribe(
+      data => {
+        this.accommodations = data;
+      }
+    )
   }
 
 }

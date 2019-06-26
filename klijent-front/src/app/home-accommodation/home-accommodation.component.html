@@ -2,7 +2,8 @@
         <div class="row">
           <div class="col-9" style="max-height: 320px; overflow-y:  scroll;">
             <br>
-            <h4>Accommodations:</h4>            
+            <h4>Accommodations:</h4>  
+            <p class="text-danger">{{reserveMessagge}}</p>          
             <table class="table">
               <thead>
                 <tr>
@@ -17,6 +18,7 @@
                   <th>&nbsp;</th>
                   <th>&nbsp;</th>
                   <th><button class="btn btn-dark" (click)="onSearch()">Search</button></th>
+                  <th><button class="btn btn-dark" (click)="onBack()">Show all units</button></th>
                 </tr>
               </thead>
               <tbody *ngFor="let a of accommodations">
@@ -31,11 +33,13 @@
                     <td><button class="btn btn-link" (click)="onClick(a)">Show price plan</button></td>
                     <td><button class="btn btn-link" (click)="onClick1(a)">Show images</button></td>
                     <td><button class="btn btn-link" (click)="onClick2(a)">Reserve</button></td>
-                    <td>{{reserveMessagge}}</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
                   </tr>
                 </tbody>
             </table>
           </div>
+          
           <div class="col-5" style="max-height: 230px; max-width: 400px" *ngIf="showImages">
               <carousel>
                   <slide *ngFor="let image of images">
@@ -76,8 +80,8 @@
                       <div class="form-group row">
                         <label class="col-sm-2 col-form-label">Type:</label>
                         <div class="col-sm-10">
-                          <select class="form-control" id="typeAcc">
-                            <option *ngFor="let type of types" [ngValue]="type">{{type.name}}</option>
+                          <select class="form-control" id="typeAcc" [(ngModel)]="selectedType" [ngModelOptions]="{standalone: true}">
+                            <option *ngFor="let type of accommodationTypes" [ngValue]="type">{{type.name}}</option>
                           </select>
                         </div>
                       </div>
@@ -85,22 +89,22 @@
                         <div class="form-group row">
                               <label class="col-sm-2 col-form-label">Category:</label>
                               <div class="col-sm-10">
-                                <input type="number" class="form-control" placeholder="Category" [(ngModel)]="searchAccommodation.category" [ngModelOptions] = "{standalone:true}">
-                              </div>
-                        </div>
-                    
-                        <div class="form-group row">
-                            <label class="col-sm-2 col-form-label">Distance:</label>
-                            <div class="col-sm-10">
-                              <input type="number" class="form-control" placeholder="Distance of location" [(ngModel)]="distance" [ngModelOptions] = "{standalone:true}">
-                            </div>
+                                  <select class="form-control" id="catAcc" [(ngModel)]="selectedCategory" [ngModelOptions]="{standalone: true}">
+                                      <option value="0" disabled selected>Category</option>
+                                      <option value="1">1*</option>
+                                      <option value="2">2*</option>
+                                      <option value="3">3*</option>
+                                      <option value="4">4*</option>
+                                      <option value="5">5*</option>
+                                    </select>                             
+                                   </div>
                         </div>
                     
                         <div class="form-group row">
                             <label class="col-sm-2 col-form-label">Services:</label>
                             <div class="col-4 form-group">
                                 <div class="list-group w-100" style="max-height: 191px; overflow-y:  scroll;">
-                                  <div *ngFor="let s of services"class="list-group-item" style="display: block">
+                                  <div *ngFor="let s of accommodationServices"class="list-group-item" style="display: block">
                                       <div class="form-check">
                                         <input class="form-check-input" type="checkbox" [(ngModel)]="s.isChecked" [ngModelOptions]="{standalone: true}">
                                         <label class="form-check-label">{{s.name}}</label>

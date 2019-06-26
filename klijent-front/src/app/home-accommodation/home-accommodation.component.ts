@@ -16,9 +16,8 @@ import { PriceService } from '../service/priceService';
 export class HomeAccommodationComponent implements OnInit {
 
   accommodations : Accommodation[] = [];
-  searchAccommodation : Accommodation;
-  nameLoation : string;
-  distance : number;
+  searchAccommodation : Accommodation = new Accommodation();
+  nameLocation : string;
   accommodationServices : AccommodationService[] = [];
   accommodationTypes : AccommodationType[] = [];
   showSearch : boolean = false;
@@ -27,6 +26,9 @@ export class HomeAccommodationComponent implements OnInit {
   showPrice: boolean = false;
   price : PriceDTO[] = [];
   reserveMessagge : string = "";
+  dates : Date[] = [];
+  selectedType : AccommodationType;
+  selectedCategory : number = 0;
 
   constructor(private service : AccommodationUnitService, private resService : ReservationService, private imageService : ImageService, private priceService : PriceService) { 
     this.service.getAccommodations().subscribe(
@@ -57,7 +59,23 @@ export class HomeAccommodationComponent implements OnInit {
   }
 
   onSearch1(){
-    this.showSearch = false;
+    this.searchAccommodation.accommodationType = this.selectedType;
+    this.searchAccommodation.category = this.selectedCategory;
+    this.searchAccommodation.fromDate = this.dates[0];
+    this.searchAccommodation.toDate = this.dates[1];
+    this.searchAccommodation.location.name = this.nameLocation;
+    for(let s of this.accommodationServices){
+      if(s.isChecked){
+        this.searchAccommodation.accommodationService.push(s);
+      }
+    }
+
+    this.service.searchAccommodations(this.searchAccommodation).subscribe(
+      data => {
+        this.accommodations = data;
+        this.showSearch = false;
+      }
+    )
   }
 
   onClick1(a : Accommodation){
@@ -94,6 +112,14 @@ export class HomeAccommodationComponent implements OnInit {
 
   onClick2(){
     this.reserveMessagge = "You must log in or register!"
+  }
+
+  onBack(){
+    this.service.getAccommodations().subscribe(
+      data => {
+        this.accommodations = data;
+      }
+    )
   }
 
 }
