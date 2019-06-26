@@ -1,6 +1,11 @@
 package xml.accommodation_service.dto;
 
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
 import com.eureka.model.eurekamodel.model.Accommodation;
+import com.eureka.model.eurekamodel.model.AccommodationService;
 import com.eureka.model.eurekamodel.model.AccommodationType;
 import com.eureka.model.eurekamodel.model.Location;
 
@@ -8,11 +13,14 @@ public class AccomodationDTO {
 
 	private AccommodationType accommodationType;
 	private String description;
+	private List<AccommodationService> accommodationService;
 	private int category;
 	private Location location;
 	private long accommodationId;
 	private int capacity;
 	private String name;
+	private Date fromDate;
+	private Date toDate;
 	private int cancelingPeriod;
 	
 	public AccomodationDTO() {}
@@ -26,6 +34,7 @@ public class AccomodationDTO {
 		this.capacity = acc.getCapacity();
 		this.name = acc.getName();
 		this.cancelingPeriod = acc.getCancelingPeriod();
+		this.accommodationService = new ArrayList<>();
 	}
 
 	public AccommodationType getAccommodationType() {
@@ -90,6 +99,30 @@ public class AccomodationDTO {
 
 	public void setCancelingPeriod(int cancelingPeriod) {
 		this.cancelingPeriod = cancelingPeriod;
+	}
+
+	public List<AccommodationService> getAccommodationService() {
+		return accommodationService;
+	}
+
+	public void setAccommodationService(List<AccommodationService> accommodationService) {
+		this.accommodationService = accommodationService;
+	}
+
+	public Date getFromDate() {
+		return fromDate;
+	}
+
+	public void setFromDate(Date fromDate) {
+		this.fromDate = fromDate;
+	}
+
+	public Date getToDate() {
+		return toDate;
+	}
+
+	public void setToDate(Date toDate) {
+		this.toDate = toDate;
 	}
 	
 	

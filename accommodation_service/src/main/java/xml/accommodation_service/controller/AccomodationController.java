@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -25,5 +27,11 @@ public class AccomodationController {
 	public ResponseEntity<List<AccomodationDTO>> getAccommodations(){
 		List<AccomodationDTO> accs = service.getAll();
 		return new ResponseEntity<>(accs, HttpStatus.OK);
+	}
+	
+	@PostMapping(value="/all/searchAcc", consumes="application/json")
+	public ResponseEntity<List<AccomodationDTO>> searchAcc(@RequestBody AccomodationDTO accDTO){
+		List<AccomodationDTO> acDTO = service.searchAcc(accDTO);
+		return new ResponseEntity<>(acDTO, HttpStatus.OK);
 	}
 }
