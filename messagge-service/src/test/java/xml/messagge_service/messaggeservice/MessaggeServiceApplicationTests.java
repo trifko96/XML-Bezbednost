@@ -1,4 +1,4 @@
-package xml.messagges_service.messagge_service;
+package xml.messagge_service.messaggeservice;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
