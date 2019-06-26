@@ -49,7 +49,7 @@ public class SecurityTokenConfig extends WebSecurityConfigurerAdapter {
 		   .antMatchers("/accomodation/acc/all/**").permitAll()
 		   .antMatchers("/accomodation/image/**").permitAll()
 		   .antMatchers("/accomodation/price/**").permitAll()
-		   .antMatchers("/reservation/res/**").permitAll()
+		   .antMatchers("/reservation/res/**").hasRole("USER")
 		   .antMatchers("/auth/soap/**").permitAll()
 		   .antMatchers("/accomodation/soap/**").permitAll()
 		   // Any other request must be authenticated
