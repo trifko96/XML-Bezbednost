@@ -1,0 +1,44 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-6" style="max-height: 320px; overflow-y:  scroll;">
+      <br>
+      <h4>Sent messagges:</h4>            
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Agent</th>
+            <th>Content</th>
+          </tr>
+        </thead>
+        <tbody *ngFor="let m of sentMessagges">
+            <tr>
+              <td>{{m.agentR}}</td>
+              <td>{{m.content}}</td>
+            </tr>
+          </tbody>
+      </table>
+    </div>
+
+    <div class="col-6" style="max-height: 320px; overflow-y:  scroll;">
+      <br>
+      <h4>Received messagges:</h4>            
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Agent</th>
+            <th>Content</th>
+          </tr>
+        </thead>
+        <tbody *ngFor="let m1 of receivedMessagges">
+            <tr>
+              <td>{{m1.agentS}}</td>
+              <td>{{m1.content}}</td>
+            </tr>
+          </tbody>
+      </table>
+    </div>
+
+  </div>
+</div>
+
+

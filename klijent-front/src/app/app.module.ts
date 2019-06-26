@@ -22,6 +22,7 @@ import { ImageService } from './service/imageService';
 import { PriceService } from './service/priceService';
 import { ReservationService } from './service/reservationService';
 import { AccommodationUnitService } from './service/accommodationUnitService';
+import { HomeLoggedInMessaggeComponent } from './home-logged-in-messagge/home-logged-in-messagge.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { AccommodationUnitService } from './service/accommodationUnitService';
     HomeAccommodationComponent,
     HomeLoggedInComponent,
     HomeLoggedInAccComponent,
-    HomeLoggedInReservComponent
+    HomeLoggedInReservComponent,
+    HomeLoggedInMessaggeComponent
   ],
   imports: [
     BrowserModule,

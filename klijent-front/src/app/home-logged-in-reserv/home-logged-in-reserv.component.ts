@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Reservation } from '../model/ReservationDTO';
 import { ReservationService } from '../service/reservationService';
+import { MessaggeDTO } from '../model/MessaggeDTO';
+import { MessaggeService } from '../service/messaggeService';
 
 @Component({
   selector: 'app-home-logged-in-reserv',
@@ -11,8 +13,10 @@ export class HomeLoggedInReservComponent implements OnInit {
 
   reservations : Reservation[] = [];
   showMessagge : boolean = false;
+  sendMessagge : MessaggeDTO = new MessaggeDTO();
+  alert : string = "";
 
-  constructor(private service : ReservationService) {
+  constructor(private service : ReservationService, private mService : MessaggeService) {
     this.service.getReservations().subscribe(
       data => {
         this.reservations = data;
@@ -33,10 +37,19 @@ export class HomeLoggedInReservComponent implements OnInit {
 
   onClick(r : Reservation){
     this.showMessagge = true;
+    this.sendMessagge.accommodationName = r.accommodationName;
   }
 
   onSend(){
-    this.showMessagge = false;
+    this.mService.newMessage(this.sendMessagge).subscribe(
+      data => {
+        this.showMessagge = false;
+      },
+      error => {
+        this.alert = "Your messagge is not sent!";
+      }
+    )
+    
   }
 
 }

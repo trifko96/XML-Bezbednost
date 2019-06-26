@@ -9,6 +9,7 @@ import { HomeLoggedInAccComponent } from './home-logged-in-acc/home-logged-in-ac
 import { HomeLoggedInReservComponent } from './home-logged-in-reserv/home-logged-in-reserv.component';
 import { AuthGuard } from './guards/AuthGuard';
 import { RandomGuard } from './guards/RandomGuard';
+import { HomeLoggedInMessaggeComponent } from './home-logged-in-messagge/home-logged-in-messagge.component';
 
 const routes: Route[] = [
   {path: '', redirectTo:'/home/accommodation', pathMatch: 'full'},
@@ -26,6 +27,7 @@ const routes: Route[] = [
       {path: '', redirectTo : 'homeLoggedAcc', pathMatch: 'full'},
       {path: 'homeLoggedAcc', component: HomeLoggedInAccComponent},
       {path: 'homeLoggedRes', component: HomeLoggedInReservComponent},
+      {path: 'homeLoggedMes', component: HomeLoggedInMessaggeComponent},
       {path: '**', redirectTo: 'homeLoggedAcc', pathMatch: 'full'}
     ]
   },
