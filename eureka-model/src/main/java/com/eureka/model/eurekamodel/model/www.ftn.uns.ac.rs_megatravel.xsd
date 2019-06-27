@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<xs:schema elementFormDefault="qualified" version="1.0" targetNamespace="http://www.ftn.uns.ac.rs/megatravel"
-    xmlns:tns="http://www.ftn.uns.ac.rs/megatravel" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+<xs:schema elementFormDefault="qualified" version="1.0" targetNamespace="http://www.ftn.uns.ac.rs/megatravel" xmlns:tns="http://www.ftn.uns.ac.rs/megatravel" xmlns:xs="http://www.w3.org/2001/XMLSchema">
 
   <xs:element name="add_accommodation_request">
     <xs:complexType>
@@ -198,30 +197,6 @@
     </xs:complexType>
   </xs:element>
 
-  <xs:complexType name="messagge">
-    <xs:sequence>
-      <xs:element name="id" type="xs:long"/>
-      <xs:element name="send" type="tns:user"/>
-      <xs:element name="receive" type="tns:user"/>
-      <xs:element name="content" type="xs:string"/>
-      <xs:element name="date" type="xs:dateTime"/>
-    </xs:sequence>
-  </xs:complexType>
-
-  <xs:complexType name="user">
-    <xs:sequence>
-      <xs:element name="userId" type="xs:long"/>
-      <xs:element name="name" type="xs:string"/>
-      <xs:element name="surname" type="xs:string"/>
-      <xs:element name="email" type="xs:string"/>
-      <xs:element name="password" type="xs:string"/>
-      <xs:element name="username" type="xs:string"/>
-      <xs:element name="role" type="tns:user_role"/>
-      <xs:element name="status" type="tns:user_status"/>
-      <xs:element name="businessId" type="xs:string"/>
-    </xs:sequence>
-  </xs:complexType>
-
   <xs:complexType name="image">
     <xs:sequence>
       <xs:element name="id" type="xs:long"/>
@@ -248,6 +223,20 @@
     </xs:sequence>
   </xs:complexType>
 
+  <xs:complexType name="user">
+    <xs:sequence>
+      <xs:element name="userId" type="xs:long"/>
+      <xs:element name="name" type="xs:string"/>
+      <xs:element name="surname" type="xs:string"/>
+      <xs:element name="email" type="xs:string"/>
+      <xs:element name="password" type="xs:string"/>
+      <xs:element name="username" type="xs:string"/>
+      <xs:element name="role" type="tns:user_role"/>
+      <xs:element name="status" type="tns:user_status"/>
+      <xs:element name="businessId" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
   <xs:complexType name="accommodation_type">
     <xs:sequence>
       <xs:element name="name" type="xs:string"/>
@@ -271,13 +260,22 @@
     </xs:sequence>
   </xs:complexType>
 
-  <xs:complexType name="recension">
+  <xs:complexType name="rating">
     <xs:sequence>
       <xs:element name="id" type="xs:long"/>
-      <xs:element name="value" type="xs:string"/>
-      <xs:element name="recensionStatus" type="tns:recension_status"/>
-      <xs:element name="user" type="tns:user"/>
       <xs:element name="accommodation" type="tns:accommodation"/>
+      <xs:element name="user" type="tns:user"/>
+      <xs:element name="value" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="messagge">
+    <xs:sequence>
+      <xs:element name="id" type="xs:long"/>
+      <xs:element name="send" type="tns:user"/>
+      <xs:element name="receive" type="tns:user"/>
+      <xs:element name="content" type="xs:string"/>
+      <xs:element name="date" type="xs:dateTime"/>
     </xs:sequence>
   </xs:complexType>
 
@@ -292,6 +290,16 @@
     </xs:sequence>
   </xs:complexType>
 
+  <xs:complexType name="recension">
+    <xs:sequence>
+      <xs:element name="id" type="xs:long"/>
+      <xs:element name="value" type="xs:string"/>
+      <xs:element name="recensionStatus" type="tns:recension_status"/>
+      <xs:element name="user" type="tns:user"/>
+      <xs:element name="accommodation" type="tns:accommodation"/>
+    </xs:sequence>
+  </xs:complexType>
+
   <xs:complexType name="price">
     <xs:sequence>
       <xs:element name="id" type="xs:long"/>
@@ -302,20 +310,11 @@
     </xs:sequence>
   </xs:complexType>
 
-  <xs:complexType name="rating">
-    <xs:sequence>
-      <xs:element name="id" type="xs:long"/>
-      <xs:element name="accommodation" type="tns:accommodation"/>
-      <xs:element name="user" type="tns:user"/>
-      <xs:element name="value" type="xs:string"/>
-    </xs:sequence>
-  </xs:complexType>
-
-  <xs:simpleType name="user_role">
+  <xs:simpleType name="reservation_status">
     <xs:restriction base="xs:string">
-      <xs:enumeration value="ADMIN"/>
-      <xs:enumeration value="USER"/>
-      <xs:enumeration value="AGENT"/>
+      <xs:enumeration value="APPROVED"/>
+      <xs:enumeration value="PENDING"/>
+      <xs:enumeration value="REJECTED"/>
     </xs:restriction>
   </xs:simpleType>
 
@@ -326,18 +325,11 @@
     </xs:restriction>
   </xs:simpleType>
 
-  <xs:simpleType name="reservation_status">
+  <xs:simpleType name="user_role">
     <xs:restriction base="xs:string">
-      <xs:enumeration value="APPROVED"/>
-      <xs:enumeration value="PENDING"/>
-      <xs:enumeration value="REJECTED"/>
-    </xs:restriction>
-  </xs:simpleType>
-
-  <xs:simpleType name="soap_status">
-    <xs:restriction base="xs:string">
-      <xs:enumeration value="SUCCESS"/>
-      <xs:enumeration value="ERROR"/>
+      <xs:enumeration value="ADMIN"/>
+      <xs:enumeration value="USER"/>
+      <xs:enumeration value="AGENT"/>
     </xs:restriction>
   </xs:simpleType>
 
@@ -345,6 +337,13 @@
     <xs:restriction base="xs:string">
       <xs:enumeration value="FREE"/>
       <xs:enumeration value="RESERVED"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="soap_status">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="SUCCESS"/>
+      <xs:enumeration value="ERROR"/>
     </xs:restriction>
   </xs:simpleType>
 

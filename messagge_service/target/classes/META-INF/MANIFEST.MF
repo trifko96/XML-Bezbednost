@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+Built-By: Nemanja
+Build-Jdk: 9.0.1
+Implementation-Title: messagge_service
+Implementation-Version: 0.0.1-SNAPSHOT
+Implementation-Vendor-Id: xml.messagges_service
+Implementation-URL: https://projects.spring.io/spring-boot/#/spring-bo
+ ot-starter-parent/messagge_service
+Created-By: Maven Integration for Eclipse
+

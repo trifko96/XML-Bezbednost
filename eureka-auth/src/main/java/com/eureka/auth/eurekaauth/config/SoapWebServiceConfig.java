@@ -28,7 +28,7 @@ public class SoapWebServiceConfig extends WsConfigurerAdapter {
 	
 	@Bean
 	public XsdSchema mySchema() {
-		return new SimpleXsdSchema(new ClassPathResource("XMLSchema1.xsd"));
+		return new SimpleXsdSchema(new ClassPathResource("www.ftn.uns.ac.rs_megatravel.xsd"));
 	}
 	
 	@Bean
@@ -37,7 +37,7 @@ public class SoapWebServiceConfig extends WsConfigurerAdapter {
 		definition.setSchema(mySchema);
 		definition.setLocationUri("/soap");
 		definition.setPortTypeName("AuthServicePort");
-		definition.setTransportUri("XMLSchema1.xsd");
+		definition.setTransportUri("www.ftn.uns.ac.rs_megatravel.xsd");
 		return definition;
 	}
 }
