@@ -39,11 +39,6 @@ public class ReservationService {
 		
 	}
 	
-	public String getUser() {
-		String tmp = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
-		return tmp;
-	} 
-	
 	public List<ReservationDTO> cancelReservation(String username, long id) {
 		repository.deleteById(id);
 		return getReservationsByUser(username);
