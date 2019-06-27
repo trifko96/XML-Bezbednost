@@ -8,6 +8,7 @@ import { ReservationService } from '../service/reservationService';
 import { ImageService } from '../service/imageService';
 import { PriceService } from '../service/priceService';
 import { PriceDTO } from '../model/PriceDTO';
+import * as $ from 'jquery';
 
 @Component({
   selector: 'app-home-logged-in-acc',
@@ -18,7 +19,7 @@ export class HomeLoggedInAccComponent implements OnInit {
 
   accommodations : Accommodation[] = [];
   searchAccommodation : Accommodation = new Accommodation();
-  nameLocation : string;
+  nameLocation : string = "";
   selectedType : AccommodationType;
   selectedCategory : number = 0;
   accommodationServices : AccommodationService[] = [];
@@ -78,17 +79,12 @@ export class HomeLoggedInAccComponent implements OnInit {
   }
 
   onSearch1(){
-    
+  
     this.searchAccommodation.accommodationType = this.selectedType;
     this.searchAccommodation.category = this.selectedCategory;
     this.searchAccommodation.fromDate = this.dates1[0];
     this.searchAccommodation.toDate = this.dates1[1];
     this.searchAccommodation.location.name = this.nameLocation;
-    for(let s of this.accommodationServices){
-      if(s.isChecked){
-        this.searchAccommodation.accommodationService.push(s);
-      }
-    }
 
     this.service.searchAccommodations(this.searchAccommodation).subscribe(
       data => {
@@ -101,6 +97,7 @@ export class HomeLoggedInAccComponent implements OnInit {
         this.selectedCategory = 0;
       }
     )
+    
   }
 
   onClick1(a : Accommodation){

@@ -49,7 +49,7 @@ public class AccomodationUnitService {
 		
 		currentAcc = repository.findAll();
 		
-		if(a.getLocation() == null) {
+		if(a.getLocation().getName().equals("")) {
 			a1 = currentAcc;
 		} else {
 			for(Accommodation acc : currentAcc) {
@@ -89,26 +89,10 @@ public class AccomodationUnitService {
 			}
 		}
 		
-		if(a.getAccommodationService().isEmpty()) {
-			a5 = a4;
+		if(a.getFromDate() == null) {
+			a6 = a4;
 		} else {
 			for(Accommodation acc : a4) {
-				int tmpCount = 0;
-				for(AccommodationService acs : a.getAccommodationService()) {
-					if(acc.getAccommodationService().contains(acs)) {
-						tmpCount++;
-					}
-				}
-				if(tmpCount == count) {
-					a5.add(acc);
-				}
-			}
-		}
-		
-		if(a.getFromDate() == null) {
-			a6 = a5;
-		} else {
-			for(Accommodation acc : a5) {
 				List<Reservation> res = resRepository.getReservations(acc.getName());
 				boolean tmp = true;
 				for(Reservation r : res) {

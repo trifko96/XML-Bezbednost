@@ -7,6 +7,7 @@ import { ReservationService } from '../service/reservationService';
 import { PriceDTO } from '../model/PriceDTO';
 import { ImageService } from '../service/imageService';
 import { PriceService } from '../service/priceService';
+import * as $ from 'jquery';
 
 @Component({
   selector: 'app-home-accommodation',
@@ -17,7 +18,7 @@ export class HomeAccommodationComponent implements OnInit {
 
   accommodations : Accommodation[] = [];
   searchAccommodation : Accommodation = new Accommodation();
-  nameLocation : string;
+  nameLocation : string = "";
   accommodationServices : AccommodationService[] = [];
   accommodationTypes : AccommodationType[] = [];
   showSearch : boolean = false;
@@ -64,11 +65,6 @@ export class HomeAccommodationComponent implements OnInit {
     this.searchAccommodation.fromDate = this.dates[0];
     this.searchAccommodation.toDate = this.dates[1];
     this.searchAccommodation.location.name = this.nameLocation;
-    for(let s of this.accommodationServices){
-      if(s.isChecked){
-        this.searchAccommodation.accommodationService.push(s);
-      }
-    }
 
     this.service.searchAccommodations(this.searchAccommodation).subscribe(
       data => {
@@ -77,10 +73,11 @@ export class HomeAccommodationComponent implements OnInit {
         this.searchAccommodation.capacity = 0;
         this.nameLocation = "";
         this.dates = [];
-        this.selectedType.name = "";
+    
         this.selectedCategory = 0;
       }
     )
+    
   }
 
   onClick1(a : Accommodation){

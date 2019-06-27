@@ -7,3 +7,9 @@ insert into accommodation (id_agent, accomodation_type_id, description, category
 insert into accommodation (id_agent, accomodation_type_id, description, category, location_id, accommodation_id, capacity, name, canceling_period, status) values (3, 1, 'desc', 1, 1, 2, 2, 'name1', 3, 0);
 insert into price (id, from_date, one_night_price, to_date, id_accommodation) values (1, '2015-05-06', 10, '2015-05-09', 1);
 insert into reservation (id, id_accommodation, id_user, from_date, to_date, status) values (1, 1, 2, '2015-05-06', '2015-05-11', 1);
+insert into accommodation_service (accommodation_service_id, name) values (1, 'WiFi');
+insert into accommodation_service (accommodation_service_id, name) values (2, 'Parking');
+insert into accommodation_service (accommodation_service_id, name) values (3, 'Dorucak');
+insert into accommodation_service_unit (accommodation_id, accommodation_service_id) values (1, 1);
+insert into accommodation_service_unit (accommodation_id, accommodation_service_id) values (1, 2);
+insert into accommodation_service_unit (accommodation_id, accommodation_service_id) values (2, 3);
