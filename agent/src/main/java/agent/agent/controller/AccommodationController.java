@@ -2,6 +2,8 @@ package agent.agent.controller;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,6 +25,8 @@ import agent.agent.service.AgentService;
 @RequestMapping(value = "/acc")
 public class AccommodationController {
 
+	Logger logger = LoggerFactory.getLogger(this.getClass());
+	
 	@Autowired
 	AccommodationService service;
 	
@@ -36,8 +40,10 @@ public class AccommodationController {
 		acc.setStatus(AccommodationStatus.FREE);
 		AccommodationDTO a = service.addNewAcc(acc);
 		if(a != null) {
+			logger.info("NP_EVENT DNS {} {} T", agentService.getUser().getUsername(), acc.getAccommodationId());
 			return new ResponseEntity<>(a, HttpStatus.OK);
 		} else {
+			logger.warn("NP_EVENT DNS {} {} F", agentService.getUser().getUsername(), acc.getAccommodationId());
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 	}
@@ -46,21 +52,25 @@ public class AccommodationController {
 	public ResponseEntity<List<AccommodationDTO>> getAllUnits(){
 		User agent = agentService.getUser();
 		List<AccommodationDTO> accDTO = service.getAllUnits(agent.getUserId());
+		logger.info("NP_EVENT VSM {}", agentService.getUser().getUsername());
 		return new ResponseEntity<>(accDTO, HttpStatus.OK);
 	}
 	
 	@GetMapping(value = "/getAllTypes")
 	public ResponseEntity<List<AccommodationType>> getAllTypes(){
+		logger.info("NP_EVENT VST {}", agentService.getUser().getUsername());
 		return new ResponseEntity<>(service.getAllTypes(),HttpStatus.OK);
 	}
 	
 	@GetMapping(value = "/getAllServices")
 	public ResponseEntity<List<agent.agent.model.AccommodationService>> getAllServices(){
+		logger.info("NP_EVENT VSS {}", agentService.getUser().getUsername());
 		return new ResponseEntity<>(service.getAllServices(),HttpStatus.OK);
 	}
 	
 	@PostMapping(value = "/getServicesByUnit", consumes = "application/json")
 	public ResponseEntity<List<agent.agent.model.AccommodationService>> getServicesByUnit(@RequestBody Accommodation acc){
+		logger.info("NP_EVENT VSSK {}", agentService.getUser().getUsername());
 		return new ResponseEntity<>(service.getServicesByUnit(acc.getAccommodationId()),HttpStatus.OK);
 	}
 	
@@ -69,6 +79,7 @@ public class AccommodationController {
 		service.reserveAcc(acc.getAccommodationId());
 		User agent = agentService.getUser();
 		List<AccommodationDTO> accDTO = service.getAllUnits(agent.getUserId());
+		logger.info("NP_EVENT RSM {}", agentService.getUser().getUsername());
 		return new ResponseEntity<>(accDTO, HttpStatus.OK);
 		
 	}

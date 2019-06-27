@@ -3,6 +3,8 @@ package agent.agent.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,6 +24,9 @@ import agent.agent.service.ReservationService;
 @RestController
 @RequestMapping(value="/res")
 public class ReservationController {
+	
+	
+	Logger logger = LoggerFactory.getLogger(this.getClass());
 	
 	@Autowired
 	ReservationService service;
@@ -43,6 +48,7 @@ public class ReservationController {
 				resDTO.add(r);
 			}
 		}
+		logger.info("NP_EVENT VSR {}", agentService.getUser().getUserId());
 		return new ResponseEntity<>(resDTO,HttpStatus.OK);
 	}
 	
@@ -58,6 +64,7 @@ public class ReservationController {
 				resDTO.add(res);
 			}
 		}
+		logger.info("NP_EVENT ODR {} {}", agentService.getUser().getUserId(), r.getId());
 		return new ResponseEntity<>(resDTO,HttpStatus.OK);
 	}
 	
@@ -73,6 +80,7 @@ public class ReservationController {
 				resDTO.add(res);
 			}
 		}
+		logger.info("NP_EVENT NODR {} {}", agentService.getUser().getUserId(), r.getId());
 		return new ResponseEntity<>(resDTO,HttpStatus.OK);
 	}
 	
