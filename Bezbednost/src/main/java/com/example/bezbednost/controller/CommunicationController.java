@@ -80,11 +80,13 @@ public class CommunicationController {
 			// Cuvamo u novi keyStore
 			keyStoreWriter.saveKeyStore(nazivKeyStora1.concat(".jks"), "111".toCharArray());
 			
+			service.create(id1, id2);
+			
 		}catch (Exception e) {
 			e.printStackTrace();
 		}
 	    
-	    return new ResponseEntity<>(HttpStatus.OK);
+	    return new ResponseEntity<>("",HttpStatus.OK);
 	}
 	
 	

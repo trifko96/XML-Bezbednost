@@ -14,9 +14,10 @@ $(document).ready(function(){
 		
 		customAjax({
 			method: 'POST',
-			url: "/Communication/create/"+idPrvog+"/"+idDrugog,
+			url: "/Communication/enable/"+idPrvog+"/"+idDrugog,
 			contentType: 'application/json',
 			success: function(data){
+				if(data == "")
 				customAjax({
 					method: "GET",
 					url: "/Certificate/"+idPrvog,
