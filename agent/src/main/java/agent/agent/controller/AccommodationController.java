@@ -40,10 +40,10 @@ public class AccommodationController {
 		acc.setStatus(AccommodationStatus.FREE);
 		AccommodationDTO a = service.addNewAcc(acc);
 		if(a != null) {
-			logger.info("NP_EVENT DNS {} {} T", agentService.getUser().getUsername(), acc.getAccommodationId());
+			logger.info("NP_EVENT DNSM {} {} T", agentService.getUser().getUsername(), acc.getAccommodationId());
 			return new ResponseEntity<>(a, HttpStatus.OK);
 		} else {
-			logger.warn("NP_EVENT DNS {} {} F", agentService.getUser().getUsername(), acc.getAccommodationId());
+			logger.warn("NP_EVENT DNSM {} {} F", agentService.getUser().getUsername(), acc.getAccommodationId());
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 	}

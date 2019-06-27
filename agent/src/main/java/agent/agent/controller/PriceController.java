@@ -31,7 +31,7 @@ public class PriceController {
 	@PostMapping(value="/getPrice")
 	public ResponseEntity<List<PriceDTO>> getPrice(@RequestBody long id){
 		List<PriceDTO> priceDTO = service.getPrice(id);
-		logger.info("NP_EVENT VC");
+		logger.info("NP_EVENT VCC");
 		return new ResponseEntity<>(priceDTO, HttpStatus.OK);
 	}
 	

@@ -55,7 +55,7 @@ public class AccomodationServiceController {
 	
 	@GetMapping(value = "/all/getServices")
 	public ResponseEntity<List<AccommodationService>> getServices(){
-		logger.info("NP_EVENT VSE {} {}", userService.getCurrentUsername());
+		logger.info("NP_EVENT VSE {}", userService.getCurrentUsername());
 		return new ResponseEntity<>(service.getAll(),HttpStatus.OK);
 	}
 	
