@@ -11,7 +11,8 @@ export class HomeLoggedInComponent implements OnInit {
 
   paths = [
     {path: "homeLoggedAcc", label: "Accomodations"},
-    {path: "homeLoggedRes", label: "Reservations"}
+    {path: "homeLoggedRes", label: "Reservations"},
+    {path: "homeLoggedMes", label: "Messagges"}
   ]
 
   constructor(private service : authService, private router : Router) { }

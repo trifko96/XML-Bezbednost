@@ -74,6 +74,11 @@ export class HomeAccommodationComponent implements OnInit {
       data => {
         this.accommodations = data;
         this.showSearch = false;
+        this.searchAccommodation.capacity = 0;
+        this.nameLocation = "";
+        this.dates = [];
+        this.selectedType.name = "";
+        this.selectedCategory = 0;
       }
     )
   }
