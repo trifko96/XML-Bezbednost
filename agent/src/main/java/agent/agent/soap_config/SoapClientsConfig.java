@@ -1,9 +1,19 @@
 package agent.agent.soap_config;
 
+import javax.net.ssl.SSLContext;
+
+import org.apache.http.client.HttpClient;
+import org.apache.http.conn.ssl.NoopHostnameVerifier;
+import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
+import org.apache.http.impl.client.HttpClientBuilder;
+import org.apache.http.ssl.SSLContextBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.oxm.jaxb.Jaxb2Marshaller;
 import org.springframework.ws.client.support.interceptor.ClientInterceptor;
+import org.springframework.ws.transport.http.HttpComponentsMessageSender;
+import org.springframework.ws.transport.http.HttpComponentsMessageSender.RemoveSoapHeadersInterceptor;
 
 import agent.agent.soap_clients.AccommodationServiceSoapClient;
 import agent.agent.soap_clients.AuthServiceSoapClient;
@@ -74,4 +84,28 @@ public class SoapClientsConfig {
 	public SecurityRequestInterceptor securityRequestInterceptor() {
 		return new SecurityRequestInterceptor();
 	}
+	
+	@Bean
+	  public HttpComponentsMessageSender httpComponentsMessageSender() throws Exception {
+	    HttpComponentsMessageSender httpComponentsMessageSender = new HttpComponentsMessageSender();
+	    httpComponentsMessageSender.setHttpClient(httpClient());
+
+	    return httpComponentsMessageSender;
+	  }
+
+	  public HttpClient httpClient() throws Exception {
+	    return HttpClientBuilder.create().setSSLSocketFactory(sslConnectionSocketFactory())
+	        .addInterceptorFirst(new RemoveSoapHeadersInterceptor()).build();
+	  }
+
+	  public SSLConnectionSocketFactory sslConnectionSocketFactory() throws Exception {
+	    // NoopHostnameVerifier essentially turns hostname verification off as otherwise following error
+	    // is thrown: java.security.cert.CertificateException: No name matching localhost found
+	    return new SSLConnectionSocketFactory(sslContext(), NoopHostnameVerifier.INSTANCE);
+	  }
+
+	  public SSLContext sslContext() throws Exception {
+	    return SSLContextBuilder.create()
+	        .loadTrustMaterial( new ClassPathResource("agent.jks").getFile(), "password".toCharArray()).build();
+	  }
 }
