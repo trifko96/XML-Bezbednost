@@ -1,7 +1,7 @@
 {
     "/api/*" : {
         "target" :
-        "http://localhost:9300",
+        "https://localhost:9300",
         "secure" : false,
         "pathRewrite" : {"^/api" : ""},
         "changeOrigin" : true,
