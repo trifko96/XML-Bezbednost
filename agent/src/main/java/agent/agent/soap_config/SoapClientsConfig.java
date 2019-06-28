@@ -46,17 +46,17 @@ public class SoapClientsConfig {
 		return client;
 	}
 	
-	/*@Bean
+	@Bean
 	public MessaggeServiceSoapClient messagesServiceSoapClient(Jaxb2Marshaller marshaller) {
 		MessaggeServiceSoapClient client = new MessaggeServiceSoapClient();
 		ClientInterceptor[] interceptors = new ClientInterceptor[]{securityRequestInterceptor()};
 		client.setInterceptors(interceptors);
-		client.setDefaultUri("http://localhost:8762/mess/soap");
+		client.setDefaultUri("http://localhost:8762/messagge/soap");
 		client.setMarshaller(marshaller);
 		client.setUnmarshaller(marshaller);
 		client.getWebServiceTemplate().setCheckConnectionForFault(true);
 		return client;
-	}*/
+	}
 	
 	@Bean
 	public AuthServiceSoapClient authServiceSoapClient(Jaxb2Marshaller marshaller) {

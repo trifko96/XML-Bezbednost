@@ -58,4 +58,17 @@ public class ReservationService {
 		return getReservationsByUser(tmp);
 		
 	}
+	
+	public List<Reservation> getReservations() {
+		List<Reservation> res = repository.findAll();
+		return res;
+	}
+	
+	public void save(Reservation r) {
+		repository.save(r);
+	}
+	
+	public Reservation getResById(long id) {
+		return repository.getReservationById(id);
+	}
 }

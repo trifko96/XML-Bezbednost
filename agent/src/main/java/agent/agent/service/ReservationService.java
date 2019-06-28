@@ -11,6 +11,7 @@ import agent.agent.model.Accommodation;
 import agent.agent.model.Reservation;
 import agent.agent.repository.AccommodationRepository;
 import agent.agent.repository.ReservationRepository;
+import agent.agent.soap_clients.ReservationServiceSoapClient;
 
 @Service
 public class ReservationService {
@@ -18,7 +19,8 @@ public class ReservationService {
 	@Autowired
 	ReservationRepository repository;
 	
-	
+	@Autowired
+	ReservationServiceSoapClient soapClient;
 	
 	public List<ReservationDTO> getReservations(long id) {
 		List<Reservation> res = repository.getReservations(id);
@@ -31,9 +33,14 @@ public class ReservationService {
 	
 	public void approveRes(long id) {
 		repository.approveRes(id);
+		soapClient.approveReservation(id);
 	}
 	
 	public void rejectRes(long id) {
 		repository.rejectRes(id);
+	}
+	
+	public void saveAllRes() {
+		repository.saveAll(soapClient.getReservations().getReservation());
 	}
 }

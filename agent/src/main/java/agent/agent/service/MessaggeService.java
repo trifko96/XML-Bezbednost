@@ -11,6 +11,7 @@ import agent.agent.model.Messagge;
 import agent.agent.model.User;
 import agent.agent.repository.MessaggeRepository;
 import agent.agent.repository.UserRepository;
+import agent.agent.soap_clients.MessaggeServiceSoapClient;
 
 @Service
 public class MessaggeService {
@@ -20,6 +21,9 @@ public class MessaggeService {
 	
 	@Autowired
 	UserRepository userRepository;
+	
+	@Autowired
+	MessaggeServiceSoapClient soapClient;
 	
 	public List<MessaggeDTO> getMessagges(String username){
 		List<Messagge> messagges = repository.getMessagge(username);
@@ -38,6 +42,11 @@ public class MessaggeService {
 		messagge.setSend(sender);
 		messagge.setReceive(receiver);
 		repository.save(messagge);
+		soapClient.sendMessagge(messagge);
 		return getMessagges(m.getAgentName());
+	}
+	
+	public void saveAllMessages() {
+		repository.saveAll(soapClient.getMessagges().getMessagge());
 	}
 }

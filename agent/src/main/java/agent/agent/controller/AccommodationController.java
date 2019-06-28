@@ -20,6 +20,8 @@ import agent.agent.model.AccommodationType;
 import agent.agent.model.User;
 import agent.agent.service.AccommodationService;
 import agent.agent.service.AgentService;
+import agent.agent.service.MessaggeService;
+import agent.agent.service.ReservationService;
 
 @RestController
 @RequestMapping(value = "/acc")
@@ -32,6 +34,12 @@ public class AccommodationController {
 	
 	@Autowired
 	AgentService agentService;
+	
+	@Autowired
+	ReservationService resService;
+	
+	@Autowired
+	MessaggeService messService;
 	
 	@PostMapping(value = "/addNewAcc", consumes = "application/json")
 	public ResponseEntity<AccommodationDTO> addNewAcc(@RequestBody Accommodation acc){
@@ -97,6 +105,8 @@ public class AccommodationController {
 	public ResponseEntity syncAll() {
 		service.saveAllServices();
 		service.saveAllTypes();
+		resService.saveAllRes();
+		messService.saveAllMessages();
 		return new ResponseEntity(HttpStatus.OK);
 	}
 }

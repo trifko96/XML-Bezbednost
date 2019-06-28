@@ -55,4 +55,12 @@ public class MessaggeService {
 		repository.save(m);
 		return getSentMessagges(tmp);
 	}
+	
+	public List<Messagge> getAllMessagges(){
+		return repository.findAll();
+	}
+	
+	public void save(Messagge m) {
+		repository.save(m);
+	}
 }
