@@ -40,7 +40,7 @@ public class ReservationService {
 	}
 	
 	public List<ReservationDTO> cancelReservation(String username, long id) {
-		repository.deleteById(id);
+		repository.deleteReservation(id);
 		return getReservationsByUser(username);
 	}
 	
@@ -50,7 +50,7 @@ public class ReservationService {
 		Reservation r = new Reservation();
 		r.setFromDate(res.getFromDate());
 		r.setToDate(res.getToDate());
-		r.setId(res.getId());
+		
 		r.setStatus(ReservationStatus.PENDING);
 		r.setUser(u);
 		r.setAccommodation(a);

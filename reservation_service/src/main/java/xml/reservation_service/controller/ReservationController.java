@@ -40,7 +40,7 @@ public class ReservationController {
 	@PostMapping(value="/cancelReservation", consumes="application/json")
 	public ResponseEntity<List<ReservationDTO>> cancelReservation(@RequestBody ReservationDTO resDTO){
 		String tmp = userService.getUser();
-		List<ReservationDTO> res = service.cancelReservation(tmp, resDTO.getAccommodationId());
+		List<ReservationDTO> res = service.cancelReservation(tmp, resDTO.getId());
 		logger.info("NP_EVENT OR {} {}", userService.getUser(), resDTO.getId());
 		return new ResponseEntity<>(res,HttpStatus.OK);
 	}

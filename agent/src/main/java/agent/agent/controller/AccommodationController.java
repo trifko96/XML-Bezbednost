@@ -106,7 +106,7 @@ public class AccommodationController {
 		service.saveAllServices();
 		service.saveAllTypes();
 		resService.saveAllRes();
-		messService.saveAllMessages();
+		//messService.saveAllMessages();
 		return new ResponseEntity(HttpStatus.OK);
 	}
 }

@@ -37,10 +37,8 @@ public class SecurityTokenConfig extends WebSecurityConfigurerAdapter {
 		.antMatchers("/acc/**").permitAll()
 		.antMatchers("/image/**").permitAll()
 		.antMatchers("/price/**").permitAll()
-		.antMatchers("/accService/admin").hasRole("ADMIN")
-		.antMatchers("/accService/all").permitAll()
-		.antMatchers("/accType/admin").hasRole("ADMIN")
-		.antMatchers("/accType/all").permitAll()
+		.antMatchers("/accService/**").permitAll()
+		.antMatchers("/accType/**").permitAll()
 		.antMatchers("/soap/**").hasRole("AGENT")
 		.anyRequest().authenticated(); 
 	}

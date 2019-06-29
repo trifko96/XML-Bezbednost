@@ -85,27 +85,4 @@ public class SoapClientsConfig {
 		return new SecurityRequestInterceptor();
 	}
 	
-	@Bean
-	  public HttpComponentsMessageSender httpComponentsMessageSender() throws Exception {
-	    HttpComponentsMessageSender httpComponentsMessageSender = new HttpComponentsMessageSender();
-	    httpComponentsMessageSender.setHttpClient(httpClient());
-
-	    return httpComponentsMessageSender;
-	  }
-
-	  public HttpClient httpClient() throws Exception {
-	    return HttpClientBuilder.create().setSSLSocketFactory(sslConnectionSocketFactory())
-	        .addInterceptorFirst(new RemoveSoapHeadersInterceptor()).build();
-	  }
-
-	  public SSLConnectionSocketFactory sslConnectionSocketFactory() throws Exception {
-	    // NoopHostnameVerifier essentially turns hostname verification off as otherwise following error
-	    // is thrown: java.security.cert.CertificateException: No name matching localhost found
-	    return new SSLConnectionSocketFactory(sslContext(), NoopHostnameVerifier.INSTANCE);
-	  }
-
-	  public SSLContext sslContext() throws Exception {
-	    return SSLContextBuilder.create()
-	        .loadTrustMaterial( new ClassPathResource("agent.jks").getFile(), "password".toCharArray()).build();
-	  }
 }
