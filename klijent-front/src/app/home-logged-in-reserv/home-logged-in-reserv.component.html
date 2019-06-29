@@ -9,6 +9,7 @@
               <th>Name</th>
               <th>From date</th>
               <th>To date</th>
+              <th>Status</th>
               <th>&nbsp;</th>
               <th>&nbsp;</th>
               <th>&nbsp;</th>
@@ -16,12 +17,13 @@
           </thead>
           <tbody *ngFor="let r of reservations">
               <tr>
-                <td>{{r.name}}</td>
+                <td>{{r.accommodationName}}</td>
                 <td>{{r.fromDate.slice(0,10)}}</td>
                 <td>{{r.toDate.slice(0,10)}}</td>
-                <td><button class="btn btn-link" (click)="onClick(r)">Send messagge</button></td>
+                <td>{{r.status}}</td>
+                <td *ngIf = "r.status == 'APPROVED'"><button class="btn btn-link" (click)="onClick(r)">Send messagge</button></td>
                 <td><button class="btn btn-link" (click)="onClick1(r)">Cancel reservation</button></td>
-                <td><button class="btn btn-link" (click)="onClick2(r)">Finish</button></td>
+                <td *ngIf = "r.status == 'APPROVED'"><button class="btn btn-link" (click)="onClick2(r)">Comment</button></td>
               </tr>
             </tbody>
         </table>

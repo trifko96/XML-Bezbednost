@@ -19,8 +19,8 @@
           <tr>
             <td>{{r.username}}</td>
             <td>{{r.accName}}</td>
-            <td>{{r.fromDate}}</td>
-            <td>{{r.toDate}}</td>
+            <td>{{r.fromDate.slice(0,10)}}</td>
+            <td>{{r.toDate.slice(0,10)}}</td>
             <td>{{r.status}}</td>
             <td *ngIf="r.status == 'PENDING'"><button class="btn btn-link" (click)="approve(r)">Approve</button></td>
             <td *ngIf="r.status == 'PENDING'"><button class="btn btn-link" (click)="reject(r)">Reject</button></td>

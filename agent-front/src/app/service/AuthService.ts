@@ -27,7 +27,7 @@ export class AuthService{
 
     loginRequest(response){
         localStorage.setItem("JWT_TOKEN", response.jwt);
-        this.http.get('api/syncAll').subscribe(
+        this.http.get('api/acc/syncAll').subscribe(
             data =>{
               console.log(data);
             },
