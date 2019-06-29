@@ -39,7 +39,7 @@ public class MessaggeController {
 		return new ResponseEntity<>(mesDTO, HttpStatus.OK);
 	}
 	
-	@PostMapping(value="/newMessagge", consumes="applicaton/json")
+	@PostMapping(value="/newMessagge", consumes="application/json")
 	public ResponseEntity<List<MessaggeDTO>> newMessage(@RequestBody MessaggeDTO mDTO){
 		String tmp = userService.getUser();
 		List<MessaggeDTO> mesDTO = service.newMessagge(tmp, mDTO);
