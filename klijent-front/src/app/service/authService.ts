@@ -18,7 +18,7 @@ export class authService{
     login(user : User) : Observable<boolean>{
         return this.http.post<any>("api/auth/login", {username: user.username, password: user.password})
         .pipe(
-          tap(response => localStorage.setItem("JWT_TOKEN_USER", response.jwt)),
+          tap(response => localStorage.setItem("JWT_TOKEN", response.jwt)),
           mapTo(true),
           catchError(error => {
             return of(false);
@@ -26,11 +26,11 @@ export class authService{
     }
 
     logout(){
-        localStorage.removeItem("JWT_TOKEN_USER");
+        localStorage.removeItem("JWT_TOKEN");
     }
 
     isLogged() : boolean{
-        let jwt = localStorage.getItem("JWT_TOKEN_USER");
+        let jwt = localStorage.getItem("JWT_TOKEN");
         if(jwt == null) return false;
         else if(!this.isTokenExpired()) return true;
     }
@@ -45,7 +45,7 @@ export class authService{
     }
 
     getJwt() : string{
-        return localStorage.getItem("JWT_TOKEN_USER");
+        return localStorage.getItem("JWT_TOKEN");
     }
 
     getTokenExpirationDate(token: string): Date {
